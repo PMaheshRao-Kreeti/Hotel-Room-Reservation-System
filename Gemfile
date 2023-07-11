@@ -34,9 +34,9 @@ group :development, :test do
 
   gem 'dotenv-rails'
   gem 'omniauth-facebook'
+  gem 'omniauth-rails_csrf_protection'
   gem 'pry'
   gem 'rubocop', require: false
-  gem "omniauth-rails_csrf_protection"
 end
 
 group :development do

@@ -13,3 +13,10 @@
  *= require_tree .
  *= require_self
  */
+
+ .hotel-img {
+    float: left;
+    width:  inherit;
+    height: 300px;
+    object-fit: cover;
+  }

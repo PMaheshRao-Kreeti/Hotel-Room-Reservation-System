@@ -72,7 +72,14 @@ app/shared/_header.html.erb
 
 --------------------------------------------------
 
-facebook authentication
-
-app_id = '147146295015325'
-app_secret = 'fd4af0d1017be4cfcc22c92eeb3687a0'
+----------------------------------------------------
+app/views/hotels/index.html.erb
+            
+            <div class="col-lg-3">
+              <% room_count(hotel) %>
+              <p class="card-text"><strong>Room Available:</strong></p>
+              <p class="card-text">Single Bedroom :<%= @single_bedroom_count %> Available</p>
+              <p class="card-text">Double Bedroom :<%= @double_bedroom_count %> Available</p>
+              <p class="card-text">Suite :<%= @suite_count %> Available</p>
+              <p class="card-text">Dormitory :<%= @dormitory_count %> Available</p>
+            </div>

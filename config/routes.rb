@@ -12,12 +12,18 @@ Rails.application.routes.draw do
   delete '/logout', to: 'sessions#destroy'
   get '/admin_login', to: 'sessions#admin_new'
   post '/admin_login', to: 'sessions#create_admin'
-  
+
   # facbook authentication
   get '/auth/:provider/callback', to: 'sessions#facebook_callback'
 
   get '/admin/dashboard', to: 'admins#index'
 
   resources :home, only: [:index]
+
   resources :customers, only: [:index]
+
+  resources :admins, only: [:index]
+
+  resources :hotels
+  end
 end

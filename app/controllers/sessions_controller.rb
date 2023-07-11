@@ -19,7 +19,6 @@ class SessionsController < ApplicationController
   end
 
   def create_admin
-
     user = User.find_by(email: params[:email])
 
     if user&.authenticate(params[:password]) && user.role == 'admin'
@@ -37,7 +36,8 @@ class SessionsController < ApplicationController
   end
 
   def facebook_callback
-    user = User.find_or_create_by(uid: request.env['omniauth.auth'][:uid], provider: request.env['omniauth.auth'][:provider]) do |u|
+    user = User.find_or_create_by(uid: request.env['omniauth.auth'][:uid],
+                                  provider: request.env['omniauth.auth'][:provider]) do |u|
       u.name = request.env['omniauth.auth'][:info][:name]
       u.email = request.env['omniauth.auth'][:info][:email]
       u.password = SecureRandom.hex(15)
