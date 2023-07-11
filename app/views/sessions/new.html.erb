@@ -1,0 +1,40 @@
+<p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">User Login</p>
+<section class="vh-95">
+  <div class="container-fluid h-custom">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-md-9 col-lg-6 col-xl-5">
+        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
+          class="img-fluid" alt="Sample image">
+      </div>
+      <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+        <div class="form-outline mb-4">
+          <p class="text-danger"><%= flash[:alert] %></p>
+        </div>
+        <%= form_with url: login_path do |form| %>  
+          <!-- Email input -->
+          <div class="form-outline mb-4">
+            <label class="form-label" for="email">Email address</label>
+            <%= form.email_field :email, placeholder: 'Enter valid email address', class: "form-control form-control-lg" %>
+          </div>
+
+          <!-- Password input -->
+          <div class="form-outline mb-3">
+            <label class="form-label" for="password">Password</label>
+            <%= form.password_field :password, placeholder: 'Enter password', class: "form-control form-control-lg" %>
+          </div>
+
+          <!-- Submit facebook logina nd signup button -->
+          <div class="text-center text-lg-start mt-4 pt-2">
+            <%= form.submit "Login as User", class: "btn btn-lg btn-block btn-primary" %>
+            <hr class="my-4">
+            
+            <%= link_to 'Continue with Facebook', '/auth/facebook', method: :post, class: 'btn btn-lg btn-block btn-primary mb-2', style:"background-color: #3b5998;"%>
+            <hr class="my-4">
+            <h3 class="">Sign up and Registertion</h3>
+            <p><%= link_to 'Create New Account', signup_path , class: 'btn btn-success btn-lg my-4' %></p>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</section>
