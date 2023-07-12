@@ -1,0 +1,48 @@
+<div class="container">
+  <div class="row p-3">
+    <div class="card">
+      <h2 class="text-center">Gallery</h2>
+    </div>
+  </div>
+
+  <div class="row">
+      <div class="col-lg-12 mt-5 mb-3">
+      <% if current_user.role == 'admin' %>  
+        <%= link_to "Back to Hotel", hotels_path, class: "btn btn-warning"%>
+      <%else%>
+        <%= link_to "Back to Home", customers_path, class: "btn btn-primary"%>
+      <% end %>
+      </div>
+    </div>
+    
+  <div class="row">
+    <% (1..4).each do |value| %>
+     <div class="col-lg-3 d-flex">
+        <%= image_tag "gallery_#{value}.jpg", alt: 'photo.', class: 'img-fluid my-2 p-2' %>
+     </div>
+    <% end %>
+
+    <% @gallery.each do |gallery|%>
+      <div class="col-lg-3 d-flex">
+        <% if gallery.bedroom_image.attached? %>
+          <%= image_tag gallery.bedroom_image, alt: 'photo.', class: 'img-fluid my-2 p-2' %>
+        <% end %>
+      </div>
+      <div class="col-lg-3 d-flex">
+        <% if gallery.interior_image.attached? %>
+          <%= image_tag gallery.interior_image, alt: 'photo.', class: 'img-fluid my-2 p-2' %>
+        <% end %>
+      </div>
+      <div class="col-lg-3 d-flex">
+        <% if gallery.exterior_image.attached? %>
+          <%= image_tag gallery.exterior_image, alt: 'photo.', class: 'img-fluid my-2 p-2' %>
+        <% end %>
+      </div>
+      <div class="col-lg-3 d-flex">
+        <% if gallery.outside_view_image.attached? %>
+          <%= image_tag gallery.outside_view_image, alt: 'photo.', class: 'img-fluid my-2 p-2' %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>

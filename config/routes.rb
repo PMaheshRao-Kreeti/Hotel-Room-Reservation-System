@@ -25,4 +25,8 @@ Rails.application.routes.draw do
   resources :admins, only: [:index]
 
   resources :hotels
+
+  resources :rooms
+
+  resources :galleries, only: [:index]
 end

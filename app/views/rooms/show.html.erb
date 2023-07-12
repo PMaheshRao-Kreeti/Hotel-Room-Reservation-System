@@ -1,0 +1,61 @@
+<div class="container-fluid px-5 py-5">
+  <div class="row mt-5 mb-4">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-body">
+          <h2 class="card-title text-center">Room Details</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">  
+    <div class="col-lg-12 mb-4">
+      <% if current_user.role == 'admin' %>  
+          <%= link_to "Back to room", rooms_path, class: "btn btn-warning"%>
+        <%else%>
+          <%= link_to "Back to room", url_for(:back), class: "btn btn-primary"%>
+        <% end %>
+    </div>
+  </div>
+  <div class="row pl-3 pr-3">
+    <div class="col-lg-4  ">
+        <%= image_tag @room.bedroom_image, alt: 'room image', class: 'img-fluid rounded-3 px-3 py-3' %>
+        <div class="col-lg-6 d-flex">
+          <%= image_tag @room.interior_image, alt: 'room image', class: 'img-fluid rounded-3 px-3 py-3' %>
+          <%= image_tag @room.exterior_image, alt: 'room image', class: 'img-fluid rounded-3 px-3 py-3' %>
+        </div>
+        <div class="col-lg-6 d-flex">
+          <%= image_tag @room.outside_view_image, alt: 'room image', class: 'img-fluid rounded-3 px-3 py-3' %>
+          <%= image_tag @room.swimming_pool_image, alt: 'room image', class: 'img-fluid rounded-3 px-3 py-3' %>
+        </div>
+    </div>
+    <div class="col-lg-8">
+      <h2 class="text-center">HOTEL : <%= @room.hotel.name%></h2>
+      <div class="row">
+        <div class="col-lg-6">
+          <h3 class="mt-2 mb-4">Basic Inforamtion</h3>
+          <p class="lead"><strong>Room description : </strong><%= @room.hotel.description %></p>
+          <p class="lead"><strong>Room Type : <%= @room.room_type %></strong></p>
+          <p class="lead"><strong>Capacity : </strong><%= @room.capacity %> person</p>
+          <p class="lead"><strong>Availability : </strong><%= @room.availability %> </p>
+          <p class="lead"><strong>Price : </strong><%= @room.price %> Rs.</p>
+        </div>
+        <div class="col-lg-6">
+          <h3 class="mt-2 mb-4">location Inforamtion</h3>
+          <p class="lead"><strong>City : </strong><%= @room.hotel.city %></p>
+          <p class="lead"><strong>Address : </strong><%= @room.hotel.full_address %></p>
+          <p class="lead"><strong>State : </strong><%= @room.hotel.state %></p>
+          <p class="lead"><strong>Country : </strong><%= @room.hotel.country %></p>
+          <p class="lead"><strong>Pin Code : </strong><%= @room.hotel.pincode %></p>
+        </div>
+        <div class="row mt-5 pt-5">
+          <% if current_user.role == 'admin' %>
+            <%= link_to "Edit Room detail", edit_room_path(@room), class: "btn btn-success"%>
+          <% else %>
+            <%= link_to  "Book Room", root_path, class:"btn btn-success" %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

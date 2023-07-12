@@ -14,7 +14,7 @@
  *= require_self
  */
 
- .hotel-img {
+ .hotel-img, .room-img {
     float: left;
     width:  inherit;
     height: 300px;

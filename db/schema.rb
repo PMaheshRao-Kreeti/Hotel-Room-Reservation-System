@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20_230_711_055_217) do
+ActiveRecord::Schema.define(version: 20_230_711_102_547) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -58,6 +58,22 @@ ActiveRecord::Schema.define(version: 20_230_711_055_217) do
     t.datetime 'updated_at', precision: 6, null: false
   end
 
+  create_table 'rooms', force: :cascade do |t|
+    t.string 'interior_image'
+    t.string 'exterior_image'
+    t.string 'bedroom_image'
+    t.string 'outside_view_image'
+    t.string 'swimming_pool_image'
+    t.string 'room_type'
+    t.integer 'price'
+    t.integer 'capacity'
+    t.string 'availability'
+    t.bigint 'hotel_id', null: false
+    t.datetime 'created_at', precision: 6, null: false
+    t.datetime 'updated_at', precision: 6, null: false
+    t.index ['hotel_id'], name: 'index_rooms_on_hotel_id'
+  end
+
   create_table 'users', force: :cascade do |t|
     t.string 'name'
     t.string 'email'
@@ -72,4 +88,5 @@ ActiveRecord::Schema.define(version: 20_230_711_055_217) do
 
   add_foreign_key 'active_storage_attachments', 'active_storage_blobs', column: 'blob_id'
   add_foreign_key 'active_storage_variant_records', 'active_storage_blobs', column: 'blob_id'
+  add_foreign_key 'rooms', 'hotels'
 end

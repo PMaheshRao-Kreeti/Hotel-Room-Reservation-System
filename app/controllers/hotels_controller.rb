@@ -1,6 +1,8 @@
 class HotelsController < ApplicationController
   before_action :set_hotel, only: %i[edit show room_count update destroy]
 
+  include HotelsHelper
+
   def index
     @hotels = Hotel.all
   end

@@ -1,0 +1,89 @@
+<%= form_with model: @room do |form| %>
+  <div class="row mx-4 mt-5">
+    <div class="col-lg-4">
+      <div class="form-group">
+        <%= form.label :hotel_id, class: 'mb-2' %>
+        <%= form.select :hotel_id,  options_for_select(Hotel.all.map{|hotel| [hotel.name, hotel.id]}),{prompt:'Select Hotel'},class: 'form-select form-select-lg' ,selected: room.hotel_id%>
+        <% @room.errors.full_messages_for(:hotel_id).each do |message| %>
+          <p class="text-danger"><%= message%></p>
+        <% end %>
+      </div>
+    </div>
+    <div class="col-lg-4">
+      <div class="form-group">
+        <%= form.label :room_type, class: 'mb-2' %>
+        <%= form.select :room_type,  options_for_select(Room::ROOMTYPES),{prompt:'Select Room Type'},class: 'form-select form-select-lg' ,selected: room.room_type%>
+        <% @room.errors.full_messages_for(:room_type).each do |message| %>
+          <p class="text-danger"><%= message%></p>
+        <% end %>
+      </div>
+    </div>
+    <div class="col-lg-3">
+      <div class="form-group">
+        <%= form.label :price, class: 'mb-2' %>
+        <%= form.text_field :price, class: 'form-control form-control-lg' %>
+        <% @room.errors.full_messages_for(:price).each do |message| %>
+          <p class="text-danger"><%= message%></p>
+        <% end %>
+      </div>
+    </div> 
+  </div> 
+
+  <div class="row mx-4 mt-5">
+    <div class="col-lg-3">
+      <div class="form-group">
+        <%= form.label :capacity, class: 'mb-2' %>
+        <%= form.number_field :capacity, class: 'form-control form-control-lg' %>
+        <% @room.errors.full_messages_for(:capacity).each do |message| %>
+          <p class="text-danger"><%= message%></p>
+        <% end %>
+      </div>
+    </div>
+    <div class="col-lg-4">
+      <div class="form-group">
+        <%= form.label :availability, class: 'mb-2' %>
+        <%= form.select :availability,  options_for_select(Room::AVAILABLEOPTION),{prompt:''},class: 'form-select form-select-lg' ,selected: room.availability%>
+        <% @room.errors.full_messages_for(:availability).each do |message| %>
+          <p class="text-danger"><%= message%></p>
+        <% end %>
+      </div>
+    </div>
+  </div> 
+  
+  <div class="row mx-4 mt-5">
+    <div class="col-lg-4">
+      <%= form.label :interior_image %> <br>
+      <%= form.file_field :interior_image %>
+    </div>
+    <div class="col-lg-4">
+      <%= form.label :exterior_image %> <br>
+      <%= form.file_field :exterior_image %>
+    </div>
+    <div class="col-lg-4">
+      <%= form.label :bedroom_image %> <br>
+      <%= form.file_field :bedroom_image %>
+    </div>
+  </div>
+
+  <div class="row mx-4 mt-5">
+    <div class="col-lg-4">
+      <%= form.label :outside_view_image %> <br>
+      <%= form.file_field :outside_view_image %>
+    </div>
+    <div class="col-lg-4">
+      <%= form.label :swimming_pool_image %> <br>
+      <%= form.file_field :swimming_pool_image %>
+    </div>
+  </div>  
+
+  <div class="row mx-4 mt-5">
+    <div class="col-lg-2">
+     <%= form.submit class: "btn btn-primary btn-primary-lg btn-lg" %>
+    </div>
+    
+    <div class="col-lg-3 ">
+     <%= link_to "Back to home", root_path, class: "btn btn-outline-primary btn-lg" %>
+    </div>
+  </div>
+  
+<% end %>

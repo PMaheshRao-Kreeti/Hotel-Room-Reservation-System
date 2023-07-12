@@ -6,8 +6,9 @@
       </button>
       <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
         <ul class="navbar-nav">
-          <a href="/" class="navbar-brand">BookRooms</a>
+          
             <% if !user_logged_in? %>
+              <a href="/" class="navbar-brand">BookRooms</a>
               <li class="nav-item">
                 <%= link_to 'Customer Login', login_path, class: 'nav-link' %>
               </li>
@@ -18,20 +19,28 @@
                 <%= link_to 'Admin Login', admin_login_path, method: :get, class: 'nav-link' %>
               </li>
             <% else %>
+              
+              <% if current_user.role == 'admin'%>
+                <a href="/admins" class="navbar-brand">BookRooms</a>
+              
+              <% else %>
+                <a href="/customers" class="navbar-brand">BookRooms</a>
+              
+              <% end %>  
               <li class="nav-item">
                 <%= link_to 'Hotels', hotels_path, class: 'nav-link' %>
               </li>
               <li class="nav-item">
-                <%#= link_to 'Customer SignUp', signup_path, class: 'nav-link' %>
+                <%= link_to 'Rooms', rooms_path, class: 'nav-link' %>
               </li>
               <li class="nav-item">
-                <%#= link_to 'Admin Login', admin_login_path, method: :get, class: 'nav-link' %>
+                <%= link_to 'Gallery', galleries_path, class: 'nav-link ' %>
               </li>
               <li class="nav-item">
-                <%= link_to 'Logout', logout_path,method: :delete, class: 'nav-link' %>
+                <span class="nav-link disabled text-dark">Welcome, <%= current_user.name %>(<%= current_user.role %>)  </span>
               </li>
               <li class="nav-item">
-                <span class="nav-link disabled text-dark"><%= current_user.name %>(<%= current_user.role %>)  </span>
+                <%= link_to 'Logout', logout_path,method: :delete, class: 'btn btn-danger' %>
               </li>
             <% end %>
         </ul>
