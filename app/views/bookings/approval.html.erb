@@ -1,0 +1,70 @@
+<%= form_with model: @booking, url: hotel_booking_path(@hotel, @booking) do |form| %>
+
+  <div class="row">
+    <div class="card mt-5 mb-3">
+      <div class="card-body">
+        <h2 class="text-center">Booking Information</h2>
+      </div>
+    </div>
+
+    <div class="card mt-5 mb-3">
+      <div class="card-body">
+          <div class="row">
+            <div class="col-lg-4">
+              <div class="card-text"><strong >Hotel Name : </strong><%= @hotel.name %></div>
+              <div class="card-text"><strong >Booking ID : </strong><%= @booking.id %></div>
+              <div class="card-text"><strong >Guest Name : </strong><%= @booking.guest_name %></div>
+              <div class="card-text"><strong >User Email : </strong><%= @booking.user.email %></div>
+              <div class="card-text"><strong >No of Guest : </strong><%= @booking.no_of_guest %></div>
+          </div>          
+          <div class="col-lg-4">
+              <div class="card-text"><strong >Booking Room Type : </strong><%= @booking.room_type %></div>
+              <div class="card-text"><strong >Booking Status : </strong><%= @booking.booking_status %></div>
+              <div class="card-text"><strong >Check In Date : </strong><%= @booking.check_in_date  %></div>
+              <div class="card-text"><strong >Check Out Date : </strong><%= @booking.check_out_date %></div>
+
+          </div>
+          </div>
+      </div>
+    </div>
+  </div>
+  <div class="row mt-5">
+    <div class="col-lg-4">
+      <div class="form-group">
+        <%= form.label :booking_status, class: 'mb-2' %>
+        <%= form.select :booking_status,  options_for_select(Booking::BOOKINGSTATUS),class: 'form-select form-select-lg' ,selected: @booking.booking_status%>
+        <% @booking.errors.full_messages_for(:booking_status).each do |message| %>
+          <p class="text-danger"><%= message%></p>
+        <% end %>
+      </div>
+    </div>
+
+    <%# room_id available to that hotels room type %>
+    <div class="col-lg-4">
+      <div class="form-group">
+        <%= form.label :room_id, class: 'mb-2' %>
+        <% booked_room_ids = Booking.where(hotel_id: @booking.hotel_id, room_type: @booking.room_type)
+                                    .where("check_in_date <= ? AND check_out_date >= ?", @booking.check_out_date, @booking.check_in_date)
+                                    .pluck(:room_id) %>
+        <% available_rooms = Room.where(hotel_id: @booking.hotel_id, room_type: @booking.room_type)
+                                .where.not(id: booked_room_ids) %>
+        <%= form.select :room_id, options_for_select(available_rooms.map { |room| [room.room_number, room.id] }),
+                        class: 'form-select form-select-lg' %>
+        <% @booking.errors.full_messages_for(:room_id).each do |message| %>
+          <p class="text-danger"><%= message %></p>
+        <% end %>
+      </div>  
+
+    </div>
+  </div>
+  <!-- submit button & back button-->
+  <div class="row mt-5">
+    <div class="col-lg-2">
+     <%= form.submit "Submit",class: "btn btn-success btn-lg" %>
+    </div>
+
+    <div class="col-lg-3 ">
+     <%= link_to "Back to bookings", bookings_path, class: "btn btn-warning btn-lg" %>
+    </div>
+  </div>
+<% end %>

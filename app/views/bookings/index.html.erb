@@ -1,0 +1,120 @@
+ <!--All booking-->
+<div class="col-lg-12">
+  <%= flash[:notice] %>
+  <div class="col-lg-3">
+    <%= link_to "Back to Rooms", rooms_path, class: "btn btn-warning"%>
+  </div>
+  <div class="card mt-5 mb-3">
+    <div class="card-body">
+      <h2 class="text-center">Todays Booking List</h2>
+    </div>
+  </div>
+  
+  <table class="table table-bordered mt-3 text-center">
+    <thead class="bg-primary text-white">
+      <th>Hotel name </th>
+      <th>Guest Name</th>
+      <th>Email</th>
+      <th>No of Guest</th>
+      <th>Room Type</th>
+      <th>check_in_date </th>
+      <th>check_out_date</th>
+      <th>Booking Status</th>
+      <th>Room</th>
+      <th>Action</th>
+    </thead>
+    <tbody>
+      <% @todays_bookings.each do |booking| %>
+        <tr>
+          <% find_hotel(booking.hotel_id)%>
+          <td><%= @hotel.name %></td>
+          <td><%= booking.guest_name %></td>
+          <td><%= booking.user.email %></td>
+          <td><%= booking.no_of_guest %></td>
+          <td><%= booking.room_type %></td>
+          <td><%= booking.check_in_date  %></td>
+          <td><%= booking.check_out_date %></td>
+          
+          <% if booking.booking_status == 'approved' %>
+            <td class="text-uppercase text-success text-uppercase"><strong><%= booking.booking_status %></strong></td>
+          <% elsif booking.booking_status == 'rejected' %>
+            <td class="text-uppercase text-danger text-uppercase"><strong><%= booking.booking_status %></strong></td>
+          <% else %>
+            <td class="text-uppercase text-warning text-uppercase"><strong><%= booking.booking_status %></strong></td>
+          <% end %>
+          
+          <% @booking_room = find_room(booking.room_id)%>
+          <td>
+            <% if @booking_room.present? %>
+              <%= @booking_room.room_number %>
+            <% else %>
+              N/A
+            <% end %>
+          </td>
+          <td>
+            <%= link_to 'Action',  hotel_booking_path(@hotel, booking), class: 'btn btn-primary' %>
+          </td>
+        </tr> 
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+ <!--All booking-->
+
+<div class="col-lg-12">
+  <div class="card mt-5 mb-3">
+    <div class="card-body">
+      <h2 class="text-center">All Booking List</h2>
+    </div>
+  </div>
+
+  <table class="table table-bordered mt-3 text-center">
+    <thead class="bg-primary text-white">
+      <th>Hotel name </th>
+      <th>Guest Name</th>
+      <th>Email</th>
+      <th>No of Guest</th>
+      <th>Room Type</th>
+      <th>check_in_date </th>
+      <th>check_out_date</th>
+      <th>Booking Status</th>
+      <th>Room id</th>
+      <th>Action</th>
+    </thead>
+    <tbody>
+      <% @all_bookings.each do |booking| %>
+        <tr>
+          <% find_hotel(booking.hotel_id)%>
+          <td><%= @hotel.name %></td>
+          <td><%= booking.guest_name %></td>
+          <td><%= booking.user.email %></td>
+          <td><%= booking.no_of_guest %></td>
+          <td><%= booking.room_type %></td>
+          <td><%= booking.check_in_date  %></td>
+          <td><%= booking.check_out_date %></td>
+          
+          <% if booking.booking_status == 'approved' %>
+            <td class="text-uppercase text-success text-uppercase"><strong><%= booking.booking_status %></strong></td>
+          <% elsif booking.booking_status == 'rejected' %>
+            <td class="text-uppercase text-danger text-uppercase"><strong><%= booking.booking_status %></strong></td>
+          <% else %>
+            <td class="text-uppercase text-warning text-uppercase"><strong><%= booking.booking_status %></strong></td>
+          <% end %>
+          
+          <% @booking_room = find_room(booking.room_id)%>
+          <td>
+            <% if @booking_room.present? %>
+              <%= @booking_room.room_number %>
+            <% else %>
+              N/A
+            <% end %>
+          </td>
+          <td>
+            <%= link_to 'Action',  hotel_booking_path(@hotel, booking), class: 'btn btn-primary' %>
+          </td>
+        </tr> 
+      <% end %>
+    </tbody>
+  </table>
+</div>

@@ -1,6 +1,8 @@
 class User < ApplicationRecord
   has_secure_password
 
+  has_many :bookings
+
   enum role: { admin: 0, customer: 1 }
 
   validates :name, presence: true

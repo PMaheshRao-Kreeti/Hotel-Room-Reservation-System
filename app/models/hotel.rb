@@ -2,6 +2,7 @@ class Hotel < ApplicationRecord
   has_one_attached :hotel_image
 
   has_many :rooms
+  has_many :bookings
 
   validates :name, presence: true
   validates :address, presence: true, uniqueness: true

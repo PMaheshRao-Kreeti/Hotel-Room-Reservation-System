@@ -16,16 +16,24 @@ Rails.application.routes.draw do
   # facbook authentication
   get '/auth/:provider/callback', to: 'sessions#facebook_callback'
 
-  get '/admin/dashboard', to: 'admins#index'
+  get '/admins', to: 'admins#index'
 
-  resources :home, only: [:index]
+  get '/customers', to: 'customers#index'
 
-  resources :customers, only: [:index]
+  # booking routes
+  get '/bookings', to: 'bookings#index'
+  get '/bookings/history', to: 'bookings#booking_history'
+  post 'availibility_checking', to:'bookings#availibility_checking'
+  post 'bookings/:id/cancelled', to: 'bookings#cancelled', as: 'booking_cancelled'
+  
+  resources :hotels do
+    resources :bookings, only: %i[new create edit update destroy]
+    get '/bookings/:id/', to: 'bookings#approval'
+  end
 
-  resources :admins, only: [:index]
 
-  resources :hotels
-
+  # rooms routes
+  get '/hotels/:id/show_rooms', to: 'hotels#show_rooms', as: 'hotel_rooms'
   resources :rooms
 
   resources :galleries, only: [:index]

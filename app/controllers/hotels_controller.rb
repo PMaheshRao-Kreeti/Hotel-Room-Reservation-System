@@ -1,5 +1,5 @@
 class HotelsController < ApplicationController
-  before_action :set_hotel, only: %i[edit show room_count update destroy]
+  before_action :set_hotel, only: %i[edit show hotel_rooms room_count update destroy]
 
   include HotelsHelper
 
@@ -21,6 +21,10 @@ class HotelsController < ApplicationController
   end
 
   def show; end
+
+  def show_rooms
+    @hotel = Hotel.find(params[:id])
+  end
 
   def update
     if @hotel.update(hotel_params)

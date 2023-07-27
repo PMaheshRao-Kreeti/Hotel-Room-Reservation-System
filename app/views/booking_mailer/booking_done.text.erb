@@ -1,0 +1,24 @@
+Booking Done Successfully
+
+Dear <%= @user.name %>,
+
+Your booking has been successfully done. Here are the details:
+
+Hotel: <%= @hotel.name %>
+
+Booking Status: <%= @booking.booking_status %>
+
+Booked At: <%= @booking.created_at.localtime %>
+
+Guest Name: <%= @booking.guest_name %>
+Booking Email: <%= @user.email %>
+Number of Guests: <%=@booking.no_of_guest %>
+
+Room Type: <%= @booking.room_type %>
+Check In Date: <%= @booking.check_in_date %>
+Check Out Date: <%= @booking.check_out_date %>
+
+Thank you for choosing our service. If you have any questions or need further assistance, please feel free to contact us.
+
+Best regards,
+Bookrooms Admin

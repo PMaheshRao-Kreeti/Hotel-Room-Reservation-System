@@ -7,4 +7,12 @@ module ApplicationHelper
   def user_logged_in?
     current_user
   end
+
+  def find_user(user_id)
+    @user = User.find_by(id: user_id)
+  end
+
+  def find_hotel(hotel_id)
+    @hotel = Hotel.find_by(id: hotel_id)
+  end
 end

@@ -10,7 +10,7 @@ class UsersController < ApplicationController
 
     if @user.save
       session[:user_id] = @user.id
-      redirect_to cus_path, notice: 'Account created successfully!'
+      redirect_to customers_path, notice: 'Account created successfully!'
     else
       render :new
     end

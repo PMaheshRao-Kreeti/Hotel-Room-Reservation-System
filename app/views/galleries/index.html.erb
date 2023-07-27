@@ -22,12 +22,12 @@
      </div>
     <% end %>
 
+    
     <% @gallery.each do |gallery|%>
-      <div class="col-lg-3 d-flex">
-        <% if gallery.bedroom_image.attached? %>
-          <%= image_tag gallery.bedroom_image, alt: 'photo.', class: 'img-fluid my-2 p-2' %>
-        <% end %>
-      </div>
+      <% if @count > 6%>
+        <% break %>
+      <% end %>
+      <% @count+=1 %>
       <div class="col-lg-3 d-flex">
         <% if gallery.interior_image.attached? %>
           <%= image_tag gallery.interior_image, alt: 'photo.', class: 'img-fluid my-2 p-2' %>
@@ -36,11 +36,6 @@
       <div class="col-lg-3 d-flex">
         <% if gallery.exterior_image.attached? %>
           <%= image_tag gallery.exterior_image, alt: 'photo.', class: 'img-fluid my-2 p-2' %>
-        <% end %>
-      </div>
-      <div class="col-lg-3 d-flex">
-        <% if gallery.outside_view_image.attached? %>
-          <%= image_tag gallery.outside_view_image, alt: 'photo.', class: 'img-fluid my-2 p-2' %>
         <% end %>
       </div>
     <% end %>

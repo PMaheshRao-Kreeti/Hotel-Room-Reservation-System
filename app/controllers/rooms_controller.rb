@@ -11,6 +11,7 @@ class RoomsController < ApplicationController
 
   def create
     @room = Room.new(room_params)
+    room_capacity_based_on_room_type(@room)
     if @room.save
       redirect_to rooms_path, notice: 'Room was successfully created.'
     else
@@ -42,7 +43,20 @@ class RoomsController < ApplicationController
   end
 
   def room_params
-    params.require(:room).permit(:room_type, :price, :capacity, :availability, :hotel_id, :interior_image,
-                                 :exterior_image, :bedroom_image, :outside_view_image, :swimming_pool_image)
+    params.require(:room).permit(:room_type, :price, :capacity, :hotel_id, :interior_image,
+                                 :exterior_image, :bedroom_image, :room_number)
+  end
+
+  def room_capacity_based_on_room_type(room)
+    case room.room_type
+    when 'Single Bed'
+      room.capacity = 2
+    when 'Double Bed'
+      room.capacity = 4
+    when 'Suite'
+      room.capacity = 8
+    when 'Dormitory'
+      room.capacity = 16
+    end
   end
 end

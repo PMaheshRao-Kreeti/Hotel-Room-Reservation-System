@@ -5,14 +5,14 @@
       
       <div class="card my-3">
         <div class="card-body">
-          <h2 class="text-center">Hotel List</h2>
+          <h2 class="text-center">All Hotel List</h2>
         </div>
       </div>
     
       <% if current_user.role == 'admin' %>  
         <%= link_to "Add new hotel", new_hotel_path, class: "btn btn-primary"%>
         <%#= link_to "Add new room", new_room_path, class: "btn btn-success"%>
-        <%= link_to "Back to dashboard", admin_dashboard_path, class: "btn btn-warning"%>
+        <%= link_to "Back to dashboard", admins_path, class: "btn btn-warning"%>
       <%else%>
         <%= link_to "Back to Home", customers_path, class: "btn btn-primary"%>
       <% end %>
@@ -33,18 +33,18 @@
 
                 <% room_count(hotel) %>
                 <p class="card-text"><strong>Room Available:</strong></p>
-                <p class="card-text">Single Bedroom :<%= @single_bedroom_count %> Available</p>
-                <p class="card-text">Double Bedroom :<%= @double_bedroom_count %> Available</p>
-                <p class="card-text">Suite :<%= @suite_count %> Available</p>
-                <p class="card-text">Dormitory :<%= @dormitory_count %> Available</p>
+                <p class="card-text">Single Bedroom : <%= @single_bedroom_count %> Available</p>
+                <p class="card-text">Double Bedroom : <%= @double_bedroom_count %> Available</p>
+                <p class="card-text">Suite : <%= @suite_count %> Available</p>
+                <p class="card-text">Dormitory : <%= @dormitory_count %> Available</p>
+                <p class="card-text"><strong>Price Range : </strong><%= hotel.min_room_price%> - <%= hotel.max_room_price%> Rs.</p>
                 
+                <%= link_to 'Show Rooms', hotel_rooms_path(hotel), class: 'btn btn-info' %>
                 <%if current_user.role == 'admin' %>
-                  <p class="card-text"><strong>Price Range : </strong><%#= hotel.price_range %> <%= hotel.min_room_price%> - <%= hotel.max_room_price%> Rs.</p>
                   <%= link_to 'Edit detail', edit_hotel_path(hotel), class: 'btn btn-success' %>
-                  <%= link_to 'Show Rooms', hotel_path(hotel), class: 'btn btn-info' %>
                   <%= link_to 'Delete', hotel_path(hotel), class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' } %>
                 <% else %>
-                  <%= link_to 'Explore Rooms', hotel_path(hotel), class: 'btn btn-success' %> <strong><%#= hotel.price_range %> <%= hotel.min_room_price%> - <%= hotel.max_room_price%> Rs.</strong>
+                  <%= link_to 'Booking Details', hotel_path(hotel), class: 'btn btn-success' %>
                 <% end %>
               </div>
             </div>

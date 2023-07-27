@@ -4,14 +4,9 @@ class SessionsController < ApplicationController
 
   def create
     user = User.find_by(email: params[:email])
-
     if user&.authenticate(params[:password])
       session[:user_id] = user.id
-      if user.role == 'admin'
-        redirect_to admin_dashboard_path
-      else
-        redirect_to customers_path
-      end
+      redirect_to customers_path
     else
       flash.now[:alert] = 'Invalid email or password'
       render :new
@@ -20,10 +15,9 @@ class SessionsController < ApplicationController
 
   def create_admin
     user = User.find_by(email: params[:email])
-
-    if user&.authenticate(params[:password]) && user.role == 'admin'
+    if user&.authenticate(params[:password])
       session[:user_id] = user.id
-      redirect_to admin_dashboard_path
+      redirect_to admins_path
     else
       flash.now[:alert] = 'Invalid email or password for admin'
       render :new

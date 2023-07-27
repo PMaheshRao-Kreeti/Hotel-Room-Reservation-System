@@ -21,17 +21,23 @@
             <% else %>
               
               <% if current_user.role == 'admin'%>
+                
                 <a href="/admins" class="navbar-brand">BookRooms</a>
-              
+                <li class="nav-item">
+                  <%= link_to 'Booking List', bookings_path, class: 'nav-link' %>
+                </li>
+                <li class="nav-item"> 
+                  <%= link_to 'Rooms', rooms_path, class: 'nav-link' %>
+                </li>
+                
               <% else %>
                 <a href="/customers" class="navbar-brand">BookRooms</a>
-              
+                <li class="nav-item">
+                  <%= link_to 'Booking History', bookings_history_path, class: 'nav-link ml-3' %>
+                </li>
               <% end %>  
               <li class="nav-item">
                 <%= link_to 'Hotels', hotels_path, class: 'nav-link' %>
-              </li>
-              <li class="nav-item">
-                <%= link_to 'Rooms', rooms_path, class: 'nav-link' %>
               </li>
               <li class="nav-item">
                 <%= link_to 'Gallery', galleries_path, class: 'nav-link ' %>

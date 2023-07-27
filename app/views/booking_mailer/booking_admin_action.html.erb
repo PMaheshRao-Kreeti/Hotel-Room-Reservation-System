@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Booking Confirmation Status</h1>
+
+    <p>Dear <%= @user.name %>,
+
+    <p>Your booking has been checked by admin and admin <%= @booking.booking_status %> your booking. Here are the Booking details:</p>
+
+    <p>
+      <strong>Hotel:</strong> <%= @hotel.name %>
+      <br>
+      <strong>Booking Status:</strong> <%= @booking.booking_status %>
+      <br>
+      <br>
+      <strong>Booked At:</strong> <%= @booking.created_at.localtime %>
+      <br>
+      <br>
+      <strong>Guest Name:</strong> <%= @booking.guest_name %>
+      <br>
+      <strong>Booking Email:</strong> <%= @user.email %>
+      <br>
+      <strong>Number of Guests:</strong> <%= @booking.no_of_guest %>
+      <br>
+      <strong>Room Type:</strong> <%= @booking.room_type %>
+      <br>
+      <strong>Check In Date:</strong> <%= @booking.check_in_date %>
+      <br>
+      <strong>Check Out Date:</strong> <%= @booking.check_out_date %>
+    </p>
+
+    <p>Thank you for choosing our service. If you have any questions or need further assistance, please feel free to contact us.</p>
+
+    <p>Best regards,</p>
+    <p>Bookrooms Admin</p>
+  </body>
+</html>

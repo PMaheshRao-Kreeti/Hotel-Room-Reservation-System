@@ -1,7 +1,6 @@
-<div class="row mt-5">
-  <h2 class="text-center">Available rooms</h2>
-  <div class="row">
-      <div class="col-lg-12">
+<% if @hotel.rooms.present? %>
+  <div class="row my-5">
+    <div class="col-lg-12">
         <% if current_user.role == 'admin' %>  
           <%= link_to "Back to hotel", hotels_path, class: "btn btn-warning"%>
           <%= link_to "Add new hotel", new_hotel_path, class: "btn btn-primary"%>
@@ -11,40 +10,53 @@
         <% end %>
       </div>
     </div>
-</div>
-<% if @hotel.rooms.present? %>
-  <div class="row mt-5">
+    <h2 class="text-center">HOTEL : <%= @hotel.name %></h2>
+    <div class="col-lg-12 d-flex mt-5">
+      <div class="col-lg-3">
+        <% if @hotel.hotel_image.attached? %>
+          <%= image_tag @hotel.hotel_image, alt: 'Hotel Image',class: 'img-fluid rounded-3 p-2' %>
+        <% end %>
+      </div>
+      <div class="col-lg-9 d-flex m-2">
+        <div class="col-lg-6 p-2">
+          <p class="lead"><strong>Description : </strong><%= @hotel.description %></p>
+          <p class="lead"><strong>Address : </strong><%= @hotel.full_address %></p>
+          <p class="lead"><strong>Available : Wi-Fi , Room-service , Swimming pool , Car rental services , Laundry services .</strong></p>
+        </div>
 
-    <% @hotel.rooms.each do |room|%>
-      <div class="col-lg-4">
-          <div class="card mt-5">
-            <% if room.bedroom_image.attached? %>
-              <%= image_tag room.bedroom_image, alt: 'room image',class: 'rounded-3 p-2' %>
-            <% end %> 
-            <div class="card-body">
-              <h5 class="card-title"><%= room.hotel.name %></h5>
-              <p class="card-text"><strong>Room Type : </strong><%= room.room_type %></p>
-              <p class="card-text"><strong>Address : </strong><%= room.hotel.full_address %></p>
-              <%if current_user.role == 'admin' %>
-                <p class="card-text"><strong>Price : </strong><%= room.price %> Rs.</p>
-              <% end %>
-              <p class="card-text"><strong>Capacity : </strong><%= room.capacity %> person</p>
-              <p class="card-text"><strong>Availability : </strong><%= room.availability %> </p>
-              <%if current_user.role == 'admin' %>
-                <%= link_to 'Edit detail', edit_room_path(room), class: 'btn btn-success' %>
-                <%= link_to 'Show detail', room_path(room), class: 'btn btn-primary' %>
-                <%= link_to 'Delete', room_path(room), class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' } %>
-                
-              <% else %>
-                <%= link_to 'Book Room', room_path(room), class: 'btn btn-success' %> <strong> <%= room.price %> Rs.</strong>
-              <% end %>
-            </div>
+        <div class="col-lg-1"></div>
+        
+        <div class="col-lg-3 p-2">
+          <p class="lead"><strong>Room Price List :</strong></p>
+          <p class="lead">Single Bedroom : <strong>499</strong>  Rs.</p>
+          <p class="lead">Double Bedroom : <strong>799</strong>  Rs.</p>
+          <p class="lead">Suite : <strong>1299</strong> Rs.</p>
+          <p class="lead">Dormitory : <strong>1799</strong>  Rs.</p> 
+        </div>
+        <div class="col-lg-2 p-2">
+          <%= link_to 'Book Room', new_hotel_booking_path(@hotel), class: 'btn btn-success btn-lg' %>
+        </div>
+      </div>
+    </div>
+    <div class="container my-5">
+      <div class="row">
+        <div class="h2 text-center">Homestay Location</div>
+        <div class="mapouter">
+          <div class="gmap_canvas">
+            <iframe width="100%" height="500px" id="gmap_canvas" src="https://maps.google.com/maps?q=<%= @hotel.latitude %>,<%= @hotel.longitude %>&t=&z=14&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+            <style>.mapouter{position:relative;text-align:right;height:100%;width:100%;}</style>
+            <style>.gmap_canvas {overflow:hidden;background:none!important;height:100%;width:100%;}</style>
           </div>
         </div>
-    <% end %>  
+      </div>
+    </div>
   </div>
+  
 <% else %>
   <div class="row mt-5">
+      <div class="col-lg-2 my-2 ">
+        <%= link_to "Back to Hotel", hotels_path, class: "btn btn-primary"%>
+      </div>
     <h2 class="text-danger">Sorry No Available Room !!!</h2>
   </div>
 

@@ -4,7 +4,7 @@
         <%= flash[:notice] %>
       <div class="card mt-5 mb-3">
         <div class="card-body">
-          <h2 class="text-center">Hotel Room List</h2>
+          <h2 class="text-center">All Room List</h2>
         </div>
       </div>
 
@@ -29,20 +29,14 @@
                 <h5 class="card-title">HOTEL : <%= room.hotel.name %></h5>
                 <p class="card-text"><strong>Room Type : </strong><%= room.room_type %></p>
                 <p class="card-text"><strong>Address : </strong><%= room.hotel.full_address %></p>
-                <%if current_user.role == 'admin'%>
-                  <p class="card-text"><strong>Price : </strong><%= room.price %> Rs.</p>
-                <% end %>
                 <p class="card-text"><strong>Capacity : </strong><%= room.capacity %> person</p>
-                <p class="card-text"><strong>Availability : </strong><%= room.availability %> </p>
+                <p class="card-text"><strong>Price : </strong><%= room.price %> Rs.</p>
                 
                 <%if current_user.role == 'admin' %>
                   <%= link_to 'Edit detail', edit_room_path(room), class: 'btn btn-success' %>
-                  <%= link_to 'Show detail', room_path(room), class: 'btn btn-primary' %>
                   <%= link_to 'Delete', room_path(room), class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' } %>
-                  
-                <% else %>
-                  <%= link_to 'Book Room', room_path(room), class: 'btn btn-success' %> <strong> <%= room.price %> Rs.</strong>
                 <% end %>
+                <%= link_to 'Show detail', room_path(room), class: 'btn btn-primary' %>
               </div>
             </div>
           </div>
