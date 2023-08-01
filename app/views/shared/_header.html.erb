@@ -35,13 +35,46 @@
                 <li class="nav-item">
                   <%= link_to 'Booking History', bookings_history_path, class: 'nav-link ml-3' %>
                 </li>
-              <% end %>  
+              <% end %>
+
               <li class="nav-item">
                 <%= link_to 'Hotels', hotels_path, class: 'nav-link' %>
               </li>
               <li class="nav-item">
                 <%= link_to 'Gallery', galleries_path, class: 'nav-link ' %>
               </li>
+
+              <%# notification button dropdown %>
+              <%if current_user.role == 'customer'%>
+                <div class="notification me-3">
+                  <div class="dropdown">
+                    <a class="btn btn-dark dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false"> notification
+                      <% if current_user.notifications.where(status: false).count > 0 %>
+                        <span id="notification-count" class="badge rounded-pill badge-notification bg-warning" data-count="<%= current_user.notifications.where(status: false).count %>">
+                          <%= current_user.notifications.where(status: false).count %>
+                        </span>
+                      <% else %>
+                        <span id="notification-count" class="badge rounded-pill badge-notification bg-warning" data-count="0">0</span>
+                      <% end %>
+                    </a>
+                    <% if current_user.notifications.where(status: false).count > 0 %>
+                      <ul class="dropdown-menu" style="width: 20vw; height: auto; overflow: auto;" id="notification-list" aria-labelledby="dropdownMenuButton1">
+                        <button class="btn btn-sm btn-primary mark-read" value="<%= current_user.id %>" id="readbtn">Mark all as read</button>
+                        <% current_user.notifications.where(status: false).each do |notification| %>
+                          <li class="notification-message mt-2"><%= notification.message %></li>
+                          <div class="dropdown-divider"></div>
+                        <% end %>
+                      </ul>
+                    <% elsif current_user.notifications.where(status: false).count == 0 %>
+                      <ul class="dropdown-menu" style="width: 20vw; height: auto; overflow: auto;" id="notification-list" aria-labelledby="dropdownMenuButton1">
+                        <button class="btn btn-sm btn-primary mark-read" value="<%= current_user.id %>" id="readbtn">Mark all as read</button>
+                        <li class="notification-message mt-2" id="no-notification">No Notification Yet</li>
+                        <div class="dropdown-divider"></div>
+                      </ul>
+                    <% end %>
+                  </div>
+                </div>
+              <% end %>
               <li class="nav-item">
                 <span class="nav-link disabled text-dark">Welcome, <%= current_user.name %>(<%= current_user.role %>)  </span>
               </li>
@@ -54,3 +87,37 @@
     </div>
   </nav>
 </header>
+
+
+<script>
+  document.getElementById('readbtn').addEventListener('click', function(event) {
+    event.preventDefault();
+    var btnSelect = document.getElementById('readbtn');
+    var selectedBtn = btnSelect.value;
+
+    $.ajax({
+      url: '/markread',
+      method: 'POST',
+      data: {
+        selected_btn: selectedBtn,
+        authenticity_token: $('meta[name="csrf-token"]').attr('content')
+      },
+      success: function(response) {
+          // Update notification count to 0
+        var notificationCount = document.getElementById('notification-count');
+        if (notificationCount) {
+          notificationCount.innerText = '0';
+        }
+
+        // Hide the notification list
+        var notificationList = document.getElementById('notification-list');
+        if (notificationList) {
+          notificationList.style.display = 'none';
+        }
+      },
+      error: function(xhr, status, error) {
+        alert("Failed to mark as read");
+      }
+    });
+  });
+</script>

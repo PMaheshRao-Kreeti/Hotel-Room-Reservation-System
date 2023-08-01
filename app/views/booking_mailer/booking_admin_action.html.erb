@@ -4,7 +4,7 @@
     <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
   </head>
   <body>
-    <h1>Booking Confirmation Status</h1>
+    <h1>Booking Status : <%= @booking.booking_status %></h1>
 
     <p>Dear <%= @user.name %>,
 
@@ -12,9 +12,6 @@
 
     <p>
       <strong>Hotel:</strong> <%= @hotel.name %>
-      <br>
-      <strong>Booking Status:</strong> <%= @booking.booking_status %>
-      <br>
       <br>
       <strong>Booked At:</strong> <%= @booking.created_at.localtime %>
       <br>
@@ -31,6 +28,10 @@
       <br>
       <strong>Check Out Date:</strong> <%= @booking.check_out_date %>
     </p>
+
+    <% if @booking.booking_status == 'approved' %>
+      <%= link_to 'Add Event to Calendar', attachments['event.ics'].url, download: 'event.ics' %>
+    <% end %>
 
     <p>Thank you for choosing our service. If you have any questions or need further assistance, please feel free to contact us.</p>
 

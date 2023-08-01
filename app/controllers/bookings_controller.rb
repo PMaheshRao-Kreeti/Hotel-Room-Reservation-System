@@ -42,11 +42,16 @@ class BookingsController < ApplicationController
   end
 
   def update
-    if @booking.update(params.require(:booking).permit(:booking_status, :room_id))
-      if @booking.booking_status == 'rejected' || @booking.booking_status == 'pending'
-        @booking.room_id = ''
-        @booking.save
-      end
+    if @booking.update(admin_booking_update_params)
+      hotel = Hotel.find_by(id: @booking.hotel_id)
+
+      notification_content = "Booking #{@booking.booking_status}: for #{hotel.name} from #{@booking.check_in_date} to #{@booking.check_out_date}."
+      notification = Notification.new(user_id: @booking.user_id, message: notification_content, status: false)
+      send_notification(notification) if notification.save
+
+      @booking.room_id = '' if @booking.booking_status == 'rejected' || @booking.booking_status == 'pending'
+      @booking.save
+
       BookingMailer.with(booking: @booking).booking_admin_action.deliver_now
       redirect_to bookings_path, notice: 'Booking was successfully updated.'
     else
@@ -75,6 +80,12 @@ class BookingsController < ApplicationController
     end
   end
 
+  def markread
+    user = params[:selected_btn]
+    notifications = Notification.where(user_id: user)
+    notifications.update(status: true)
+  end
+
   def cancelled
     booking = Booking.find_by(id: params[:id])
     booking.room_id = '' if booking.booking_status == 'approved'
@@ -90,6 +101,10 @@ class BookingsController < ApplicationController
                                     :room_type, :user_id, :hotel_id)
   end
 
+  def admin_booking_update_params
+    params.require(:booking).permit(:booking_status, :room_id)
+  end
+
   def set_booking
     @booking = Booking.find(params[:id])
   rescue ActiveRecord::RecordNotFound => e
@@ -100,4 +115,5 @@ class BookingsController < ApplicationController
     @hotel = Hotel.find(params[:hotel_id])
     room_count(@hotel)
   end
+
 end

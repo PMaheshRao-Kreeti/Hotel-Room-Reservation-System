@@ -39,13 +39,13 @@
                 <p class="card-text">Dormitory : <%= @dormitory_count %> Available</p>
                 <p class="card-text"><strong>Price Range : </strong><%= hotel.min_room_price%> - <%= hotel.max_room_price%> Rs.</p>
                 
-                <%= link_to 'Show Rooms', hotel_rooms_path(hotel), class: 'btn btn-info' %>
                 <%if current_user.role == 'admin' %>
                   <%= link_to 'Edit detail', edit_hotel_path(hotel), class: 'btn btn-success' %>
                   <%= link_to 'Delete', hotel_path(hotel), class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' } %>
                 <% else %>
                   <%= link_to 'Booking Details', hotel_path(hotel), class: 'btn btn-success' %>
                 <% end %>
+                <%= link_to 'Show Rooms', hotel_rooms_path(hotel), class: 'btn btn-info' %>
               </div>
             </div>
           </div>

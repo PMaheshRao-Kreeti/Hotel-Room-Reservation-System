@@ -1,12 +1,10 @@
-Booking Confirmation Status
+Booking Status: <%= @booking.booking_status %>
 
 Dear <%= @user.name %>,
 
 Your booking has been checked by admin and admin <%= @booking.booking_status %> your booking. Here are the Booking details:
 
 Hotel: <%= @hotel.name %>
-
-Booking Status: <%= @booking.booking_status %>
 
 Booked At: <%= @booking.created_at.localtime %>
 
@@ -17,6 +15,10 @@ Number of Guests: <%= @booking.no_of_guest %>
 Room Type: <%= @booking.room_type %>
 Check In Date: <%= @booking.check_in_date %>
 Check Out Date: <%= @booking.check_out_date %>
+
+<% if @booking.booking_status == 'approved' %>
+  <%= link_to 'Add Event to Calendar', attachments['event.ics'].url, download: 'event.ics' %>
+<% end %>
 
 Thank you for choosing our service. If you have any questions or need further assistance, please feel free to contact us.
 

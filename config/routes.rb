@@ -25,12 +25,14 @@ Rails.application.routes.draw do
   get '/bookings/history', to: 'bookings#booking_history'
   post 'availibility_checking', to:'bookings#availibility_checking'
   post 'bookings/:id/cancelled', to: 'bookings#cancelled', as: 'booking_cancelled'
-  
+
   resources :hotels do
     resources :bookings, only: %i[new create edit update destroy]
     get '/bookings/:id/', to: 'bookings#approval'
   end
 
+  # notification
+  post 'markread', to: 'bookings#markread'
 
   # rooms routes
   get '/hotels/:id/show_rooms', to: 'hotels#show_rooms', as: 'hotel_rooms'
