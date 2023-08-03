@@ -34,6 +34,15 @@ class HotelsController < ApplicationController
     end
   end
 
+  def search
+    query = params[:search_hotels].presence && params[:search_hotels][:query]
+
+    if query
+      @hotels = Hotel.search_by_keyword(query)
+      # binding.pry
+    end
+  end
+
   def destroy
     @hotel.destroy
     redirect_to hotels_path, notice: 'hotel has been deleted successfully'

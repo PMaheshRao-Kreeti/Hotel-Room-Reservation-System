@@ -27,6 +27,9 @@ gem 'image_processing', '~> 1.2'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false
+gem 'elasticsearch-model', '~> 7.2', '>= 7.2.1'
+
+gem 'elasticsearch-rails', '~> 7.2', '>= 7.2.1'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

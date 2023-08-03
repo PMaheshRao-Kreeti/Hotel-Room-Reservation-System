@@ -35,19 +35,14 @@ class BookingsController < ApplicationController
     end
   end
 
-  def edit; end
-
   def approval
     find_hotel(@booking.hotel_id)
   end
 
   def update
     if @booking.update(admin_booking_update_params)
-      hotel = Hotel.find_by(id: @booking.hotel_id)
 
-      notification_content = "Booking #{@booking.booking_status}: for #{hotel.name} from #{@booking.check_in_date} to #{@booking.check_out_date}."
-      notification = Notification.new(user_id: @booking.user_id, message: notification_content, status: false)
-      send_notification(notification) if notification.save
+      create_and_send_notification(@booking)
 
       @booking.room_id = '' if @booking.booking_status == 'rejected' || @booking.booking_status == 'pending'
       @booking.save
@@ -59,19 +54,27 @@ class BookingsController < ApplicationController
     end
   end
 
-  def destroy
-    if @booking.destroy
-      redirect_to bookings_history_path, notice: 'Booking has been deleted successfully.'
-    else
-      redirect to hotels_path, notice: 'Booking is not deleted .'
-    end
+  def create_and_send_notification(book)
+    hotel = Hotel.find_by(id: @booking.hotel_id)
+    content = "Booking #{book.booking_status}: for #{hotel.name} from #{book.check_in_date} to #{book.check_out_date}."
+    notification = Notification.new(user_id: book.user_id, message: content, status: false)
+    send_notification(notification) if notification.save
   end
+
+  # def destroy
+  #   if @booking.destroy
+  #     redirect_to bookings_history_path, notice: 'Booking has been deleted successfully.'
+  #   else
+  #     redirect to hotels_path, notice: 'Booking is not deleted .'
+  #   end
+  # end
 
   def availibility_checking
     check_in_date = params[:check_in_date]
     check_out_date = params[:check_out_date]
     hotel = Hotel.find_by(id: params[:hotel_id])
-    bookings = Booking.where('check_in_date >= ? AND check_out_date <= ? AND hotel_id = ?', check_in_date, check_out_date, hotel.id)
+    bookings = Booking.where('check_in_date >= ? AND check_out_date <= ? AND hotel_id = ?', check_in_date,
+                             check_out_date, hotel.id)
     rooms = hotel.rooms
     find_available_room_types(bookings, rooms)
 

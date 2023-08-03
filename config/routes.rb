@@ -29,6 +29,9 @@ Rails.application.routes.draw do
   resources :hotels do
     resources :bookings, only: %i[new create edit update destroy]
     get '/bookings/:id/', to: 'bookings#approval'
+    collection do
+      get :search
+    end
   end
 
   # notification

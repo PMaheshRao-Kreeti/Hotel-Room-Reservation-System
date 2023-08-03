@@ -6,6 +6,7 @@ class SessionsController < ApplicationController
     user = User.find_by(email: params[:email])
     if user&.authenticate(params[:password])
       session[:user_id] = user.id
+      cookies.signed[:user_id] = user.id
       redirect_to customers_path
     else
       flash.now[:alert] = 'Invalid email or password'
@@ -26,6 +27,7 @@ class SessionsController < ApplicationController
 
   def destroy
     reset_session
+    cookies.delete(:user_id)
     redirect_to root_path
   end
 

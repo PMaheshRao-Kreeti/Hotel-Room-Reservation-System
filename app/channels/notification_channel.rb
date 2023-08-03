@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Notification Channel
 class NotificationChannel < ApplicationCable::Channel
   def subscribed
     # stream_from "some_channel"
