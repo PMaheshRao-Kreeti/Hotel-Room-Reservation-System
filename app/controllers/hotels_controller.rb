@@ -1,10 +1,10 @@
 class HotelsController < ApplicationController
-  before_action :set_hotel, only: %i[edit show hotel_rooms room_count update destroy]
+  before_action :set_hotel, only: %i[edit show hotel_rooms update destroy]
 
   include HotelsHelper
 
   def index
-    @hotels = Hotel.all
+    @hotels = Hotel.order(created_at: :asc)
   end
 
   def new
@@ -36,11 +36,23 @@ class HotelsController < ApplicationController
 
   def search
     query = params[:search_hotels].presence && params[:search_hotels][:query]
-
+    @checkin_date = params[:checkin]
+    @checkout_date = params[:checkout]
     if query
       @hotels = Hotel.search_by_keyword(query)
-      # binding.pry
     end
+  end
+
+  def filter
+    @loop_counter = 0
+    destination = params[:destination]
+    @checkin_date = params[:checkin]
+    @checkout_date = params[:checkout]
+    @no_of_guests = params[:guests].to_i
+    @no_of_rooms = params[:rooms].to_i
+    
+    @hotels = (destination.present?) ? Hotel.search(destination).records : Hotel.all.order(created_at: :asc)
+
   end
 
   def destroy

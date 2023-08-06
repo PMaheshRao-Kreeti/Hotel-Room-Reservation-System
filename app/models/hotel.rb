@@ -19,8 +19,6 @@ class Hotel < ApplicationRecord
       indexes :address
       indexes :city
       indexes :state
-      indexes :country
-      indexes :pincode
     end
   end
 
@@ -29,9 +27,7 @@ class Hotel < ApplicationRecord
       name:,
       address:,
       city:,
-      state:,
-      country:,
-      pincode:
+      state:
     }
   end
 
@@ -44,7 +40,7 @@ class Hotel < ApplicationRecord
           {
             multi_match: {
               query: query,
-              fields: [:name, :address, :city, :state, :country, :pincode]
+              fields: [:name, :address, :city, :state]
             }
           }]
         }
@@ -67,5 +63,5 @@ class Hotel < ApplicationRecord
     rooms.minimum(:price)
   end
 
-  # in helper method no of room avaialable method present
+  
 end

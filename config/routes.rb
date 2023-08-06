@@ -31,6 +31,7 @@ Rails.application.routes.draw do
     get '/bookings/:id/', to: 'bookings#approval'
     collection do
       get :search
+      get :filter
     end
   end
 
