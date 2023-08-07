@@ -1,114 +1,114 @@
-<div class="container mx-3">
-  <div class="row mx-3">
-    <%= form_with model: @hotel do |form| %>
-      <div class="row mt-5">
-        <div class="col-lg-4">
-          <div class="form-group">
-            <%= form.label :name, class: 'mb-2' %>
-            <%= form.text_field :name, class: 'form-control form-control-lg' %>
-            <% @hotel.errors.full_messages_for(:name).each do |message| %>
-              <p class="text-danger"><%= message%></p>
-            <% end %>
-          </div>
+<div class="container mt-3">
+  <%= form_with model: @hotel do |form| %>
+    <div class="row mt-5">
+      <div class="col-lg-4 col-md-6">
+        <div class="form-group">
+          <%= form.label :name, class: 'mb-2' %>
+          <%= form.text_field :name, class: 'form-control form-control-lg' %>
+          <% @hotel.errors.full_messages_for(:name).each do |message| %>
+            <p class="text-danger"><%= message%></p>
+          <% end %>
         </div>
       </div>
+    </div>
           
-      <div class="row mt-5">
-        <div class="col-lg-6">
-          <div class="form-group">
-            <%= form.label :address, class: 'mb-2' %>
-            <%= form.text_field :address, class: 'form-control form-control-lg' %>
-            <% @hotel.errors.full_messages_for(:address).each do |message| %>
-              <p class="text-danger"><%= message%></p>
-            <% end %>
-          </div>
+    <div class="row mt-5">
+      <div class="col-lg-6 col-md-6">
+        <div class="form-group">
+          <%= form.label :address, class: 'mb-2' %>
+          <%= form.text_field :address, class: 'form-control form-control-lg' %>
+          <% @hotel.errors.full_messages_for(:address).each do |message| %>
+            <p class="text-danger"><%= message%></p>
+          <% end %>
         </div>
       </div>
+    </div>
     
-      <div class="row mt-5">
-        <div class="col-lg-3">
-          <div class="form-group">
-            <%= form.label :city, class: 'mb-2' %>
-            <%= form.text_field :city, class: 'form-control form-control-lg' %>
-            <% @hotel.errors.full_messages_for(:city).each do |message| %>
-              <p class="text-danger"><%= message%></p>
-            <% end %>
-          </div>
-        </div>
-        <div class="col-lg-3">
-          <div class="form-group">
-            <%= form.label :state, class: 'mb-2' %>
-            <%= form.text_field :state, class: 'form-control form-control-lg' %>
-            <% @hotel.errors.full_messages_for(:state).each do |message| %>
-              <p class="text-danger"><%= message%></p>
-            <% end %>
-          </div>
-        </div>
-        <div class="col-lg-3">
-          <div class="form-group">
-            <%= form.label :country, class: 'mb-2' %>
-            <%= form.text_field :country, class: 'form-control form-control-lg' %>
-            <% @hotel.errors.full_messages_for(:country).each do |message| %>
-              <p class="text-danger"><%= message%></p>
-            <% end %>
-          </div>
-        </div>
-        <div class="col-lg-3">
-          <div class="form-group">
-            <%= form.label :pincode, class: 'mb-2' %>
-            <%= form.text_field :pincode, class: 'form-control form-control-lg' %>
-            <% @hotel.errors.full_messages_for(:pincode).each do |message| %>
-              <p class="text-danger"><%= message%></p>
-            <% end %>
-          </div>
+    <div class="row mt-5">
+      <div class="col-lg-3 col-md-6">
+        <div class="form-group">
+          <%= form.label :city, class: 'mb-2' %>
+          <%= form.text_field :city, class: 'form-control form-control-lg' %>
+          <% @hotel.errors.full_messages_for(:city).each do |message| %>
+            <p class="text-danger"><%= message%></p>
+          <% end %>
         </div>
       </div>
+      <div class="col-lg-3 col-md-6">
+        <div class="form-group">
+          <%= form.label :state, class: 'mb-2' %>
+          <%= form.text_field :state, class: 'form-control form-control-lg' %>
+          <% @hotel.errors.full_messages_for(:state).each do |message| %>
+            <p class="text-danger"><%= message%></p>
+          <% end %>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6">
+        <div class="form-group">
+          <%= form.label :country, class: 'mb-2' %>
+          <%= form.text_field :country, class: 'form-control form-control-lg' %>
+          <% @hotel.errors.full_messages_for(:country).each do |message| %>
+            <p class="text-danger"><%= message%></p>
+          <% end %>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6">
+        <div class="form-group">
+          <%= form.label :pincode, class: 'mb-2' %>
+          <%= form.text_field :pincode, class: 'form-control form-control-lg' %>
+          <% @hotel.errors.full_messages_for(:pincode).each do |message| %>
+            <p class="text-danger"><%= message%></p>
+          <% end %>
+        </div>
+      </div>
+    </div>
     
-      <div class="row mt-5">
-        <div class="col-lg-6">
-          <div class="form-group">
-            <%= form.label :description, class: 'mb-2' %>
-            <%= form.text_area :description,class: 'form-control form-control-lg' %>
-            <% @hotel.errors.full_messages_for(:description).each do |message| %>
-              <p class="text-danger"><%= message%></p>
-            <% end %>
-          </div>
-        </div>
-        <div class="row mt-5 mb-3">
-          <div class="col-lg-6">
-            <%= form.label :hotel_image %> <br>
-            <%= form.file_field :hotel_image %>
-          </div>
-        </div>
-        <div class="col-lg-3">
-          <div class="form-group">
-            <%= form.label :latitude, class: 'mb-2' %>
-            <%= form.text_field :latitude, class: 'form-control form-control-lg' %>
-            <% @hotel.errors.full_messages_for(:latitude).each do |message| %>
-              <p class="text-danger"><%= message%></p>
-            <% end %>
-          </div>
-        </div>
-        <div class="col-lg-3">
-          <div class="form-group">
-            <%= form.label :longitude, class: 'mb-2' %>
-            <%= form.text_field :longitude, class: 'form-control form-control-lg' %>
-            <% @hotel.errors.full_messages_for(:longitude).each do |message| %>
-              <p class="text-danger"><%= message%></p>
-            <% end %>
-          </div>
+    <div class="row mt-5">
+      <div class="col-lg-6">
+        <div class="form-group">
+          <%= form.label :description, class: 'mb-2' %>
+          <%= form.text_area :description,class: 'form-control form-control-lg' %>
+          <% @hotel.errors.full_messages_for(:description).each do |message| %>
+            <p class="text-danger"><%= message%></p>
+          <% end %>
         </div>
       </div>
-        
-      <div class="row my-3">
-        <div class="col-lg-2">
-          <%= form.submit class: "btn btn-primary btn-primary-lg btn-lg" %>
-        </div>
-        
-        <div class="col-lg-2">
-          <%= link_to "Back to hotels", hotels_path, class: "btn btn-outline-primary btn-lg" %>
+      <div class="col-lg-6">
+        <div class="form-group mb-3">
+          <%= form.label :hotel_image %> <br>
+          <%= form.file_field :hotel_image %>
         </div>
       </div>
-    <% end %>
-  </div>
+    </div>
+    
+    <div class="row mt-5">
+      <div class="col-lg-3">
+        <div class="form-group">
+          <%= form.label :latitude, class: 'mb-2' %>
+          <%= form.text_field :latitude, class: 'form-control form-control-lg' %>
+          <% @hotel.errors.full_messages_for(:latitude).each do |message| %>
+            <p class="text-danger"><%= message%></p>
+          <% end %>
+        </div>
+      </div>
+      <div class="col-lg-3">
+        <div class="form-group">
+          <%= form.label :longitude, class: 'mb-2' %>
+          <%= form.text_field :longitude, class: 'form-control form-control-lg' %>
+          <% @hotel.errors.full_messages_for(:longitude).each do |message| %>
+            <p class="text-danger"><%= message%></p>
+          <% end %>
+        </div>
+      </div>
+    </div>
+        
+    <div class="row my-3">
+      <div class="col-lg-2">
+        <%= form.submit class: "btn btn-primary btn-lg" %>
+      </div>
+      <div class="col-lg-2">
+        <%= link_to "Back to hotels", hotels_path, class: "btn btn-outline-primary btn-lg" %>
+      </div>
+    </div>
+  <% end %>
 </div>

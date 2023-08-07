@@ -1,5 +1,17 @@
-<div class="container">
-  <div class="row">
-    <h2 class="text-center">Welcome Admin indexpage <%= current_user.name %>(<%= current_user.role %>)</h2>
+<% if user_logged_in? %>
+  <div class="container">
+    <div class="row">
+      <h2 class="text-center">Welcome Admin  <%= current_user.name %></h2>
+    </div>
   </div>
-</div>
+<% else %>
+  <div class="container">
+    <div class="row">
+      <h2 class="text-center">
+        Please login first !!! Before trying to access admin dashboard :  
+        <%= link_to  "Login as Admin", admin_login_path, class: 'btn btn-md btn-danger' %>
+      </h2>
+    </div>
+  </div>  
+<% end %>
+  

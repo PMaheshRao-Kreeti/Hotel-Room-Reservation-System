@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# gemfiles used in the project
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
@@ -36,12 +39,11 @@ group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
 
   gem 'dotenv-rails'
+  gem 'icalendar'
   gem 'omniauth-facebook'
   gem 'omniauth-rails_csrf_protection'
   gem 'pry'
   gem 'rubocop', require: false
-  gem 'icalendar'
-
 end
 
 group :development do

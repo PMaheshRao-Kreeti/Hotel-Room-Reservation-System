@@ -1,9 +1,8 @@
+# frozen_string_literal: true
+
+# HotelController handle CRUD on Hotels Room
 class RoomsController < ApplicationController
   before_action :set_room, only: %i[edit show update destroy]
-
-  def index
-    @rooms = Room.all
-  end
 
   def new
     @room = Room.new

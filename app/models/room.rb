@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Room model handle hotels room releted data
 class Room < ApplicationRecord
   belongs_to :hotel
   has_many :bookings

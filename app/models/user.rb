@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# User model handle User data
 class User < ApplicationRecord
   has_secure_password
 
@@ -11,6 +14,7 @@ class User < ApplicationRecord
   validates :phone, presence: true
   validates :password, presence: true, length: { minimum: 5 }
 
+  # rubocop:disable all
   def self.from_omniauth(auth)
     user = find_by(email: auth.info.email)
     return user if user
@@ -24,4 +28,5 @@ class User < ApplicationRecord
       new_user.role = :customer
     end
   end
+  # rubocop:enable all
 end

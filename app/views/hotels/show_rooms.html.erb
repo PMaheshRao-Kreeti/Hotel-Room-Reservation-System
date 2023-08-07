@@ -1,49 +1,50 @@
 <div class="container mb-5">
   <div class="row mt-5">
-    <h2 class="text-center">Hotel <span class="text-warning"><%= @hotel.name%></span> Rooms</h2>
-    <div class="row">
+    <h2 class="text-center">Hotel <span class="text-warning"><%= @hotel.name %></span> Rooms</h2>
   </div>
+
+  <div class="row mt-5">
+    <div class="col-lg-12">
+      <% if current_user.role == 'admin' %>
+        <%= link_to "Back to hotel", hotels_path, class: "btn btn-warning"%>
+        <%= link_to "Add new hotel", new_hotel_path, class: "btn btn-primary"%>
+        <%= link_to "Add new room", new_room_path, class: "btn btn-success"%>
+      <% else %>
+        <%= link_to "Back to Hotel", hotels_path, class: "btn btn-primary"%>
+        <%= link_to 'Book Room', new_hotel_booking_path(@hotel), class: 'btn btn-success' %>
+      <% end %>
+    </div>
+  </div>
+    
   <% if @hotel.rooms.present? %>
     <div class="row mt-5">
-      <div class="col-lg-12">
-          <% if current_user.role == 'admin' %>  
-            <%= link_to "Back to hotel", hotels_path, class: "btn btn-warning"%>
-            <%= link_to "Add new hotel", new_hotel_path, class: "btn btn-primary"%>
-            <%= link_to "Add new room", new_room_path, class: "btn btn-success"%>
-          <%else%>
-            <%= link_to "Back to Hotel", hotels_path, class: "btn btn-primary"%>
-            <%= link_to 'Book Room', new_hotel_booking_path(@hotel), class: 'btn btn-success' %>
-          <% end %>
-        </div>
-      </div>
-
-      <% @hotel.rooms.each do |room|%>
-        <div class="col-lg-4">
-            <div class="card mt-5">
-              <% if room.bedroom_image.attached? %>
-                <%= image_tag room.bedroom_image, alt: 'room image',class: 'room-img rounded-3 p-2' %>
-              <% end %> 
-              <div class="card-body">
-                <h5 class="card-title"><%= room.hotel.name %></h5>
-                <p class="card-text"><strong>Hotel Address : </strong><%= room.hotel.full_address %></p>
-                <p class="card-text"><strong>Room Type : </strong><%= room.room_type %></p>
-                <p class="card-text"><strong>Room Number : </strong><%= room.room_number %></p>
-                <p class="card-text"><strong>Capacity : </strong><%= room.capacity %> person</p>
-                <p class="card-text"><strong>Price : </strong><%= room.price %> Rs.</p>
-                <%if current_user.role == 'admin' %>
-                  <%= link_to 'Edit detail', edit_room_path(room), class: 'btn btn-success' %>
-                  <%= link_to 'Delete', room_path(room), class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' } %>
-                <% end %>
-                <%= link_to 'Show detail', room_path(room), class: 'btn btn-primary' %>
-              </div>
+      <% @hotel.rooms.sort_by(&:room_type).each do |room| %>
+        <div class="col-lg-4 col-md-6">
+          <div class="card mt-5">
+            <% if room.bedroom_image.attached? %>
+              <%= image_tag room.bedroom_image, alt: 'room image', class: 'room-img rounded-3 p-2' %>
+            <% end %>
+            <div class="card-body">
+              <h5 class="card-title"><%= room.hotel.name %></h5>
+              <p class="card-text"><strong>Room Type:</strong> <%= room.room_type %></p>
+              <p class="card-text"><strong>Room Number:</strong> <%= room.room_number %></p>
+              <p class="card-text"><strong>Capacity:</strong> <%= room.capacity %> person</p>
+              <p class="card-text"><strong>Price:</strong> <%= room.price %> Rs.</p>
+              <% if current_user.role == 'admin' %>
+                <%= link_to 'Edit detail', edit_room_path(room), class: 'btn btn-success' %>
+                <%= link_to 'Delete', room_path(room), class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' } %>
+              <% end %>
+              <%= link_to 'Show detail', room_path(room), class: 'btn btn-primary' %>
             </div>
           </div>
-      <% end %>  
+        </div>
+      <% end %>
     </div>
+
+
   <% else %>
     <div class="row mt-5">
       <h2 class="text-danger">Sorry No Available Room !!!</h2>
     </div>
-
   <% end %>
 </div>

@@ -10,7 +10,7 @@ class BookingsController < ApplicationController
   include BookingsHelper
   def index
     @all_bookings = Booking.where.not(booking_status: 'cancelled').order(created_at: :desc)
-    @todays_bookings = Booking.where(created_at: Time.zone.now.beginning_of_day..Time.zone.now.end_of_day).order(updated_at: :desc)
+    @todays_bookings = Booking.where(created_at: Time.zone.now.beginning_of_day..Time.zone.now.end_of_day)
   end
 
   def booking_history
@@ -61,14 +61,6 @@ class BookingsController < ApplicationController
     send_notification(notification) if notification.save
   end
 
-  # def destroy
-  #   if @booking.destroy
-  #     redirect_to bookings_history_path, notice: 'Booking has been deleted successfully.'
-  #   else
-  #     redirect to hotels_path, notice: 'Booking is not deleted .'
-  #   end
-  # end
-
   def availibility_checking
     check_in_date = params[:check_in_date]
     check_out_date = params[:check_out_date]
@@ -116,7 +108,5 @@ class BookingsController < ApplicationController
 
   def set_hotel
     @hotel = Hotel.find(params[:hotel_id])
-    # room_count(@hotel)
   end
-
 end

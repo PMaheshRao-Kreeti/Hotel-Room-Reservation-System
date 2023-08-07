@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# HotelController handle CRUD on Hotel
 class HotelsController < ApplicationController
   before_action :set_hotel, only: %i[edit show hotel_rooms update destroy]
 
@@ -38,21 +41,14 @@ class HotelsController < ApplicationController
     query = params[:search_hotels].presence && params[:search_hotels][:query]
     @checkin_date = params[:checkin]
     @checkout_date = params[:checkout]
-    if query
-      @hotels = Hotel.search_by_keyword(query)
-    end
+    return unless query
+
+    @hotels = Hotel.search_by_keyword(query)
   end
 
   def filter
-    @loop_counter = 0
-    destination = params[:destination]
-    @checkin_date = params[:checkin]
-    @checkout_date = params[:checkout]
-    @no_of_guests = params[:guests].to_i
-    @no_of_rooms = params[:rooms].to_i
-    
-    @hotels = (destination.present?) ? Hotel.search(destination).records : Hotel.all.order(created_at: :asc)
-
+    initialize_filter_variables
+    filter_hotels
   end
 
   def destroy
@@ -62,9 +58,22 @@ class HotelsController < ApplicationController
 
   private
 
+  def initialize_filter_variables
+    @loop_counter = 0
+    @destination = params[:destination]
+    @checkin_date = params[:checkin]
+    @checkout_date = params[:checkout]
+    @no_of_guests = params[:guests].to_i
+    @no_of_rooms = params[:rooms].to_i
+  end
+
+  def filter_hotels
+    @hotels = @destination.present? ? Hotel.search(@destination).records : Hotel.all.order(created_at: :asc)
+  end
+
   def hotel_params
-    params.require(:hotel).permit(:name, :address, :city, :state, :country, :pincode, :description, :hotel_image, :latitude,
-                                  :longitude)
+    params.require(:hotel).permit(:name, :address, :city, :state, :country, :pincode, :description,
+                                  :hotel_image, :latitude, :longitude)
   end
 
   def set_hotel

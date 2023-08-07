@@ -1,5 +1,6 @@
+# frozen_string_literal: true
+
+# Customer Homepage template
 class CustomersController < ApplicationController
-  def index
-    # show homepage for user
-  end
+  def index; end
 end

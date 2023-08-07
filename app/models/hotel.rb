@@ -1,6 +1,7 @@
-class Hotel < ApplicationRecord
-  
+# frozen_string_literal: true
 
+# Hotel model handle hotel releted data
+class Hotel < ApplicationRecord
   has_one_attached :hotel_image
 
   has_many :rooms
@@ -31,24 +32,25 @@ class Hotel < ApplicationRecord
     }
   end
 
-
+  # rubocop:disable all
   def self.search_by_keyword(query)
-    result =__elasticsearch__.search({
-      query: {
-        bool: {
-          must: [
-          {
-            multi_match: {
-              query: query,
-              fields: [:name, :address, :city, :state]
-            }
-          }]
-        }
-      }
-    })
+    result = __elasticsearch__.search({
+                                        query: {
+                                          bool: {
+                                            must: [
+                                              {
+                                                multi_match: {
+                                                  query:,
+                                                  fields: %i[name address city state]
+                                                }
+                                              }
+                                            ]
+                                          }
+                                        }
+                                      })
     result.records
   end
-
+  # rubocop:enable all
 
   def full_address
     "#{address}, #{city}, #{state}, #{country} - #{pincode}".strip
@@ -62,6 +64,4 @@ class Hotel < ApplicationRecord
   def min_room_price
     rooms.minimum(:price)
   end
-
-  
 end

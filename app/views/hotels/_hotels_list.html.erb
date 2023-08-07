@@ -1,11 +1,9 @@
 <div class="row">
   <% @hotels.each do |hotel| %>
-    <div class="col-md-4">
-      <div class="card mt-5">
+    <div class="col-lg-4 col-md-6 mb-4">
+      <div class="card">
         <% if hotel.hotel_image.attached? %>
-          <%= image_tag hotel.hotel_image, alt: 'hotel image', class: 'hotel-img p-2' %> 
-        <% else %>
-          <%= image_tag("gallery_2.jpg", class: 'hotel-img p-2') %>
+          <%= image_tag hotel.hotel_image, alt: 'hotel image', class: 'hotel-img p-2' %>
         <% end %> 
         <div class="card-body">
           <h5 class="card-title"><%= hotel.name %></h5>
@@ -13,19 +11,19 @@
           <p class="card-text"><strong>Address : </strong><%= hotel.full_address %></p>
           <% available_room_count(hotel) %>
           <p class="card-text"><strong>Room Available:</strong></p>
-          <p class="card-text">Single Bedroom : <%= @single_bedroom_count %> Available</p>
-          <p class="card-text">Double Bedroom : <%= @double_bedroom_count %> Available</p>
-          <p class="card-text">Suite : <%= @suite_count %> Available</p>
-          <p class="card-text">Dormitory : <%= @dormitory_count %> Available</p>
-          <p class="card-text"><strong>Price Range : </strong><%= hotel.min_room_price%> - <%= hotel.max_room_price%> Rs.</p>
+          <p class="card-text">Single Bedroom: <%= @single_bedroom_count %> Available</p>
+          <p class="card-text">Double Bedroom: <%= @double_bedroom_count %> Available</p>
+          <p class="card-text">Suite: <%= @suite_count %> Available</p>
+          <p class="card-text">Dormitory: <%= @dormitory_count %> Available</p>
+          <p class="card-text"><strong>Price Range: </strong><%= hotel.min_room_price %> - <%= hotel.max_room_price %> Rs.</p>
           
-          <%if current_user.role == 'admin' %>
+          <% if current_user.role == 'admin' %>
             <%= link_to 'Edit detail', edit_hotel_path(hotel), class: 'btn btn-success' %>
             <%= link_to 'Delete', hotel_path(hotel), class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' } %>
+            <%= link_to 'Show Rooms', hotel_rooms_path(hotel), class: 'btn btn-info' %>
           <% else %>
             <%= link_to 'Booking Details', hotel_path(hotel), class: 'btn btn-success' %>
           <% end %>
-          <%= link_to 'Show Rooms', hotel_rooms_path(hotel), class: 'btn btn-info' %>
         </div>
       </div>
     </div>

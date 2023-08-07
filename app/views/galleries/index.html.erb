@@ -1,8 +1,6 @@
 <div class="container">
   <div class="row p-3">
-    <div class="card">
-      <h2 class="text-center">Gallery</h2>
-    </div>
+    <h2 class="text-center">Gallery</h2>
   </div>
 
   <div class="row">
@@ -16,28 +14,11 @@
     </div>
     
   <div class="row">
-    <% (1..4).each do |value| %>
-     <div class="col-lg-3 d-flex">
-        <%= image_tag "gallery_#{value}.jpg", alt: 'photo.', class: 'img-fluid my-2 p-2' %>
-     </div>
-    <% end %>
-
-    
-    <% @gallery.each do |gallery|%>
-      <% if @count > 6%>
-        <% break %>
-      <% end %>
-      <% @count+=1 %>
-      <div class="col-lg-3 d-flex">
-        <% if gallery.interior_image.attached? %>
-          <%= image_tag gallery.interior_image, alt: 'photo.', class: 'img-fluid my-2 p-2' %>
-        <% end %>
-      </div>
-      <div class="col-lg-3 d-flex">
-        <% if gallery.exterior_image.attached? %>
-          <%= image_tag gallery.exterior_image, alt: 'photo.', class: 'img-fluid my-2 p-2' %>
-        <% end %>
+    <% (1..12).each do |value| %>
+      <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 d-flex">
+        <%= image_tag "gallery/#{value}.jpg", alt: 'photo.', class: 'img-fluid my-2 p-2' %>
       </div>
     <% end %>
   </div>
+
 </div>

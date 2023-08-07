@@ -23,7 +23,7 @@ Rails.application.routes.draw do
   # booking routes
   get '/bookings', to: 'bookings#index'
   get '/bookings/history', to: 'bookings#booking_history'
-  post 'availibility_checking', to:'bookings#availibility_checking'
+  post 'availibility_checking', to: 'bookings#availibility_checking'
   post 'bookings/:id/cancelled', to: 'bookings#cancelled', as: 'booking_cancelled'
 
   resources :hotels do

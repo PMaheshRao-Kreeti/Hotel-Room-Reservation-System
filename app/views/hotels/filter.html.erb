@@ -34,7 +34,7 @@
           <% end %>
 
           <% if @no_of_guests.present? %>
-            <% if !(@total_guest_capacity >= @no_of_guests) %>
+            <% if !(@guest_capacity >= @no_of_guests) %>
                 <% @loop_counter += 1 %>
                 <% break %>
             <% end %>  

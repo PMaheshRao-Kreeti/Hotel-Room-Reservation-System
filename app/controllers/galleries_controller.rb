@@ -1,6 +1,6 @@
+# frozen_string_literal: true
+
+# admin dashboard page template
 class GalleriesController < ApplicationController
-  def index
-    @gallery = Room.all
-    @count = 0
-  end
+  def index; end
 end

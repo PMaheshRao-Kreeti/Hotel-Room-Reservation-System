@@ -1,6 +1,15 @@
+# frozen_string_literal: true
+
+# User controller create customer account
 class UsersController < ApplicationController
   def new
-    @user = User.new
+    if user_logged_in? && current_user.role == 'customer'
+      redirect_to customers_path
+    elsif user_logged_in? && current_user.role == 'admin'
+      redirect_to admins_path
+    else
+      @user = User.new
+    end
   end
 
   # create a new user

@@ -1,5 +1,6 @@
+# frozen_string_literal: true
+
+# admin dashboard page template
 class AdminsController < ApplicationController
-  def index
-    # show dashboard for admin
-  end
+  def index; end
 end

@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Applicationhelper
 module ApplicationHelper
   def current_user
     @current_user ||= User.find_by(id: session[:user_id])

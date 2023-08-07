@@ -1,5 +1,7 @@
-require 'icalendar'
+# frozen_string_literal: true
 
+require 'icalendar'
+# Bookingmailer
 class BookingMailer < ApplicationMailer
   # Subject can be set in your I18n file at config/locales/en.yml
   # with the following lookup:
@@ -23,16 +25,15 @@ class BookingMailer < ApplicationMailer
     @user = User.find_by(id: @booking.user_id)
     @hotel = Hotel.find_by(id: @booking.hotel_id)
 
-    if @booking.booking_status == 'approved'
-      send_event_invitation(@user, @booking, @hotel)
-      return
-    end
+    send_event_invitation(@user, @booking, @hotel) if @booking.booking_status == 'approved'
     mail(
       to: @user.email,
       subject: 'Booking status is updated by Admin'
     )
   end
 
+  # rubocop:disable all
+  
   def send_event_invitation(user, booking, hotel)
     ical = Icalendar::Calendar.new
     event = Icalendar::Event.new
@@ -48,4 +49,5 @@ class BookingMailer < ApplicationMailer
     mail(to: user.email, subject: 'Booking Confirmation')
   end
 
+  # rubocop:enable all
 end
