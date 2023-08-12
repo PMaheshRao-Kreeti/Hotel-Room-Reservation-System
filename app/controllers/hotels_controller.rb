@@ -3,6 +3,7 @@
 # HotelController handle CRUD on Hotel
 class HotelsController < ApplicationController
   before_action :set_hotel, only: %i[edit show hotel_rooms update destroy]
+  before_action :initialize_filter_variables, only: :filter
 
   include HotelsHelper
 
@@ -17,7 +18,7 @@ class HotelsController < ApplicationController
   def create
     hotel = Hotel.new(hotel_params)
     if hotel.save
-      redirect_to hotels_path, notice: 'hotel created successfully.'
+      redirect_to hotels_path, notice: 'Hotel created successfully.'
     else
       render :new
     end
@@ -31,7 +32,7 @@ class HotelsController < ApplicationController
 
   def update
     if @hotel.update(hotel_params)
-      redirect_to hotels_path, notice: 'hotel has been updated successfully'
+      redirect_to hotels_path, notice: 'Hotel has been updated successfully'
     else
       render :new
     end
@@ -47,13 +48,12 @@ class HotelsController < ApplicationController
   end
 
   def filter
-    initialize_filter_variables
     filter_hotels
   end
 
   def destroy
     @hotel.destroy
-    redirect_to hotels_path, notice: 'hotel has been deleted successfully'
+    redirect_to hotels_path, notice: 'Hotel has been deleted successfully'
   end
 
   private

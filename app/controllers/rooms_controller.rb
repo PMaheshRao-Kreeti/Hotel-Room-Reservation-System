@@ -12,7 +12,7 @@ class RoomsController < ApplicationController
     @room = Room.new(room_params)
     room_capacity_based_on_room_type(@room)
     if @room.save
-      redirect_to rooms_path, notice: 'Room was successfully created.'
+      redirect_to hotels_path, notice: 'Room was successfully created.'
     else
       render :new
     end
@@ -22,15 +22,17 @@ class RoomsController < ApplicationController
 
   def update
     if @room.update(room_params)
-      redirect_to rooms_path, notice: 'Room was successfully updated.'
+      hotel = Hotel.find_by(id: @room.hotel_id)
+      redirect_to hotel_rooms_path(hotel), notice: 'Room was successfully updated.'
     else
       render :edit
     end
   end
 
   def destroy
+    hotel = Hotel.find_by(id: @room.hotel_id)
     @room.destroy
-    redirect_to rooms_path, notice: 'Room was successfully destroyed.'
+    redirect_to hotel_rooms_path(hotel), notice: 'Room was successfully destroyed.'
   end
 
   private

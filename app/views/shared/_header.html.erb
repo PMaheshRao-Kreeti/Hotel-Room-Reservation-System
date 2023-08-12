@@ -57,36 +57,7 @@
               <% end %>
 
               <%# notification button dropdown %>
-              <%if current_user.role == 'customer'%>
-                <div class="notification me-3">
-                  <div class="dropdown">
-                    <a class="btn btn-dark dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false"> notification
-                      <% if current_user.notifications.where(status: false).count > 0 %>
-                        <span id="notification-count" class="badge rounded-pill badge-notification bg-warning" data-count="<%= current_user.notifications.where(status: false).count %>">
-                          <%= current_user.notifications.where(status: false).count %>
-                        </span>
-                      <% else %>
-                        <span id="notification-count" class="badge rounded-pill badge-notification bg-warning" data-count="0">0</span>
-                      <% end %>
-                    </a>
-                    <% if current_user.notifications.where(status: false).count > 0 %>
-                      <ul class="dropdown-menu" style="width: 20vw; height: auto; overflow: auto;" id="notification-list" aria-labelledby="dropdownMenuButton1">
-                        <button class="btn btn-sm btn-primary mark-read" value="<%= current_user.id %>" id="readbtn">Mark all as read</button>
-                        <% current_user.notifications.where(status: false).each do |notification| %>
-                          <li class="notification-message mt-2"><%= notification.message %></li>
-                          <div class="dropdown-divider"></div>
-                        <% end %>
-                      </ul>
-                    <% elsif current_user.notifications.where(status: false).count == 0 %>
-                      <ul class="dropdown-menu" style="width: 20vw; height: auto; overflow: auto;" id="notification-list" aria-labelledby="dropdownMenuButton1">
-                        <button class="btn btn-sm btn-primary mark-read" value="<%= current_user.id %>" id="readbtn">Mark all as read</button>
-                        <li class="notification-message mt-2" id="no-notification">No Notification Yet</li>
-                        <div class="dropdown-divider"></div>
-                      </ul>
-                    <% end %>
-                  </div>
-                </div>
-              <% end %>
+              <%= render  "shared/notification" %>
             <% end %>
         </ul>
           <%if user_logged_in?%>

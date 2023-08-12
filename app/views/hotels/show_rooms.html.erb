@@ -1,4 +1,9 @@
 <div class="container mb-5">
+  <%if flash[:notice].present?%>
+    <div class="alert alert-success">
+      <%= flash[:notice] %>
+    </div>
+  <% end %>
   <div class="row my-1 ">
     <h2 class="text-center text-success">
       <span class="border-bottom border-2 border-dark pb-2">Hotel 

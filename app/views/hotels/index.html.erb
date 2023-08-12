@@ -1,5 +1,10 @@
 <% if !user_logged_in? %>
   <div class="container">
+    <%if flash[:notice].present?%>
+      <div class="alert alert-success">
+        <%= flash[:notice] %>
+      </div>
+    <% end %>
     <div class="row">
       <div class="col-12">
         <h2 class="text-center">
@@ -29,7 +34,7 @@
           </div>
         <% else %>
           <div class="col-12 mb-3">
-            <%= link_to "Home", customers_path, class: "btn btn-primary" %>
+            <%= link_to "Home", customers_path, class: "btn btn-warning" %>
           </div>
         <% end %>
 
