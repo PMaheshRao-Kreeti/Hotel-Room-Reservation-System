@@ -9,9 +9,9 @@ class User < ApplicationRecord
 
   enum role: { admin: 0, customer: 1 }
 
-  validates :name, presence: true
+  validates :name, presence: true, length: { maximum: 255 }
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }, presence: true, uniqueness: true
-  validates :phone, presence: true
+  validates :phone, presence: true, format: { with: /\A\d{10}\z/, message: 'Invalid phone number format.' }
   validates :password, presence: true, length: { minimum: 5 }
 
   # rubocop:disable all

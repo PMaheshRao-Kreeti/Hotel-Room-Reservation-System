@@ -86,7 +86,7 @@ class BookingsController < ApplicationController
     booking.room_id = '' if booking.booking_status == 'approved'
     booking.booking_status = 'cancelled'
     booking.save
-    redirect_to bookings_history_path
+    redirect_to bookings_history_path, notice: 'Your booking is successfully cancelled.'
   end
 
   private

@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", function() {
   consumer.subscriptions.create({ channel: "NotificationChannel" }, {
     connected() {
       // Called when the subscription is ready for use on the server
-      console.log("connection etabilished for notification");
+      console.log("Connected to the NotificationChannel!");
     },
 
     disconnected() {

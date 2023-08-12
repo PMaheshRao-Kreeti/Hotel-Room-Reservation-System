@@ -7,12 +7,25 @@ class Hotel < ApplicationRecord
   has_many :rooms
   has_many :bookings
 
-  validates :name, presence: true
-  validates :address, presence: true, uniqueness: true
-  validates :city, :state, :country, :pincode, :latitude, :longitude, presence: true
+  # Validations
+  validates :name, presence: true, length: { maximum: 255 }
+  validates :address, presence: true, length: { maximum: 255 }
+  validates :city, presence: true, length: { maximum: 255 }
+  validates :state, presence: true, length: { maximum: 255 }
+  validates :country, presence: true, length: { maximum: 255 }
+  validates :pincode, presence: true, length: { maximum: 20 }
+  validates :description, presence: true
+  validates :hotel_image, presence: true
+  validates :latitude, presence: true, numericality: { greater_than_or_equal_to: -90, less_than_or_equal_to: 90 }
+  validates :longitude, presence: true, numericality: { greater_than_or_equal_to: -180, less_than_or_equal_to: 180 }
 
   include Elasticsearch::Model
   include Elasticsearch::Model::Callbacks
+
+  def self.index_data
+    __elasticsearch__.create_index! force: true
+    __elasticsearch__.import
+  end
 
   settings do
     mapping dynamic: 'false' do

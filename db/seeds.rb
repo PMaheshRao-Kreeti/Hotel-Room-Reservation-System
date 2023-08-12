@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
 #
@@ -9,6 +11,20 @@
 # ----------------------------------------------------------------------------------------------------------------------
 
 #----------------------------------------------------------------
+
+# rubocop:disable all
+
+# Admin account acreation
+
+User.create(
+  name: 'Admin',
+  email: 'admin@gmail.com',
+  phone: '78451215415',
+  password: 'admin',
+  role: 0
+)
+# ----------------------------------------------------------------
+
 # User account creation
 
 User.create(
@@ -33,19 +49,10 @@ User.create(
   role: 1
 )
 
-# ----------------------------------------------------------------
-# Admin accout acreation
-
-User.create(
-  name: 'Admin',
-  email: 'admin@gmail.com',
-  phone: '78451215415',
-  password: 'admin',
-  role: 0
-)
 
 # ----------------------------------------------------------------
 # Hotel Creation
+
 hotel = Hotel.create(
   name: 'MONOTEL',
   address: 'Near Wipro Gate No 4, DM Block, Sec V, Bidhannagar',
@@ -62,6 +69,8 @@ hotel.hotel_image.attach(
   io: File.open(File.join(Rails.root, 'app/assets/images/hotel/Monotel.jpg')),
   filename: 'Monotel.jpg'
 )
+
+
 
 hotel = Hotel.create(
   name: 'Acco Plaza Ce 161 hotel',
@@ -95,7 +104,7 @@ hotel.hotel_image.attach(
   filename: 'FabExpress.jpg'
 )
 
-hotel = Hotel.create(
+Hotel.create(
   name: 'Dorota House',
   address: 'FE-163, FE Block, Sector III, Bidhannagar',
   city: 'Kolkata',
@@ -233,3 +242,5 @@ hotel.hotel_image.attach(
 )
 
 hotel.save
+
+# rubocop:enable all

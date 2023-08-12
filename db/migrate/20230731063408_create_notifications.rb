@@ -1,3 +1,7 @@
+# frozen_string_literal: true
+
+# Notification Database
+# rubocop:disable all
 class CreateNotifications < ActiveRecord::Migration[6.1]
   def change
     create_table :notifications do |t|
@@ -9,3 +13,4 @@ class CreateNotifications < ActiveRecord::Migration[6.1]
     end
   end
 end
+# rubocop:enable all

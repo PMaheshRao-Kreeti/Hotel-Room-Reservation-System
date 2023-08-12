@@ -7,8 +7,14 @@ class Booking < ApplicationRecord
 
   BOOKINGSTATUS = %w[approved rejected pending].freeze
 
-  validates :no_of_guest, :guest_name, :room_type, presence: true
-  validates :check_in_date, :check_out_date, presence: true
+  validates :no_of_guest, presence: true, numericality: { greater_than: 0 }
+  validates :guest_name, presence: true, length: { maximum: 255 }
+  validates :check_in_date, presence: true
+  validates :check_out_date, presence: true
+  validates :booking_status, presence: true, inclusion: { in: %w[approved pending rejected cancelled] }
+  validates :room_type, presence: true, inclusion: { in: ['Single Bed', 'Double Bed', 'Suite', 'Dormitory'] }
+  validates :user_id, presence: true
+  validates :hotel_id, presence: true
   validate :booking_duration_more_than_one_day
 
   # Custom validation method

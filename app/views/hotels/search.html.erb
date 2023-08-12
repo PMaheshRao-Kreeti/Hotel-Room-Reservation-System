@@ -1,10 +1,10 @@
-<div class="container px-5">
-  <div class="row px-5">
-    <div class="col-lg-12 px-5">
+<div class="container ">
+  <div class="row">
+    <div class="col-lg-12">
 
       <% if @hotels.empty? %>
         <div class="alert alert-danger text-center">
-          No results found!!! Please enter a valid keyword for the search.
+          Notice : No results found!!! Please enter a valid keyword for the search.
         </div>
         <% @hotels = Hotel.all %>
       <% end %>
@@ -16,7 +16,7 @@
 
       <div class="row mt-2">
         <div class="col-12 text-center">
-          <%= link_to "Back to Hotel", hotels_path, class: "btn btn-primary mt-1" %>
+          <%= link_to "Back", hotels_path, class: "btn btn-primary mt-1" %>
         </div>
       </div>
 
@@ -44,7 +44,13 @@
                 <h5 class="card-title"><%= hotel.name %></h5>
                 <p class="card-text"><strong>Description:</strong> <%= hotel.description %></p>
                 <p class="card-text"><strong>Address:</strong> <%= hotel.full_address %></p>
-                <p class="card-text"><strong>Room Available:</strong></p>
+
+                <% if current_user.role == 'admin' %>
+                  <p class="card-text"><strong>Total Rooms :</strong></p>
+                <% else %>
+                  <p class="card-text"><strong>Room Available:</strong></p>
+                <% end %>
+
                 <p class="card-text">Single Bedroom: <%= @single_bedroom_count %> Available</p>
                 <p class="card-text">Double Bedroom: <%= @double_bedroom_count %> Available</p>
                 <p class="card-text">Suite: <%= @suite_count %> Available</p>

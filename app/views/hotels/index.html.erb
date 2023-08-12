@@ -17,18 +17,19 @@
 
         <div class="row mt-5 mb-2">
           <div class="col-12">
-            <h2 class="text-center">All Hotel List</h2>
+            <h2 class="text-center text-success"><span class="border-bottom border-2 border-dark pb-2">All Hotel List</span></h2>
           </div>
         </div>
 
         <% if current_user.role == 'admin' %>
           <div class="col-12 mb-3">
-            <%= link_to "Add new hotel", new_hotel_path, class: "btn btn-primary" %>
-            <%= link_to "Back to dashboard", admins_path, class: "btn btn-warning" %>
+            <%= link_to "Dashboard", admins_path, class: "btn btn-warning px-4 mt-1" %>
+            <%= link_to "Hotel +", new_hotel_path, class: "btn btn-primary px-4 mt-1" %>
+            <%= link_to "Room +", new_room_path, class: "btn btn-success px-4 mt-1"%>
           </div>
         <% else %>
           <div class="col-12 mb-3">
-            <%= link_to "Back to Home", customers_path, class: "btn btn-primary" %>
+            <%= link_to "Home", customers_path, class: "btn btn-primary" %>
           </div>
         <% end %>
 

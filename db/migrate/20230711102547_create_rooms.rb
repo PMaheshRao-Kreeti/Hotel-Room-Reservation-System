@@ -1,8 +1,9 @@
+# frozen_string_literal: true
+
+# Room database
 class CreateRooms < ActiveRecord::Migration[6.1]
   def change
     create_table :rooms do |t|
-      t.string :interior_image
-      t.string :exterior_image
       t.string :bedroom_image
       t.string :room_type
       t.string :room_number
@@ -14,3 +15,4 @@ class CreateRooms < ActiveRecord::Migration[6.1]
     end
   end
 end
+# rubocop:enable all

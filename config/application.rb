@@ -1,9 +1,12 @@
+# frozen_string_literal: true
+
 require_relative 'boot'
 
 require 'rails/all'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
+# rubocop:disable all
 Bundler.require(*Rails.groups)
 
 module HotelReservationSystem
@@ -20,3 +23,4 @@ module HotelReservationSystem
     # config.eager_load_paths << Rails.root.join("extras")
   end
 end
+# rubocop:enable all

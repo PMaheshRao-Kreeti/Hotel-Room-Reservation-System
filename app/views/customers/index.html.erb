@@ -1,8 +1,10 @@
 <% if user_logged_in? %>
   <div class="container">
-    <div class="alert alert-success">
-      <%= flash[:notice] %>
-    </div>
+    <%if flash[:notice].present?%>
+      <div class="alert alert-success">
+        <%= flash[:notice] %>
+      </div>
+    <% end %>
     <div class="row">
       <h2 class="text-center">Welcome Customer indexpage <%= current_user.name %>(<%= current_user.role %>)</h2>
     </div>

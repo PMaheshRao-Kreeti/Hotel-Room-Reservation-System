@@ -1,47 +1,67 @@
-<div class="row my-5">
-  <div class="col-lg-12">
-        <% if current_user.role == 'admin' %>  
-          <%= link_to "Back to hotel", hotels_path, class: "btn btn-warning"%>
-          <%= link_to "Add new hotel", new_hotel_path, class: "btn btn-primary"%>
-          <%= link_to "Add new room", new_room_path, class: "btn btn-success"%>
-        <%else%>
-          <%= link_to "Back to Hotel", hotels_path, class: "btn btn-primary"%>
-        <% end %>
-      </div>
-    </div>
-</div>
-
 <% if @hotel.rooms.present? %>
-  <div class="row my-5">
-    <h2 class="text-center">HOTEL : <%= @hotel.name %></h2>
-    <div class="col-lg-12 d-flex mt-5">
-      <div class="col-lg-3">
-        <% if @hotel.hotel_image.attached? %>
-          <%= image_tag @hotel.hotel_image, alt: 'Hotel Image',class: 'img-fluid rounded-3 p-2' %>
-        <% end %>
-      </div>
-      <div class="col-lg-9 d-flex m-2">
-        <div class="col-lg-6 p-2">
-          <p class="lead"><strong>Description : </strong><%= @hotel.description %></p>
-          <p class="lead"><strong>Address : </strong><%= @hotel.full_address %></p>
-          <p class="lead"><strong>Available : Wi-Fi , Room-service , Swimming pool , Car rental services , Laundry services .</strong></p>
+  <div class="row mb-2">
+    <div class="h2 text-center "><span class="border-bottom border-2 border-dark pb-2">HOTEL  <span class="text-info"><%= @hotel.name %></span> </span></div>
+    <div class="col-lg-12 my-3">
+      <% if current_user.role == 'admin' %>  
+        <%= link_to "Back", hotels_path, class: "btn btn-warning"%>
+        <%= link_to "Hotel +", new_hotel_path, class: "btn btn-primary"%>
+        <%= link_to "Room +", new_room_path, class: "btn btn-success"%>
+      <%else%>
+        <%= link_to "Back", hotels_path, class: "btn btn-primary"%>
+      <% end %>
+    </div>
+
+    <div class="col-lg-12 mt-4">
+      <div class="row">
+        <div class="col-lg-10 col-md-12 mx-auto">
+          <div class="row">
+            <div class="col-lg-6 col-md-12 p-2">
+              <p class="fs-5"><strong>Description : </strong><%= @hotel.description %></p>
+              <p class="fs-5"><strong>Address : </strong><%= @hotel.full_address %></p>
+              <p class="fs-5"><strong>Available: Wi-Fi, Room-service, Swimming pool, Car rental services, Laundry services.</strong></p>
+            </div>
+            <div class="col-lg-3 col-md-6 p-2">
+              <p class="fs-5"><strong>Room Price List:</strong></p>
+              <p class="fs-5">Single Bedroom: <strong>499</strong> Rs.</p>
+              <p class="fs-5">Double Bedroom: <strong>799</strong> Rs.</p>
+              <p class="fs-5">Suite: <strong>1299</strong> Rs.</p>
+              <p class="fs-5">Dormitory: <strong>1799</strong> Rs.</p>
+            </div>
+            <div class="col-lg-3 col-md-6 p-2">
+              <%= link_to 'Book Room', new_hotel_booking_path(@hotel), class: 'btn btn-success btn-lg' %>
+            </div>
+          </div>
         </div>
 
-        <div class="col-lg-1"></div>
-        
-        <div class="col-lg-3 p-2">
-          <p class="lead"><strong>Room Price List :</strong></p>
-          <p class="lead">Single Bedroom : <strong>499</strong>  Rs.</p>
-          <p class="lead">Double Bedroom : <strong>799</strong>  Rs.</p>
-          <p class="lead">Suite : <strong>1299</strong> Rs.</p>
-          <p class="lead">Dormitory : <strong>1799</strong>  Rs.</p> 
-        </div>
-        <div class="col-lg-2 p-2">
-          <%= link_to 'Book Room', new_hotel_booking_path(@hotel), class: 'btn btn-success btn-lg' %>
+        <div class="container mb-3">
+          <div class="row">
+            <h2 class="text-center">Hotel Images : </h2>
+            <div class="col-lg-12">
+              <div class="row">
+                <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+                  <% if @hotel.hotel_image.attached? %>
+                    <%= image_tag @hotel.hotel_image, alt: 'Hotel Image', class: 'img-fluid rounded-5 p-2' %>
+                  <% end %>
+                </div>
+                <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+                  <% if @hotel.hotel_image.attached? %>
+                    <%= image_tag @hotel.hotel_image, alt: 'Hotel Image', class: 'img-fluid rounded-5 p-2' %>
+                  <% end %>
+                </div>
+                <div class="col-lg-4 col-md-12 col-sm-12">
+                  <% if @hotel.hotel_image.attached? %>
+                    <%= image_tag @hotel.hotel_image, alt: 'Hotel Image', class: 'img-fluid rounded-5 p-2' %>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
+  
 
+      
     <%# Google map integration for homestay location %>
     <div class="container my-5">
       <div class="row">

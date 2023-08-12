@@ -1,3 +1,7 @@
+# frozen_string_literal: true
+
+# Hotel database
+# rubocop:disable all
 class CreateHotels < ActiveRecord::Migration[6.1]
   def change
     create_table :hotels do |t|
@@ -16,3 +20,4 @@ class CreateHotels < ActiveRecord::Migration[6.1]
     end
   end
 end
+# rubocop:enable all

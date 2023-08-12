@@ -1,26 +1,30 @@
 <div class="container mb-5">
-  <div class="row mt-5">
-    <h2 class="text-center">Hotel <span class="text-warning"><%= @hotel.name %></span> Rooms</h2>
+  <div class="row my-1 ">
+    <h2 class="text-center text-success">
+      <span class="border-bottom border-2 border-dark pb-2">Hotel 
+        <span class="text-warning"><%= @hotel.name %></span> Rooms 
+      </span>
+    </h2>
   </div>
 
-  <div class="row mt-5">
+  <div class="row mb-1 mt-4">
     <div class="col-lg-12">
       <% if current_user.role == 'admin' %>
-        <%= link_to "Back to hotel", hotels_path, class: "btn btn-warning"%>
-        <%= link_to "Add new hotel", new_hotel_path, class: "btn btn-primary"%>
-        <%= link_to "Add new room", new_room_path, class: "btn btn-success"%>
+        <%= link_to "Back", hotels_path, class: "btn btn-warning px-5 my-1" %>
+        <%= link_to "Hotel +", new_hotel_path, class: "btn btn-primary px-5 my-1"%>
+        <%= link_to "Room +", new_room_path, class: "btn btn-success px-5 my-1"%>
       <% else %>
-        <%= link_to "Back to Hotel", hotels_path, class: "btn btn-primary"%>
-        <%= link_to 'Book Room', new_hotel_booking_path(@hotel), class: 'btn btn-success' %>
+        <%= link_to "Back ", hotels_path, class: "btn btn-primary"%>
+        <%# <%= link_to 'Book Room', new_hotel_booking_path(@hotel), class: 'btn btn-success' %> %>
       <% end %>
     </div>
   </div>
     
   <% if @hotel.rooms.present? %>
-    <div class="row mt-5">
+    <div class="row mt-2">
       <% @hotel.rooms.sort_by(&:room_type).each do |room| %>
         <div class="col-lg-4 col-md-6">
-          <div class="card mt-5">
+          <div class="card shadow mt-5">
             <% if room.bedroom_image.attached? %>
               <%= image_tag room.bedroom_image, alt: 'room image', class: 'room-img rounded-3 p-2' %>
             <% end %>
@@ -34,7 +38,6 @@
                 <%= link_to 'Edit detail', edit_room_path(room), class: 'btn btn-success' %>
                 <%= link_to 'Delete', room_path(room), class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' } %>
               <% end %>
-              <%= link_to 'Show detail', room_path(room), class: 'btn btn-primary' %>
             </div>
           </div>
         </div>
@@ -43,8 +46,17 @@
 
 
   <% else %>
-    <div class="row mt-5">
-      <h2 class="text-danger">Sorry No Available Room !!!</h2>
+    <div class="row card shadow p-4 mt-5">
+      <% if current_user.role == 'admin' %>
+        <h3 class="text-danger">No Rooms are available in this Hotel, Please add Room.
+          <%= link_to "Room +", new_room_path, class: "btn btn-success px-4"%>
+        </h3>
+      <% else %>
+        <h3 class="text-danger">No Rooms are available in this Hotel, Please Book different Hotels Room.
+          <%= link_to "Hotel list", hotels_path, class: "btn btn-primary px-4" %>
+        </h3>
+      <% end %>
+      
     </div>
   <% end %>
 </div>

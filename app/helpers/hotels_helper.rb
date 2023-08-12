@@ -22,7 +22,8 @@ module HotelsHelper
   end
 
   # for admin instead od showing available rooms it shows all rooms in the hotel
-  def total_number_of_available_rooms(hotel)
+  # total_number_of_rooms_in_hotel(hotel)
+  def total_number_of_rooms_in_hotel(hotel)
     @single_bedroom_count = hotel.rooms.where(room_type: 'Single Bed').count
     @double_bedroom_count = hotel.rooms.where(room_type: 'Double Bed').count
     @suite_count = hotel.rooms.where(room_type: 'Suite').count

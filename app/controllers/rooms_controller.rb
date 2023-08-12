@@ -20,8 +20,6 @@ class RoomsController < ApplicationController
 
   def edit; end
 
-  def show; end
-
   def update
     if @room.update(room_params)
       redirect_to rooms_path, notice: 'Room was successfully updated.'
@@ -42,8 +40,7 @@ class RoomsController < ApplicationController
   end
 
   def room_params
-    params.require(:room).permit(:room_type, :price, :capacity, :hotel_id, :interior_image,
-                                 :exterior_image, :bedroom_image, :room_number)
+    params.require(:room).permit(:room_type, :price, :capacity, :hotel_id, :bedroom_image, :room_number)
   end
 
   def room_capacity_based_on_room_type(room)
