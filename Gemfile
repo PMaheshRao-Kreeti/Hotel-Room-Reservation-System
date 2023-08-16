@@ -39,10 +39,12 @@ group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
 
   gem 'dotenv-rails'
+  gem 'factory_bot_rails'
   gem 'icalendar'
   gem 'omniauth-facebook'
   gem 'omniauth-rails_csrf_protection'
   gem 'pry'
+  gem 'rspec-rails'
   gem 'rubocop', require: false
 end
 

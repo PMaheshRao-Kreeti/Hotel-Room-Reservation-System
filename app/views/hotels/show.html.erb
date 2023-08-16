@@ -21,11 +21,11 @@
               <p class="fs-5"><strong>Available: Wi-Fi, Room-service, Swimming pool, Car rental services, Laundry services.</strong></p>
             </div>
             <div class="col-lg-3 col-md-6 p-2">
-              <p class="fs-5"><strong>Room Price List:</strong></p>
-              <p class="fs-5">Single Bedroom: <strong>499</strong> Rs.</p>
-              <p class="fs-5">Double Bedroom: <strong>799</strong> Rs.</p>
-              <p class="fs-5">Suite: <strong>1299</strong> Rs.</p>
-              <p class="fs-5">Dormitory: <strong>1799</strong> Rs.</p>
+              <p class="fs-5"><strong>Room per day charge :</strong></p>
+              <p class="fs-5">Single Bedroom: <strong>199</strong> Rs.</p>
+              <p class="fs-5">Double Bedroom: <strong>299</strong> Rs.</p>
+              <p class="fs-5">Suite: <strong>399</strong> Rs.</p>
+              <p class="fs-5">Dormitory: <strong>499</strong> Rs.</p>
             </div>
             <div class="col-lg-3 col-md-6 p-2">
               <%= link_to 'Book Room', new_hotel_booking_path(@hotel), class: 'btn btn-success btn-lg' %>
@@ -82,7 +82,9 @@
       <div class="col-lg-2 my-2 ">
         <%= link_to "Back to Hotel", hotels_path, class: "btn btn-primary"%>
       </div>
-    <h2 class="text-danger">Sorry No Available Room !!!</h2>
+    <div class="card shadow p-3">
+      <h2 class="text-danger">No Rooms are available in this Hotel, Please Book different Hotels Room.</h2>
+    </div>
   </div>
 
 <% end %>

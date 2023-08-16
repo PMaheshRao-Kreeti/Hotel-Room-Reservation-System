@@ -3,27 +3,39 @@
 This README would normally document whatever steps are necessary to get the
 application up and running.
 
-Things you may want to cover:
+## recommended to use google chrome or firefox
 
-* Ruby version
+* Ruby version -> 3.2.1
 
-* System dependencies
+* Rails version -> 6.1.7.4
 
-* Configuration
+* Webpacker Version -> 5.4.4
 
-* Database creation
+* Node Version -> 16.20.1
 
-* Database initialization
+* Yarn Version -> 1.22.19
 
-* How to run the test suite
+* database used -> postgresql
 
-* Services (job queues, cache servers, search engines, etc.)
+* elastic search version -> 7.4.0
 
-* Deployment instructions
+## setup instruction:
 
-* ...
+```bundle && yarn```
 
----------------------------------------------------------------------------------------
+**make sure to start elasticsearch server before seeding the database**
 
+```rails db:create```
 
-    
+```rails db:migrate```
+
+```rails db:seed```
+
+## Necessary Accounts
+
+mail id : admin@gmail.com  (admin)
+password : admin
+
+mail id : maheshrao2002@gmail.com  (customer)
+password : mahesh
+
