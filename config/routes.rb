@@ -45,6 +45,7 @@ Rails.application.routes.draw do
   get '/hotels/:id/show_rooms', to: 'hotels#show_rooms', as: 'hotel_rooms'
   resources :rooms
 
-  resources :galleries, only: [:index]
+  get '/galleries', to: 'galleries#index'
+
 end
 # rubocop:enable all
