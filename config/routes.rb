@@ -36,8 +36,9 @@ Rails.application.routes.draw do
     resources :rooms, except: %i[index show]
   
     # booking routes
-    resources :bookings, only: %i[new create edit update destroy]
-    get '/bookings/:id/', to: 'bookings#approval'
+    get '/bookings/:id/', to: 'bookings#approval', as: 'booking_approval'
+    resources :bookings, only: %i[new create update destroy]
+    
     collection do
       get :search
       get :filter

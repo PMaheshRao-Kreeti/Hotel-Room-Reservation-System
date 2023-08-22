@@ -32,8 +32,7 @@
     <tbody>
       <% @todays_bookings.each do |booking| %>
         <tr>
-          <% find_hotel(booking.hotel_id)%>
-          <td><%= @hotel.name %></td>
+          <td><%= booking.hotel_name %></td>
           <td><%= booking.guest_name %></td>
           <td><%= booking.user.email %></td>
           <td><%= booking.no_of_guest %></td>
@@ -58,7 +57,11 @@
             <% end %>
           </td>
           <td>
-            <%= link_to 'Action',  hotel_booking_path(@hotel, booking), class: 'btn btn-primary' %>
+            <% if  booking.hotel_id.present? %>
+              <%= link_to 'Action',  hotel_booking_path(booking.hotel_id, booking), class: 'btn btn-primary' %>
+            <% else %>
+              <a href="#" class="btn btn-danger disabled"> Action</a>
+            <% end %>
           </td>
         </tr> 
       <% end %>
@@ -91,8 +94,7 @@
     <tbody>
       <% @all_bookings.each do |booking| %>
         <tr>
-          <% find_hotel(booking.hotel_id)%>
-          <td><%= @hotel.name %></td>
+          <td><%= booking.hotel_name %></td>
           <td><%= booking.guest_name %></td>
           <td><%= booking.user.email %></td>
           <td><%= booking.no_of_guest %></td>
@@ -117,7 +119,11 @@
             <% end %>
           </td>
           <td>
-            <%= link_to 'Action',  hotel_booking_path(@hotel, booking), class: 'btn btn-primary' %>
+            <% if  booking.hotel_id.present? %>
+              <%= link_to 'Action',  hotel_booking_path(booking.hotel_id, booking), class: 'btn btn-primary' %>
+            <% else %>
+              <a href="#" class="btn btn-danger disabled ">Action</a>
+            <% end %>
           </td>
         </tr> 
       <% end %>

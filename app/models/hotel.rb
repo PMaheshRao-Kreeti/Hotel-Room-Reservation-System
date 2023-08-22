@@ -9,7 +9,7 @@ class Hotel < ApplicationRecord
 
   # association
   has_many :rooms, dependent: :destroy
-  has_many :bookings
+  has_many :bookings , dependent: :nullify
 
   # Validations
   validates :name, presence: true, length: { maximum: 255 }
@@ -72,7 +72,7 @@ class Hotel < ApplicationRecord
   # callback method for rejecting all booking request related to that hotel
   def reject_bookings_and_send_rejection_emails
     bookings.each do |booking|
-      booking.update(status: 'rejected', hotel_id: nil)
+      booking.update(booking_status: 'rejected', hotel_id: nil)
       BookingMailer.with(booking: @booking).booking_admin_action.deliver_later
     end
   end

@@ -50,8 +50,9 @@ ActiveRecord::Schema.define(version: 2023_07_31_063408) do
     t.date "check_out_date"
     t.string "booking_status"
     t.string "room_type"
+    t.string "hotel_name"
     t.bigint "user_id", null: false
-    t.bigint "hotel_id", null: false
+    t.bigint "hotel_id"
     t.bigint "room_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

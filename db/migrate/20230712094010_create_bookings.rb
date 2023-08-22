@@ -11,8 +11,9 @@ class CreateBookings < ActiveRecord::Migration[6.1]
       t.date :check_out_date
       t.string :booking_status
       t.string :room_type
+      t.string :hotel_name
       t.references :user, null: false, foreign_key: true
-      t.references :hotel, null: false, foreign_key: true
+      t.references :hotel, null: true, foreign_key: true
       t.references :room, null: true, foreign_key: true
 
       t.timestamps

@@ -34,8 +34,18 @@ application up and running.
 ## Necessary Accounts
 
 mail id : admin@gmail.com  (admin)
+<br>
 password : admin
 
 mail id : maheshrao2002@gmail.com  (customer)
+<br>
 password : mahesh
+
+mail id : user@gmail.com  (customer)
+<br>
+password : 12345
+
+
+
+
 

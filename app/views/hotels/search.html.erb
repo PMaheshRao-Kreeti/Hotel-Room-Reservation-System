@@ -25,13 +25,13 @@
 
           <% if current_user.role == 'customer'%>  
             
-            <% if @checkin.present? && @checkout.present? %>
+            <% if @checkin_date.present? && @checkout_date.present? %>
               <% available_room_count(hotel, @checkin_date, @checkout_date) %>
             <% else %>
               <% available_room_count(hotel) %>
             <% end %>
 
-          <% else %>
+          <% else %> 
             <%  total_number_of_rooms_in_hotel(hotel)  %>
           <% end %>
           
