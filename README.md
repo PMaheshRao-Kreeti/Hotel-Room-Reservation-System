@@ -39,11 +39,3 @@ password : admin
 mail id : maheshrao2002@gmail.com  (customer)
 password : mahesh
 
-<div class="col-lg-4">
-      <div class="form-group">
-        <%= form.label :hotel_id, class: 'mb-2' %>
-        <%= form.select :hotel_id,  options_for_select(Hotel.all.map{|hotel| [hotel.name, hotel.id]},room.hotel_id),{prompt:'Select Hotel'},class: 'form-select form-select-lg' %>
-        <% @room.errors.full_messages_for(:hotel_id).each do |message| %>
-          <p class="text-danger"><%= message%></p>
-        <% end %>
-      </div>
