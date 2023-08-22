@@ -3,10 +3,14 @@
 # rubocop:disable all
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
-
+  
   root 'welcome#index'
 
-  # custom routes
+  get '/admins', to: 'welcome#admin_index' 
+  get '/customers', to: 'welcome#customer_index'
+  get '/galleries', to: 'welcome#gallery'
+
+  # signup and login routes routes
 
   get '/signup', to: 'users#new'
   post '/signup', to: 'users#create'
@@ -19,10 +23,6 @@ Rails.application.routes.draw do
   # facbook authentication
   get '/auth/:provider/callback', to: 'sessions#facebook_callback'
 
-  get '/admins', to: 'admins#index'
-
-  get '/customers', to: 'customers#index'
-
   # booking routes
   get '/bookings', to: 'bookings#index'
   get '/bookings/history', to: 'bookings#booking_history'
@@ -30,6 +30,12 @@ Rails.application.routes.draw do
   post 'bookings/:id/cancelled', to: 'bookings#cancelled', as: 'booking_cancelled'
 
   resources :hotels do
+    get '/show_rooms', to: 'hotels#show_rooms', as: 'show_rooms'
+    
+    # rooms routes
+    resources :rooms, except: %i[index show]
+  
+    # booking routes
     resources :bookings, only: %i[new create edit update destroy]
     get '/bookings/:id/', to: 'bookings#approval'
     collection do
@@ -40,12 +46,6 @@ Rails.application.routes.draw do
 
   # notification
   post 'markread', to: 'bookings#markread'
-
-  # rooms routes
-  get '/hotels/:id/show_rooms', to: 'hotels#show_rooms', as: 'hotel_rooms'
-  resources :rooms
-
-  get '/galleries', to: 'galleries#index'
 
 end
 # rubocop:enable all

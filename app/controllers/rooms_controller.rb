@@ -3,16 +3,15 @@
 # HotelController handle CRUD on Hotels Room
 class RoomsController < ApplicationController
   before_action :set_room, only: %i[edit show update destroy]
-
+  before_action :set_hotel, only: %i[new create edit update destroy]
   def new
     @room = Room.new
   end
 
   def create
-    @room = Room.new(room_params)
-    room_capacity_based_on_room_type(@room)
+    @room = @hotel.rooms.create(room_params)
     if @room.save
-      redirect_to hotels_path, notice: 'Room was successfully created.'
+      redirect_to hotel_show_rooms_path(@hotel), notice: "Room at #{@hotel.name} was successfully created "
     else
       render :new
     end
@@ -22,17 +21,15 @@ class RoomsController < ApplicationController
 
   def update
     if @room.update(room_params)
-      hotel = Hotel.find_by(id: @room.hotel_id)
-      redirect_to hotel_rooms_path(hotel), notice: 'Room was successfully updated.'
+      redirect_to hotel_show_rooms_path(@hotel), notice: "Room at #{@hotel.name} was successfully updated ."
     else
       render :edit
     end
   end
 
   def destroy
-    hotel = Hotel.find_by(id: @room.hotel_id)
     @room.destroy
-    redirect_to hotel_rooms_path(hotel), notice: 'Room was successfully destroyed.'
+    redirect_to hotel_show_rooms_path(@hotel), notice: "Room was successfully destroyed from #{@hotel.name} ."
   end
 
   private
@@ -41,20 +38,11 @@ class RoomsController < ApplicationController
     @room = Room.find(params[:id])
   end
 
-  def room_params
-    params.require(:room).permit(:room_type, :price, :capacity, :hotel_id, :bedroom_image, :room_number)
+  def set_hotel
+    @hotel = Hotel.find(params[:hotel_id])
   end
 
-  def room_capacity_based_on_room_type(room)
-    case room.room_type
-    when 'Single Bed'
-      room.capacity = 2
-    when 'Double Bed'
-      room.capacity = 4
-    when 'Suite'
-      room.capacity = 8
-    when 'Dormitory'
-      room.capacity = 16
-    end
+  def room_params
+    params.require(:room).permit(:room_type, :price, :hotel_id, :bedroom_image, :room_number)
   end
 end

@@ -6,7 +6,10 @@
       </div>
     <% end %>
     <div class="row">
-      <h2 class="text-center">Welcome Customer indexpage <%= current_user.name %>(<%= current_user.role %>)</h2>
+      <div class="card shadow p-4 rounded">
+          <h2 class="text-center">Welcome back, <span class="text-success"> <%= current_user.name %></span> We're thrilled to have you here again.</h2>
+      </div>
+
     </div>
   </div>
 <% else %>

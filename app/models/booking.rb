@@ -2,11 +2,13 @@
 
 # Booking model represents a booking made by user
 class Booking < ApplicationRecord
+  BOOKINGSTATUS = %w[approved rejected pending].freeze
+
+  # association
   belongs_to :user
   belongs_to :hotel
 
-  BOOKINGSTATUS = %w[approved rejected pending].freeze
-
+  # validations
   validates :no_of_guest, presence: true, numericality: { greater_than: 0 }
   validates :guest_name, presence: true, length: { maximum: 255 }
   validates :check_in_date, presence: true

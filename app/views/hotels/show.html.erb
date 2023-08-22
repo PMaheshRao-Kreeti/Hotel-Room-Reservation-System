@@ -20,14 +20,22 @@
               <p class="fs-5"><strong>Address : </strong><%= @hotel.full_address %></p>
               <p class="fs-5"><strong>Available: Wi-Fi, Room-service, Swimming pool, Car rental services, Laundry services.</strong></p>
             </div>
-            <div class="col-lg-3 col-md-6 p-2">
+            <div class="col-lg-4 col-md-7 p-2">
               <p class="fs-5"><strong>Room per day charge :</strong></p>
-              <p class="fs-5">Single Bedroom: <strong>199</strong> Rs.</p>
-              <p class="fs-5">Double Bedroom: <strong>299</strong> Rs.</p>
-              <p class="fs-5">Suite: <strong>399</strong> Rs.</p>
-              <p class="fs-5">Dormitory: <strong>499</strong> Rs.</p>
+              <% single_bedroom = @hotel.rooms.where(room_type: 'Single Bed').order(:price).pluck(:price).presence || [0] %>
+              <p class="fs-5">Single Bedroom: <strong><%= single_bedroom.min %> - <%= single_bedroom.max %> Rs.</strong></p>
+
+              <% double_bedroom = @hotel.rooms.where(room_type: 'Double Bed').order(:price).pluck(:price).presence || [0] %>
+              <p class="fs-5">Double Bedroom: <strong><%= double_bedroom.min %> - <%= double_bedroom.max %> Rs.</strong></p>
+
+              <% suite = @hotel.rooms.where(room_type: 'Suite').order(:price).pluck(:price).presence || [0] %>
+              <p class="fs-5">Suite: <strong><%= suite.min %> - <%= suite.max %> Rs.</strong></p>
+
+              <% dormitory = @hotel.rooms.where(room_type: 'Dormitory').order(:price).pluck(:price).presence || [0] %>
+              <p class="fs-5">Dormitory: <strong><%= dormitory.min %> - <%= dormitory.max %> Rs.</strong></p>
+
             </div>
-            <div class="col-lg-3 col-md-6 p-2">
+            <div class="col-lg-2 col-md-5 p-2">
               <%= link_to 'Book Room', new_hotel_booking_path(@hotel), class: 'btn btn-success btn-lg' %>
             </div>
           </div>

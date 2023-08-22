@@ -2,9 +2,13 @@
 
 # Hotel model handle hotel releted data
 class Hotel < ApplicationRecord
+  before_destroy :reject_bookings_and_send_rejection_emails
+
+  # hotel image attachment
   has_one_attached :hotel_image
 
-  has_many :rooms
+  # association
+  has_many :rooms, dependent: :destroy
   has_many :bookings
 
   # Validations
@@ -65,6 +69,15 @@ class Hotel < ApplicationRecord
   end
   # rubocop:enable all
 
+  # callback method for rejecting all booking request related to that hotel
+  def reject_bookings_and_send_rejection_emails
+    bookings.each do |booking|
+      booking.update(status: 'rejected', hotel_id: nil)
+      BookingMailer.with(booking: @booking).booking_admin_action.deliver_later
+    end
+  end
+
+  # full address of hotel
   def full_address
     "#{address}, #{city}, #{state}, #{country} - #{pincode}".strip
   end

@@ -28,6 +28,16 @@ admin = User.new(
 admin.save
 
 customer = User.new(
+  name: 'User',
+  email: 'user@gmail.com',
+  phone: '9145678943',
+  password: '12345',
+  role: 1
+)
+
+customer.save
+
+customer = User.new(
   name: 'Mahesh',
   email: 'maheshrao2002@gmail.com',
   phone: '9145678923',
@@ -233,43 +243,43 @@ hotel9.save
   room.save
   room = Room.new( room_type: 'Double Bed', room_number: '201', price: 299, capacity: 4, hotel_id: id )
   room.bedroom_image.attach(
-    io: File.open(File.join(Rails.root, 'app/assets/images/bedroom/single_bedroom.jpg')),
-    filename: 'single_bedroom.jpg'
+    io: File.open(File.join(Rails.root, 'app/assets/images/bedroom/double_bedroom.jpg')),
+    filename: 'double_bedroom.jpg'
   )
   room.save
 
   room = Room.new( room_type: 'Double Bed', room_number: '202', price: 299, capacity: 4,  hotel_id: id )
   room.bedroom_image.attach(
-    io: File.open(File.join(Rails.root, 'app/assets/images/bedroom/single_bedroom.jpg')),
-    filename: 'single_bedroom.jpg'
+    io: File.open(File.join(Rails.root, 'app/assets/images/bedroom/double_bedroom.jpg')),
+    filename: 'double_bedroom.jpg'
   )
   room.save
 
   room = Room.new( room_type: 'Double Bed', room_number: '203', price: 299, capacity: 4,  hotel_id: id )
   room.bedroom_image.attach(
-    io: File.open(File.join(Rails.root, 'app/assets/images/bedroom/single_bedroom.jpg')),
-    filename: 'single_bedroom.jpg'
+    io: File.open(File.join(Rails.root, 'app/assets/images/bedroom/double_bedroom.jpg')),
+    filename: 'double_bedroom.jpg'
   )
   room.save
 
   room = Room.new( room_type: 'Suite', room_number: '401', price: 399, capacity: 8, hotel_id: id )
   room.bedroom_image.attach(
-    io: File.open(File.join(Rails.root, 'app/assets/images/bedroom/single_bedroom.jpg')),
-    filename: 'single_bedroom.jpg'
+    io: File.open(File.join(Rails.root, 'app/assets/images/bedroom/suite.jpg')),
+    filename: 'suite.jpg'
   )
   room.save
 
   room = Room.new( room_type: 'Suite', room_number: '402', price: 399, capacity: 8, hotel_id: id )
   room.bedroom_image.attach(
-    io: File.open(File.join(Rails.root, 'app/assets/images/bedroom/single_bedroom.jpg')),
-    filename: 'single_bedroom.jpg'
+    io: File.open(File.join(Rails.root, 'app/assets/images/bedroom/suite.jpg')),
+    filename: 'suite.jpg'
   )
   room.save
 
   room = Room.new( room_type: 'Dormitory', room_number: '301', price: 499, capacity: 16, hotel_id: id )
   room.bedroom_image.attach(
-    io: File.open(File.join(Rails.root, 'app/assets/images/bedroom/single_bedroom.jpg')),
-    filename: 'single_bedroom.jpg'
+    io: File.open(File.join(Rails.root, 'app/assets/images/bedroom/dormitory.jpg')),
+    filename: 'dormitory.jpg'
   )
   room.save
 end

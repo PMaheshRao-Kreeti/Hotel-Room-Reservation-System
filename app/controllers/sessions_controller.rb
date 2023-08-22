@@ -3,11 +3,11 @@
 # Sessioncontroller create and destroy created session
 class SessionsController < ApplicationController
   def new
-    redirect_to_user_path(current_user.role) if user_logged_in?
+    redirect_to customers_path if user_logged_in? && current_user.role == 'customer'
   end
 
   def admin_new
-    redirect_to_user_path(current_user.role) if user_logged_in?
+    redirect_to admins_path if user_logged_in? && current_user.role == 'admin'
   end
 
   def create
@@ -22,8 +22,8 @@ class SessionsController < ApplicationController
   end
 
   def create_admin
-    user = User.find_by(email: params[:email], role: :admin)
-    if user&.authenticate(params[:password])
+    user = User.find_by(email: params[:email])
+    if user&.authenticate(params[:password]) && user&.admin?
       session[:user_id] = user.id
       redirect_to admins_path
     else

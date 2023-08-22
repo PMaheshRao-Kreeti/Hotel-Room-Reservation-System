@@ -12,4 +12,8 @@ class WelcomeController < ApplicationController
       redirect_to customers_path
     end
   end
+
+  def admin_index; end
+  def customer_index; end
+  def gallery; end
 end

@@ -1,24 +1,22 @@
-<%= form_with model: @room do |form| %>
+<%= form_for [@hotel, @room] do |form| %>
   <div class="row mx-4 mt-5">
     <div class="col-lg-4">
       <div class="form-group">
-        <%= form.label :hotel_id, class: 'mb-2' %>
-        <%= form.select :hotel_id,  options_for_select(Hotel.all.map{|hotel| [hotel.name, hotel.id]}),{prompt:'Select Hotel'},class: 'form-select form-select-lg' ,selected: room.hotel_id%>
-        <% @room.errors.full_messages_for(:hotel_id).each do |message| %>
-          <p class="text-danger"><%= message%></p>
-        <% end %>
+        <label for="hotel_name" class="mb-2">Hotel Name</label>
+        <input class="form-control form-control-lg" type="text" value="<%= @hotel.name %>" readonly>
       </div>
     </div>
+
     <div class="col-lg-4">
       <div class="form-group">
         <%= form.label :room_type, class: 'mb-2' %>
-        <%= form.select :room_type,  options_for_select(Room::ROOMTYPES),{prompt:'Select Room Type'},class: 'form-select form-select-lg' ,selected: room.room_type%>
+        <%= form.select :room_type, options_for_select(Room::ROOMTYPES, selected: @room.room_type), { prompt: 'Select Room Type' }, class: 'form-select form-select-lg' %>
         <% @room.errors.full_messages_for(:room_type).each do |message| %>
           <p class="text-danger"><%= message%></p>
         <% end %>
       </div>
     </div>
-    <div class="col-lg-3">
+    <div class="col-lg-4">
       <div class="form-group">
         <%= form.label :price, class: 'mb-2' %>
         <%= form.text_field :price, class: 'form-control form-control-lg' %>
@@ -38,15 +36,17 @@
           <p class="text-danger"><%= message%></p>
         <% end %>
       </div>
-    </div> 
-  </div> 
-  
-  <div class="row mx-4 mt-5">
-    <div class="col-lg-4">
-      <%= form.label :bedroom_image %> <br>
-      <%= form.file_field :bedroom_image %>
     </div>
-  </div>
+    <div class="col-lg-4">
+      <div class="form-group">
+        <%= form.label :bedroom_image %> <br>
+        <%= form.file_field :bedroom_image %>
+        <% @room.errors.full_messages_for(:bedroom_image).each do |message| %>
+          <p class="text-danger"><%= message%></p>
+        <% end %>
+      </div> 
+    </div>
+  </div> 
 
   <div class="row mx-4 my-5 ">
     <div class="col-lg-2">

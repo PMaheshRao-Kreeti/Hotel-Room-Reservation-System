@@ -1,10 +1,5 @@
 <% if !user_logged_in? %>
   <div class="container">
-    <%if flash[:notice].present?%>
-      <div class="alert alert-success">
-        <%= flash[:notice] %>
-      </div>
-    <% end %>
     <div class="row">
       <div class="col-12">
         <h2 class="text-center">
@@ -16,6 +11,11 @@
   </div>
 <% else %>
   <div class="container">
+    <%if flash[:notice].present?%>
+      <div class="alert alert-success">
+        <%= flash[:notice] %>
+      </div>
+    <% end %>
     <div class="row">
       <div class="col-lg-12">
         <%= render "search_and_filter" %>
@@ -30,7 +30,7 @@
           <div class="col-12 mb-3">
             <%= link_to "Dashboard", admins_path, class: "btn btn-warning px-4 mt-1" %>
             <%= link_to "Hotel +", new_hotel_path, class: "btn btn-primary px-4 mt-1" %>
-            <%= link_to "Room +", new_room_path, class: "btn btn-success px-4 mt-1"%>
+            <%#= link_to "Room +", new_room_path, class: "btn btn-success px-4 mt-1"%>
           </div>
         <% else %>
           <div class="col-12 mb-3">

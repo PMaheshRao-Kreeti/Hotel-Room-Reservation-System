@@ -9,6 +9,7 @@ class BookingMailer < ApplicationMailer
   #   en.booking_mailer.booking_done.subject
   #
 
+  # rubocop:disable all
   def booking_done
     @booking = params[:booking]
     @user = User.find_by(id: @booking.user_id)
@@ -25,14 +26,17 @@ class BookingMailer < ApplicationMailer
     @user = User.find_by(id: @booking.user_id)
     @hotel = Hotel.find_by(id: @booking.hotel_id)
 
-    send_event_invitation(@user, @booking, @hotel) if @booking.booking_status == 'approved'
-    mail(
+    if @booking.booking_status == 'approved'
+      send_event_invitation(@user, @booking, @hotel)
+    else
+      mail(
       to: @user.email,
-      subject: 'Booking status is updated by Admin'
+      subject: 'Booking status is Rejected by Admin'
     )
+    end
   end
 
-  # rubocop:disable all
+  
   
   def send_event_invitation(user, booking, hotel)
     ical = Icalendar::Calendar.new

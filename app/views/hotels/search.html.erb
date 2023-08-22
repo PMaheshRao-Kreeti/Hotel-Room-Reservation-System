@@ -62,7 +62,7 @@
                 <% if current_user.role == 'admin' %>
                   <%= link_to 'Edit detail', edit_hotel_path(hotel), class: 'btn btn-success' %>
                   <%= link_to 'Delete', hotel_path(hotel), class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' } %>
-                  <%= link_to 'Show Rooms', hotel_rooms_path(hotel), class: 'btn btn-info' %>
+                  <%= link_to 'Show Rooms', hotel_show_rooms_path(hotel), class: 'btn btn-info' %>
                 <% else %>
                   <%= link_to 'Booking Details', hotel_path(hotel), class: 'btn btn-success' %>
                 <% end %>
