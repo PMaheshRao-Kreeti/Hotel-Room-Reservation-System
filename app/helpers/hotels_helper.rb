@@ -15,13 +15,13 @@ module HotelsHelper
 
   # method to calculate
   def count_available_rooms(hotel, room_type, checkin, checkout)
-    # binding.pry
+
     total_rooms = hotel.rooms.where(room_type:)
     booked_rooms = hotel.bookings.where('((?<= check_in_date AND ? > check_in_date) OR
                                           (?<= check_out_date)) AND hotel_id = ? AND room_type = ?',
                                         checkin, checkout, checkin, hotel.id, room_type)
     total_rooms.count - booked_rooms.count
-    # binding.pry
+
   end
 
   # for admin instead od showing available rooms it shows all rooms in the hotel
