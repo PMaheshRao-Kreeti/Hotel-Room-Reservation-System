@@ -24,14 +24,14 @@
         <% @hotels.each do |hotel| %>
 
           <% if current_user.role == 'customer'%>  
-            
+            <%# return count of available rooms %>
             <% if @checkin_date.present? && @checkout_date.present? %>
               <% available_room_count(hotel, @checkin_date, @checkout_date) %>
             <% else %>
               <% available_room_count(hotel) %>
             <% end %>
-
           <% else %> 
+            <%# return total number of rooms for admin %>
             <%  total_number_of_rooms_in_hotel(hotel)  %>
           <% end %>
           

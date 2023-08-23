@@ -9,17 +9,19 @@ class Hotel < ApplicationRecord
 
   # association
   has_many :rooms, dependent: :destroy
-  has_many :bookings , dependent: :nullify
+  has_many :bookings, dependent: :nullify
 
   # Validations
   validates :name, presence: true, length: { maximum: 255 }
   validates :address, presence: true, length: { maximum: 255 }
   validates :city, presence: true, length: { maximum: 255 }
   validates :state, presence: true, length: { maximum: 255 }
-  validates :country, presence: true, length: { maximum: 255 }
-  validates :pincode, presence: true, length: { maximum: 20 }
+  validates :country, presence: true, length: { maximum: 80 }
+  validates :pincode, presence: true, length: { maximum: 6 }
   validates :description, presence: true
   validates :hotel_image, presence: true
+  validate :hotel_image_content_type
+  validate :hotel_image_size
   validates :latitude, presence: true, numericality: { greater_than_or_equal_to: -90, less_than_or_equal_to: 90 }
   validates :longitude, presence: true, numericality: { greater_than_or_equal_to: -180, less_than_or_equal_to: 180 }
 
@@ -68,6 +70,19 @@ class Hotel < ApplicationRecord
     result.records
   end
   # rubocop:enable all
+
+  # custome validation
+  def hotel_image_content_type
+    return unless hotel_image.attached? && !hotel_image.content_type.in?(%w[image/jpeg image/png])
+
+    errors.add(:hotel_image, 'must be a JPEG or PNG image')
+  end
+
+  def hotel_image_size
+    return unless hotel_image.attached? && hotel_image.byte_size > 5.megabytes
+
+    errors.add(:hotel_image, 'size must be less than 5MB')
+  end
 
   # callback method for rejecting all booking request related to that hotel
   def reject_bookings_and_send_rejection_emails

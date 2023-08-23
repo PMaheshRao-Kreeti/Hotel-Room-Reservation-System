@@ -1,86 +1,88 @@
 <div class="container">
-  <div class="row ">
+  <div class="row">
     <div class="col-lg-12">
-      
       <% if @hotels.empty? %>
         <div class="alert alert-danger text-center">
-          Please fill all the filteration field before fitering !!!
+          Please fill all the filtration fields before filtering!!!
         </div>
         <% @hotels = Hotel.all %>
       <% end %>
 
-      <%= render  "search_and_filter" %>
+      <%= render "search_and_filter" %>
       <div class="row">
-        <div class="h2 text-center">Filteration Result List</div>
+        <div class="h2 text-center">Filtration Result List</div>
       </div>
-      
 
-      <%= link_to "Back to Hotel", hotels_path, class: "btn btn-primary mt-1"%>
-            
-            <% @loop_counter = 0 %>
+      <%= link_to "Back to Hotel", hotels_path, class: "btn btn-primary mt-1" %>
+
+      <% @loop_counter = 0 %>
+
       <div class="row">
         <% @hotels.each do |hotel| %>
-          <% if @checkin.present? && @checkout.present? %>
-            <% available_room_count(hotel,@checkin_date,@checkout_date) %>
+          <%# return count of available rooms %>
+          <% if @checkin_date.present? && @checkout_date.present? %>
+            <% available_room_count(hotel, @checkin_date, @checkout_date) %>
           <% else %>
-            <% available_room_count(hotel) %>  
-          <% end %>
-          
-          <% if @no_of_rooms.present? %>
-            <% if !(@total_number_of_available_rooms >= @no_of_rooms) %>
-                <% @loop_counter += 1 %>
-                <% break %>
-            <% end %>  
+            <% available_room_count(hotel) %>
           <% end %>
 
+          <%# show only those hotels with sufficient rooms available for booking %>
+          <% if @no_of_rooms.present? %>
+            <% if !(@total_number_of_available_rooms >= @no_of_rooms) %>
+              <% @loop_counter += 1 %>
+              <% break %>
+            <% end %>
+          <% end %>
+
+          <%# show only those hotels with sufficient room capacity for guests %>
           <% if @no_of_guests.present? %>
             <% if !(@guest_capacity >= @no_of_guests) %>
-                <% @loop_counter += 1 %>
-                <% break %>
-            <% end %>  
+              <% @loop_counter += 1 %>
+              <% break %>
+            <% end %>
           <% end %>
 
           <div class="col-md-4">
             <div class="card mt-5">
               <% if hotel.hotel_image.attached? %>
-                <%= image_tag hotel.hotel_image, alt: 'hotel image', class: 'hotel-img p-2' %> 
+                <%= image_tag hotel.hotel_image, alt: 'hotel image', class: 'hotel-img p-2' %>
               <% else %>
                 <%= image_tag("gallery_2.jpg", class: 'hotel-img p-2') %>
-              <% end %> 
+              <% end %>
               <div class="card-body">
                 <h5 class="card-title"><%= hotel.name %></h5>
-                <p class="card-text"><strong>Description : </strong><%= hotel.description %></p>
-                <p class="card-text"><strong>Address : </strong><%= hotel.full_address %></p>
+                <p class="card-text"><strong>Description: </strong><%= hotel.description %></p>
+                <p class="card-text"><strong>Address: </strong><%= hotel.full_address %></p>
                 <p class="card-text"><strong>Room Available:</strong></p>
-                <p class="card-text">Single Bedroom : <%= @single_bedroom_count %> Available</p>
-                <p class="card-text">Double Bedroom : <%= @double_bedroom_count %> Available</p>
-                <p class="card-text">Suite : <%= @suite_count %> Available</p>
-                <p class="card-text">Dormitory : <%= @dormitory_count %> Available</p>
-                <p class="card-text"><strong>Price Range : </strong><%= hotel.min_room_price%> - <%= hotel.max_room_price%> Rs.</p>
-                
-                <%if current_user.role == 'admin' %>
+                <p class="card-text">Single Bedroom: <%= @single_bedroom_count %> Available</p>
+                <p class="card-text">Double Bedroom: <%= @double_bedroom_count %> Available</p>
+                <p class="card-text">Suite: <%= @suite_count %> Available</p>
+                <p class="card-text">Dormitory: <%= @dormitory_count %> Available</p>
+                <p class="card-text"><strong>Price Range: </strong><%= hotel.min_room_price %> - <%= hotel.max_room_price %> Rs.</p>
+
+                <% if current_user.role == 'admin' %>
                   <%= link_to 'Edit detail', edit_hotel_path(hotel), class: 'btn btn-success' %>
                   <%= link_to 'Delete', hotel_path(hotel), class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' } %>
                 <% else %>
                   <%= link_to 'Booking Details', hotel_path(hotel), class: 'btn btn-success' %>
                 <% end %>
-                
+
                 <%= link_to 'Show Rooms', hotel_show_rooms_path(hotel), class: 'btn btn-info' %>
               </div>
             </div>
           </div>
         <% end %>
-        
+
         <% if @hotels.count == @loop_counter %>
           <div class="alert alert-warning text-center mt-3">
-            No Result found to the filter
+            No results found for the filter
           </div>
           <% @hotels = Hotel.all.order(created_at: :asc) %>
-          <%= render  "hotels_list" %>
+          <%= render "hotels_list" %>
         <% end %>
-        
+
       </div>
-      
-    </div >
+
+    </div>
   </div>
 </div>
