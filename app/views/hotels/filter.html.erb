@@ -1,21 +1,14 @@
 <div class="container">
   <div class="row">
     <div class="col-lg-12">
-      <% if @hotels.empty? %>
-        <div class="alert alert-danger text-center">
-          Please fill all the filtration fields before filtering!!!
-        </div>
-        <% @hotels = Hotel.all %>
-      <% end %>
-
+      
       <%= render "search_and_filter" %>
-      <div class="row">
+      
+      <div class="row pt-4">
         <div class="h2 text-center">Filtration Result List</div>
       </div>
 
       <%= link_to "Back to Hotel", hotels_path, class: "btn btn-primary mt-1" %>
-
-      <% @loop_counter = 0 %>
 
       <div class="row">
         <% @hotels.each do |hotel| %>
@@ -23,7 +16,7 @@
           <% if @checkin_date.present? && @checkout_date.present? %>
             <% available_room_count(hotel, @no_of_guests, @no_of_rooms,@checkin_date, @checkout_date) %>
           <% else %>
-            <% available_room_count(hotel, @no_of_guests, @no_of_rooms,) %>
+            <% available_room_count(hotel, @no_of_guests, @no_of_rooms) %>
           <% end %>
 
           <div class="col-md-4">
@@ -56,15 +49,6 @@
             </div>
           </div>
         <% end %>
-
-        <% if @hotels.count == @loop_counter %>
-          <div class="alert alert-warning text-center mt-3">
-            No results found for the filter
-          </div>
-          <% @hotels = Hotel.all.order(created_at: :asc) %>
-          <%= render "hotels_list" %>
-        <% end %>
-
       </div>
 
     </div>
