@@ -35,7 +35,6 @@ gem 'elasticsearch-model', '~> 7.2', '>= 7.2.1'
 gem 'elasticsearch-rails', '~> 7.2', '>= 7.2.1'
 
 group :development, :test do
-  
   gem 'dotenv-rails'
   gem 'factory_bot_rails'
   gem 'icalendar'

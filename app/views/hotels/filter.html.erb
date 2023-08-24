@@ -21,25 +21,9 @@
         <% @hotels.each do |hotel| %>
           <%# return count of available rooms %>
           <% if @checkin_date.present? && @checkout_date.present? %>
-            <% available_room_count(hotel, @checkin_date, @checkout_date) %>
+            <% available_room_count(hotel, @no_of_guests, @no_of_rooms,@checkin_date, @checkout_date) %>
           <% else %>
-            <% available_room_count(hotel) %>
-          <% end %>
-
-          <%# show only those hotels with sufficient rooms available for booking %>
-          <% if @no_of_rooms.present? %>
-            <% if !(@total_number_of_available_rooms >= @no_of_rooms) %>
-              <% @loop_counter += 1 %>
-              <% break %>
-            <% end %>
-          <% end %>
-
-          <%# show only those hotels with sufficient room capacity for guests %>
-          <% if @no_of_guests.present? %>
-            <% if !(@guest_capacity >= @no_of_guests) %>
-              <% @loop_counter += 1 %>
-              <% break %>
-            <% end %>
+            <% available_room_count(hotel, @no_of_guests, @no_of_rooms,) %>
           <% end %>
 
           <div class="col-md-4">

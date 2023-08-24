@@ -69,7 +69,14 @@ class HotelsController < ApplicationController
   end
 
   def filter_hotels
-    @hotels = @destination.present? ? Hotel.search(@destination).records : Hotel.all.order(created_at: :asc)
+    @hotels = @destination.present? && @destination != '' ? Hotel.search(@destination).records : Hotel.all
+    @filter_hotel_list = if @checkin_date.present? && @checkout_date.present?
+                           loop_available_room_count(@hotels, @no_of_guests, @no_of_rooms, @checkin_date,
+                                                     @checkout_date)
+                         else
+                           loop_available_room_count(@hotels, 0, 0)
+                         end
+    @hotels.reject! { |hotel| @filter_hotel_list.include?(hotel) } if @filter_hotel_list.present?
   end
 
   def hotel_params

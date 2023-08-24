@@ -26,9 +26,9 @@
           <% if current_user.role == 'customer'%>  
             <%# return count of available rooms %>
             <% if @checkin_date.present? && @checkout_date.present? %>
-              <% available_room_count(hotel, @checkin_date, @checkout_date) %>
+              <% available_room_count(hotel, 0, 0,@checkin_date, @checkout_date) %>
             <% else %>
-              <% available_room_count(hotel) %>
+              <% available_room_count(hotel, 0, 0) %>
             <% end %>
           <% else %> 
             <%# return total number of rooms for admin %>
