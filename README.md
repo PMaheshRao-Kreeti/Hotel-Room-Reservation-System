@@ -19,9 +19,14 @@ application up and running.
 
 * elastic search version -> 7.4.0
 
+
 ## setup instruction:
 
-```bundle && yarn```
+```bundle install && yarn install```
+
+**remove babel.config.js file**
+
+```rails webpacker:install && rails webpacker:compile```
 
 **make sure to start elasticsearch server before seeding the database**
 
