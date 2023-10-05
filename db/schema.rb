@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -10,7 +12,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_07_31_063408) do
+# rubocop:disable all
+
+ActiveRecord::Schema.define(version: 2023_09_25_104459) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -61,6 +65,23 @@ ActiveRecord::Schema.define(version: 2023_07_31_063408) do
     t.index ["user_id"], name: "index_bookings_on_user_id"
   end
 
+  create_table "hotel_admins", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "hotel_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["hotel_id"], name: "index_hotel_admins_on_hotel_id"
+    t.index ["user_id"], name: "index_hotel_admins_on_user_id"
+  end
+
+  create_table "hotel_gallery_images", force: :cascade do |t|
+    t.string "image"
+    t.bigint "hotel_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["hotel_id"], name: "index_hotel_gallery_images_on_hotel_id"
+  end
+
   create_table "hotels", force: :cascade do |t|
     t.string "name"
     t.string "address"
@@ -83,6 +104,14 @@ ActiveRecord::Schema.define(version: 2023_07_31_063408) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_notifications_on_user_id"
+  end
+
+  create_table "photos", force: :cascade do |t|
+    t.string "image"
+    t.bigint "hotel_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["hotel_id"], name: "index_photos_on_hotel_id"
   end
 
   create_table "rooms", force: :cascade do |t|
@@ -114,6 +143,12 @@ ActiveRecord::Schema.define(version: 2023_07_31_063408) do
   add_foreign_key "bookings", "hotels"
   add_foreign_key "bookings", "rooms"
   add_foreign_key "bookings", "users"
+  add_foreign_key "hotel_admins", "hotels"
+  add_foreign_key "hotel_admins", "users"
+  add_foreign_key "hotel_gallery_images", "hotels"
   add_foreign_key "notifications", "users"
+  add_foreign_key "photos", "hotels"
   add_foreign_key "rooms", "hotels"
 end
+
+# rubocop:enable all

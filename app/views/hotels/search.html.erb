@@ -6,18 +6,12 @@
         <div class="alert alert-danger text-center">
           Notice : No results found!!! Please enter a valid keyword for the search.
         </div>
-        <% @hotels = Hotel.all %>
       <% end %>
 
       <%= render "search_and_filter" %>
+
       <div class="row mt-4">
         <div class="h2 text-center">Search Result List</div>
-      </div>
-
-      <div class="row mt-2">
-        <div class="col-12">
-          <%= link_to "Back", hotels_path, class: "btn btn-primary mt-1" %>
-        </div>
       </div>
 
       <div class="row mt-3">
@@ -32,7 +26,7 @@
             <% end %>
           <% else %> 
             <%# return total number of rooms for admin %>
-            <%  total_number_of_rooms_in_hotel(hotel)  %>
+            <%#  total_number_of_rooms_in_hotel(hotel)  %>
           <% end %>
           
           <div class="col-md-4">
@@ -44,22 +38,21 @@
                 <h5 class="card-title"><%= hotel.name %></h5>
                 <p class="card-text"><strong>Description:</strong> <%= hotel.description %></p>
                 <p class="card-text"><strong>Address:</strong> <%= hotel.full_address %></p>
+                <p class="card-text"><strong>Room Available:</strong></p>
 
-                <% if current_user.role == 'admin' %>
-                  <p class="card-text"><strong>Total Rooms :</strong></p>
-                <% else %>
-                  <p class="card-text"><strong>Room Available:</strong></p>
-                <% end %>
-
-                <% if @single_bedroom_count > 0 && @double_bedroom_count > 0 && @suite_count > 0 && @dormitory_count > 0   %>
+                <% if @single_bedroom_count > 0 || @double_bedroom_count > 0 || @suite_count > 0 || @dormitory_count > 0   %>
                   <p class="card-text">Single Bedroom: <%= @single_bedroom_count %> Available</p>
                   <p class="card-text">Double Bedroom: <%= @double_bedroom_count %> Available</p>
                   <p class="card-text">Suite: <%= @suite_count %> Available</p>
                   <p class="card-text">Dormitory: <%= @dormitory_count %> Available</p>
                   <p class="card-text"><strong>Price Range: </strong><%= hotel.min_room_price %> - <%= hotel.max_room_price %> Rs.</p>
-                  <%= link_to 'Booking Details', hotel_path(hotel), class: 'btn btn-success' %>
+                  <% if current_user.role == 'customer' %>
+                    <%= link_to 'Booking Details', hotel_booking_details_path(hotel), class: 'btn btn-success' %>
+                  <% end %>
                 <% else %>
-                  <p class="card-text alert alert-danger"> No Room Available in this hotel. Please try to book different hotel. </p>
+                  <% if current_user.role == 'customer' %>
+                    <p class="card-text alert alert-danger"> No Room Available in this hotel. Please try to book different hotel. </p>
+                  <% end %>
                 <% end %>
 
                 <% if current_user.role == 'admin' %>

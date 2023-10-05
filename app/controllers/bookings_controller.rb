@@ -2,20 +2,19 @@
 
 # Controller for managing bookings.
 class BookingsController < ApplicationController
-  before_action :set_booking, only: %i[edit approval update destroy cancelled]
+  before_action :set_booking, only: %i[edit approval update cancelled]
   before_action :set_hotel, only: %i[new create edit approval update]
 
   include ApplicationHelper
-  include HotelsHelper
   include BookingsHelper
 
   def index
-    @all_bookings = Booking.where.not(booking_status: 'cancelled').order(created_at: :desc)
-    @todays_bookings = @all_bookings.where(created_at: Time.zone.now.beginning_of_day..Time.zone.now.end_of_day)
+    @all_bookings = Booking.all_for_hotel(session[:hotel_id])
+    @todays_bookings = Booking.todays_for_hotel(session[:hotel_id])
   end
 
   def booking_history
-    @bookings = Booking.where(user_id: current_user.id).order(created_at: :desc)
+    @bookings = Booking.current_user_bookings(current_user.id)
   end
 
   def new
@@ -29,24 +28,43 @@ class BookingsController < ApplicationController
     @booking.hotel_name = @hotel.name
     @booking.booking_status = 'pending'
 
-    return unless @booking.save
+    return unless @booking.save!
 
     BookingMailer.with(booking: @booking).booking_done.deliver_now
     redirect_to bookings_history_path, notice: 'Booking Done successfully.'
   end
 
-  def approval; end
+  def approval
+    booked_room_ids = Booking.filter_by_hotel_and_roomtype(@booking.hotel_id, @booking.room_type)
+                             .overlapping_dates(@booking.check_out_date, @booking.check_in_date)
+                             .pluck(:room_id)
+
+    @available_rooms = Room.filter_by_hotel_and_roomtype(@booking.hotel_id, @booking.room_type)
+                           .excluding_room_ids(booked_room_ids)
+  end
+
+  def details
+    @hotel = Hotel.find(params[:hotel_id])
+    @single_bedroom = @hotel.rooms.room_prices('Single Bed')
+    @double_bedroom = @hotel.rooms.room_prices('Double Bed')
+    @suite = @hotel.rooms.room_prices('Suite')
+    @dormitory = @hotel.rooms.room_prices('Dormitory')
+  end
+
+  def show
+    @booking = Booking.find(params[:id])
+    @hotel = Hotel.find(params[:hotel_id])
+    @user = User.find(@booking.user_id)
+  end
 
   def update
     if @booking.update(admin_booking_update_params)
-
       create_and_send_notification(@booking)
-
       @booking.room_id = '' if @booking.booking_status == 'rejected' || @booking.booking_status == 'pending'
       @booking.save
 
       BookingMailer.with(booking: @booking).booking_admin_action.deliver_now
-      redirect_to bookings_path, notice: 'Booking was successfully updated.'
+      redirect_to bookings_path, notice: 'Booking Status was successfully updated.'
     else
       render :approval
     end
@@ -54,11 +72,8 @@ class BookingsController < ApplicationController
 
   # handle ajax request for booking checking
   def availibility_checking
-    check_in_date = params[:check_in_date]
-    check_out_date = params[:check_out_date]
     hotel = Hotel.find_by(id: params[:hotel_id])
-    bookings = Booking.where('check_in_date >= ? AND check_out_date <= ? AND hotel_id = ?', check_in_date,
-                             check_out_date, hotel.id)
+    bookings = Booking.for_date_range_and_hotel(params[:check_in_date], params[:check_out_date], hotel.id)
     rooms = hotel.rooms
     find_available_room_types(bookings, rooms)
 
@@ -67,6 +82,7 @@ class BookingsController < ApplicationController
     end
   end
 
+  # booking in app notification
   def markread
     user = params[:selected_btn]
     notifications = Notification.where(user_id: user)
@@ -89,22 +105,5 @@ class BookingsController < ApplicationController
 
   def admin_booking_update_params
     params.require(:booking).permit(:booking_status, :room_id)
-  end
-
-  def set_booking
-    @booking = Booking.find(params[:id])
-  rescue ActiveRecord::RecordNotFound => e
-    redirect_to hotel_bookings_path, notice: e
-  end
-
-  def set_hotel
-    @hotel = Hotel.find(params[:hotel_id])
-  end
-
-  def create_and_send_notification(book)
-    hotel = Hotel.find_by(id: @booking.hotel_id)
-    content = "Booking #{book.booking_status}: for #{hotel.name} from #{book.check_in_date} to #{book.check_out_date}."
-    notification = Notification.new(user_id: book.user_id, message: content, status: false)
-    send_notification(notification) if notification.save
   end
 end

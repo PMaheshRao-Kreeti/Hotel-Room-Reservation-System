@@ -1,0 +1,52 @@
+<div class="row">
+  <div class="card mt-5 mb-3">
+    <div class="card-body">
+      <h2 class="text-center">Assign Hotel Admin</h2>
+    </div>
+  </div>
+  <div class="card mt-5 mb-3">
+    <div class="card-body">
+        <div class="row">
+          <div class="col-lg-7">
+            <div class="card-text"><strong >Hotel Name : </strong><%= @hotel.name %></div>
+            <div class="card-text"><strong > Address : </strong><%= @hotel.full_address %></div>
+          </div>          
+          <div class="col-lg-5">
+            
+            <div class="card-text"><strong >Admin : </strong>
+              <% if @hotel.hotel_admin.present? %>
+                <%= @hotel.hotel_admin.user.name %>
+              <% end %>
+            </div> 
+            <div class="card-text"><strong >Email : </strong>
+              <% if @hotel.hotel_admin.present? %>
+                <%= @hotel.hotel_admin.user.email %>
+              <% end %>
+            </div>
+
+          </div>
+        </div>
+    </div>
+  </div>
+</div>
+
+<%= form_with model: @hotel_admin, url: '/admins', method: :post do |form| %>
+  
+  <div class="row mt-5">
+    
+    <%= form.hidden_field :hotel_id, value: @hotel.id %>
+      
+    <div class="col-lg-4">
+      <div class="form-group">
+        <%= form.label :admin_id, class: 'mb-2' %>
+        <%= form.select :admin_id,  @not_assigned_hotel_admin_list.map {|a| [a.name , a.id] },class: 'form-select form-select-lg'%>
+      </div>
+    </div>
+  </div>
+  <!-- submit button & back button-->
+  <div class="row mt-5">
+    <div class="col-lg-2">
+     <%= form.submit "Submit",class: "btn btn-success btn-lg" %>
+    </div>
+  </div>
+<% end %>

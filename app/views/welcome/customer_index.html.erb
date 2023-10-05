@@ -1,7 +1,7 @@
 <% if user_logged_in? %>
   <div class="container">
     <%if flash[:notice].present?%>
-      <div class="alert alert-success">
+      <div class="alert alert-success text-center">
         <%= flash[:notice] %>
       </div>
     <% end %>

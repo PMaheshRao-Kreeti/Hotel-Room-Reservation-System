@@ -10,7 +10,7 @@
     <div class="col-lg-4">
       <div class="form-group">
         <%= form.label :room_type, class: 'mb-2' %>
-        <%= form.select :room_type, options_for_select(Room::ROOMTYPES, selected: @room.room_type), { prompt: 'Select Room Type' }, class: 'form-select form-select-lg' %>
+        <%= form.select :room_type, options_for_select(['Single Bed', 'Double Bed', 'Suite', 'Dormitory'], selected: @room.room_type), { prompt: 'Select Room Type' }, class: 'form-select form-select-lg' %>
         <% @room.errors.full_messages_for(:room_type).each do |message| %>
           <p class="text-danger"><%= message%></p>
         <% end %>
@@ -37,15 +37,6 @@
         <% end %>
       </div>
     </div>
-    <div class="col-lg-4">
-      <div class="form-group">
-        <%= form.label :bedroom_image %> <br>
-        <%= form.file_field :bedroom_image %>
-        <% @room.errors.full_messages_for(:bedroom_image).each do |message| %>
-          <p class="text-danger"><%= message%></p>
-        <% end %>
-      </div> 
-    </div>
   </div> 
 
   <div class="row mx-4 my-5 ">
@@ -54,7 +45,7 @@
     </div>
     
     <div class="col-lg-3 ">
-      <%= link_to "Back", hotels_path , class: "btn btn-lg btn-warning px-4" %>
+      <%= link_to 'Back', hotel_show_rooms_path(hotel_id: session[:hotel_id]), class: 'btn btn-lg btn-warning' %>
     </div>
   </div>
   

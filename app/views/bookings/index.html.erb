@@ -1,15 +1,11 @@
  <!--All booking-->
 <div class="col-lg-12">
   <%if flash[:notice].present?%>
-    <div class="alert alert-success">
+    <div class="alert alert-success text-center">
       <%= flash[:notice] %>
     </div>
   <% end %>
 
-  <div class="col-lg-3">
-    <%= link_to "Back ", hotels_path, class: "btn btn-warning"%>
-  </div>
-  
   <div class="card mt-5 mb-3">
     <div class="card-body">
       <h2 class="text-center">Todays Booking List</h2>
@@ -58,7 +54,7 @@
           </td>
           <td>
             <% if  booking.hotel_id.present? %>
-              <%= link_to 'Action',  hotel_booking_path(booking.hotel_id, booking), class: 'btn btn-primary' %>
+              <%= link_to 'Action',  hotel_booking_approval_path(booking.hotel_id, booking), class: 'btn btn-primary' %>
             <% else %>
               <a href="#" class="btn btn-danger disabled"> Action</a>
             <% end %>
@@ -120,7 +116,7 @@
           </td>
           <td>
             <% if  booking.hotel_id.present? %>
-              <%= link_to 'Action',  hotel_booking_path(booking.hotel_id, booking), class: 'btn btn-primary' %>
+              <%= link_to 'Action',  hotel_booking_approval_path(booking.hotel_id, booking), class: 'btn btn-primary' %>
             <% else %>
               <a href="#" class="btn btn-danger disabled ">Action</a>
             <% end %>

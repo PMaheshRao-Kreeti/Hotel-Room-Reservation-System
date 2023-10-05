@@ -2,6 +2,25 @@
 
 # HotelHelper
 module HotelsHelper
+  def initialize_filter_variables
+    @destination = params[:destination]
+    @checkin_date = params[:checkin]
+    @checkout_date = params[:checkout]
+    @no_of_guests = params[:guests].to_i
+    @no_of_rooms = params[:rooms].to_i
+  end
+
+  def filter_hotels
+    @hotels = @destination.present? && @destination != '' ? Hotel.search(@destination).records : Hotel.all
+    @filter_hotel_list = if @checkin_date.present? && @checkout_date.present?
+                           loop_available_room_count(@hotels, @no_of_guests, @no_of_rooms, @checkin_date,
+                                                     @checkout_date)
+                         else
+                           loop_available_room_count(@hotels, @no_of_guests, @no_of_rooms)
+                         end
+    @hotels.reject! { |hotel| @filter_hotel_list.include?(hotel) } if @filter_hotel_list.present?
+  end
+
   # method that give number of room in the hotel
   def available_room_count(hotel, _no_of_guest, _no_of_room, checkin = Date.today, checkout = Date.today + 1)
     @single_bedroom_count = count_available_rooms(hotel, 'Single Bed', checkin, checkout)
@@ -19,16 +38,7 @@ module HotelsHelper
     booked_rooms = hotel.bookings.where('((?<= check_in_date AND ? > check_in_date) OR
                                           (?<= check_out_date)) AND hotel_id = ? AND room_type = ?',
                                         checkin, checkout, checkin, hotel.id, room_type)
-    total_rooms.count - booked_rooms.count
-  end
-
-  # for admin instead od showing available rooms it shows all rooms in the hotel
-  # total_number_of_rooms_in_hotel(hotel)
-  def total_number_of_rooms_in_hotel(hotel)
-    @single_bedroom_count = hotel.rooms.where(room_type: 'Single Bed').count
-    @double_bedroom_count = hotel.rooms.where(room_type: 'Double Bed').count
-    @suite_count = hotel.rooms.where(room_type: 'Suite').count
-    @dormitory_count = hotel.rooms.where(room_type: 'Dormitory').count
+    total_rooms.count - booked_rooms.where(booking_status: 'pending').count
   end
 
   def loop_available_room_count(hotels, no_of_guest, no_of_room, checkin = Date.today,

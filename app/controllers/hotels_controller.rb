@@ -8,7 +8,7 @@ class HotelsController < ApplicationController
   include HotelsHelper
 
   def index
-    @hotels = Hotel.order(created_at: :asc)
+    @hotels = Hotel.all
   end
 
   def new
@@ -16,23 +16,25 @@ class HotelsController < ApplicationController
   end
 
   def create
-    hotel = Hotel.new(hotel_params)
-    if hotel.save
-      redirect_to hotels_path, notice: "Hotel [ #{hotel.name} ] created successfully."
+    @hotel = Hotel.new(hotel_params)
+    if @hotel.save
+      redirect_to admin_management_path, notice: "Hotel [ #{@hotel.name} ] created successfully."
     else
       render :new
     end
   end
 
-  def show; end
+  def show
+    @hotel_gallery_images = @hotel.hotel_gallery_images
+  end
 
   def show_rooms
-    @hotel = Hotel.find(params[:hotel_id])
+    @hotel = Hotel.includes(:rooms).find(params[:hotel_id])
   end
 
   def update
     if @hotel.update(hotel_params)
-      redirect_to hotels_path, notice: "Hotel [ #{@hotel.name} ] has been updated successfully"
+      redirect_to hotel_path(session[:hotel_id]), notice: "Hotel [ #{@hotel.name} ] has been updated successfully"
     else
       render :new
     end
@@ -40,8 +42,6 @@ class HotelsController < ApplicationController
 
   def search
     query = params[:search_hotels].presence && params[:search_hotels][:query]
-    @checkin_date = params[:checkin]
-    @checkout_date = params[:checkout]
     return unless query
 
     @hotels = Hotel.search_by_keyword(query)
@@ -53,35 +53,20 @@ class HotelsController < ApplicationController
 
   def destroy
     hotel_name = @hotel.name
+    @hotel.hotel_image.purge
     @hotel.destroy
     redirect_to hotels_path, notice: "Hotel [ #{hotel_name} ] has been deleted successfully"
   end
 
   private
 
-  def initialize_filter_variables
-    @loop_counter = 0
-    @destination = params[:destination]
-    @checkin_date = params[:checkin]
-    @checkout_date = params[:checkout]
-    @no_of_guests = params[:guests].to_i
-    @no_of_rooms = params[:rooms].to_i
-  end
-
-  def filter_hotels
-    @hotels = @destination.present? && @destination != '' ? Hotel.search(@destination).records : Hotel.all
-    @filter_hotel_list = if @checkin_date.present? && @checkout_date.present?
-                           loop_available_room_count(@hotels, @no_of_guests, @no_of_rooms, @checkin_date,
-                                                     @checkout_date)
-                         else
-                           loop_available_room_count(@hotels, 0, 0)
-                         end
-    @hotels.reject! { |hotel| @filter_hotel_list.include?(hotel) } if @filter_hotel_list.present?
-  end
-
   def hotel_params
-    params.require(:hotel).permit(:name, :address, :city, :state, :country, :pincode, :description,
-                                  :hotel_image, :latitude, :longitude)
+    if current_user.super_admin?
+      params.require(:hotel).permit(:name, :address, :city, :state, :country, :pincode, :latitude, :longitude)
+    elsif current_user.hotel_admin?
+      params.require(:hotel).permit(:name, :address, :city, :state, :country, :pincode, :description,
+                                    :latitude, :longitude)
+    end
   end
 
   def set_hotel

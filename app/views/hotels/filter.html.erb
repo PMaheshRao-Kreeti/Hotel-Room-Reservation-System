@@ -8,8 +8,6 @@
         <div class="h2 text-center">Filtration Result List</div>
       </div>
 
-      <%= link_to "Back to Hotel", hotels_path, class: "btn btn-primary mt-1" %>
-
       <div class="row">
         <% @hotels.each do |hotel| %>
           <%# return count of available rooms %>
@@ -32,15 +30,19 @@
                 <p class="card-text"><strong>Description: </strong><%= hotel.description %></p>
                 <p class="card-text"><strong>Address: </strong><%= hotel.full_address %></p>
                 
-                <% if @single_bedroom_count > 0 && @double_bedroom_count > 0 && @suite_count > 0 && @dormitory_count > 0   %>
+                <% if @single_bedroom_count > 0 || @double_bedroom_count > 0 || @suite_count > 0 || @dormitory_count > 0   %>
                   <p class="card-text">Single Bedroom: <%= @single_bedroom_count %> Available</p>
                   <p class="card-text">Double Bedroom: <%= @double_bedroom_count %> Available</p>
                   <p class="card-text">Suite: <%= @suite_count %> Available</p>
                   <p class="card-text">Dormitory: <%= @dormitory_count %> Available</p>
                   <p class="card-text"><strong>Price Range: </strong><%= hotel.min_room_price %> - <%= hotel.max_room_price %> Rs.</p>
-                  <%= link_to 'Booking Details', hotel_path(hotel), class: 'btn btn-success' %>
+                  <% if current_user.role == 'customer' %>
+                    <%= link_to 'Booking Details', hotel_booking_details_path(hotel), class: 'btn btn-success' %>
+                  <% end %>
                 <% else %>
-                  <p class="card-text alert alert-danger"> No Room Available in this hotel. Please try to book different hotel. </p>
+                  <% if current_user.role == 'customer' %>
+                    <p class="card-text alert alert-danger"> No Room Available in this hotel. Please try to book different hotel. </p>
+                  <% end %>
                 <% end %>
 
                 <% if current_user.role == 'admin' %>

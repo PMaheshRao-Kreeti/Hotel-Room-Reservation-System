@@ -1,7 +1,6 @@
 <%= javascript_pack_tag 'bookings' %>
 
 <div class="col-lg-12">
-  <%= flash[:notice] %>
   <div class="card mt-5 mb-3">
     <div class="card-body">
       <h2 class="text-center">Booking Page</h2>
@@ -25,7 +24,7 @@
       <div class="col-lg-4">
         <div class="form-group">
           <%= form.label :check_in_date, class: 'mb-2' %>
-          <%= form.date_field :check_in_date, class: 'date-picker form-control form-control-lg', min: Date.today, onchange: "setMinCheckOutDate(this.value)" %>
+          <%= form.date_field :check_in_date, class: 'date-picker form-control form-control-lg', min: Date.today %>
           <% @booking.errors.full_messages_for(:check_in_date).each do |message| %>
             <p class="text-danger"><%= message%></p>
           <% end %>
@@ -34,7 +33,7 @@
       <div class="col-lg-4">
         <div class="form-group">
           <%= form.label :check_out_date, class: 'mb-2' %>
-          <%= form.date_field :check_out_date, class: 'date-picker form-control form-control-lg',onchange: "handleCheckOutDateChange(this.value)"  %>
+          <%= form.date_field :check_out_date, class: 'date-picker form-control form-control-lg' %>
           <% @booking.errors.full_messages_for(:check_out_date).each do |message| %>
             <p class="text-danger"><%= message%></p>
           <% end %>
@@ -77,73 +76,7 @@
       <div class="col-lg-2">
       <%= form.submit "Book Room",class: "btn btn-success btn-lg" ,disabled: true , id: 'book-button' %>
       </div>
-      
-      <div class="col-lg-3 ">
-      <%= link_to "Back to bookings", url_for(:back), class: "btn btn-warning btn-lg" %>
-      </div>
     </div>
   <% end %>
 </div>
 
-
-
-<script>
-  function handleCheckOutDateChange(selectedDate) {
-    const checkInDateInput = $('#booking_check_in_date');
-    const bookButton = $('#book-button');
-    const hotelId = document.getElementById('hotel_name').dataset.hotelId;
-    const divAlert = document.getElementById("nobooking");
-
-    if(checkInDateInput.val() == '')
-    {
-      alert('Please enter checkin date before entering checkout date'); 
-      return;
-    }
-    $.ajax({
-      url: '/availibility_checking',
-      method: 'POST',
-      data: {
-        check_in_date: checkInDateInput.val(),
-        check_out_date: selectedDate ,
-        hotel_id: hotelId ,  authenticity_token: $('meta[name="csrf-token"]').attr('content')
-      },
-      success: function (response) {
-        // alert("checkin done successfully");
-        const roomTypeSelect = $('#booking_room_type');
-        // roomTypeSelect.empty(); // Clear existing options
-
-        response.forEach(function (roomType) {
-          const option = $('<option></option>').text(roomType).attr('value', roomType);
-          roomTypeSelect.append(option);
-        });
-      
-        const numberOfOptions = roomTypeSelect[0].options.length;
-        // console.log('Number of options:', numberOfOptions);
-        console.log(typeof(numberOfOptions));
-        if(numberOfOptions === 1)
-        {
-          bookButton.prop('disabled', true);
-          divAlert.style.display = "block";
-          
-        }
-        // Re-enable the 'room_type' select field.
-        roomTypeSelect.prop('disabled', false);
-      },
-      error: function (xhr, status, error) {
-        alert("checkin failed please try again");
-      }
-    });
-  }
-  // function to restrict booking minimum for 1 day
-  function setMinCheckOutDate(selectedCheckInDate) {
-    const checkOutDateField = document.querySelector('input[name="booking[check_out_date]"]');
-    const checkInDateValue = new Date(selectedCheckInDate);
-    const oneDayInMilliseconds = 24 * 60 * 60 * 1000;
-    const minCheckOutDate = new Date(checkInDateValue.getTime() + oneDayInMilliseconds);
-    
-    // Format the minimum date in YYYY-MM-DD (HTML date input format)
-    const minCheckOutDateString = minCheckOutDate.toISOString().slice(0, 10);
-
-    checkOutDateField.min = minCheckOutDateString;
-  }
-</script> 

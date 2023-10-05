@@ -1,0 +1,60 @@
+<div class="row">
+  <div class="col-lg-12 mb-4">
+    <%if flash[:notice].present?%>
+      <div class="alert alert-success text-center">
+        <%= flash[:notice] %>
+      </div>
+    <% end %>
+    <%if flash[:alert].present?%>
+      <div class="alert alert-danger text-danger">
+        <%= flash[:alert] %>
+      </div>
+    <% end %>
+
+    <%= link_to 'Create Hotel', new_hotel_path, class: 'btn btn-success btn-md' %>
+    
+    <div class="card my-3">
+      <div class="card-body">
+        <h2 class="text-center">Admin Management</h2>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-12 table-responsive">
+        <table class="table table-bordered mt-3 table-striped ">
+          <thead>
+            <tr>
+              <th>Hotel name </th>
+              <th>Address </th>
+              <th>Admin name</th>
+              <th>Email</th>
+              <th>Admin</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @hotels.each do |hotel| %>
+              <tr>
+                <td><%= hotel.name %></td>
+                <td><%= hotel.full_address %></td>
+                
+                <% if hotel.hotel_admin.present? %>
+                  <td><%= hotel.hotel_admin.user.name %></td>
+                  <td><%= hotel.hotel_admin.user.email %></td>
+                  <td>
+                      <%= link_to 'delete ', admin_path(hotel),class: 'btn btn-danger' , method: :delete, data: { confirm: 'Are you sure?' }%>
+                  </td>
+                <% else %>
+                  <td class= "text-center"> --- </td>
+                  <td class= "text-center"> --- </td>
+                  <td>
+                    <%= link_to 'Assign ', new_admin_path(id: hotel.id), class: 'btn btn-warning' %>
+                  </td>
+                <% end %>
+              </tr> 
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>  
+  </div>
+</div>

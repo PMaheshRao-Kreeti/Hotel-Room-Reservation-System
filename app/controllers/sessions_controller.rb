@@ -2,12 +2,14 @@
 
 # Sessioncontroller create and destroy created session
 class SessionsController < ApplicationController
+  include SessionsHelper
+  skip_before_action :verify_authenticity_token, only: [:destroy]
   def new
-    redirect_to customers_path if user_logged_in? && current_user.role == 'customer'
+    redirect_to_user_path(current_user.role) if user_logged_in?
   end
 
   def admin_new
-    redirect_to admins_path if user_logged_in? && current_user.role == 'admin'
+    redirect_to_user_path(current_user.role) if user_logged_in?
   end
 
   def create
@@ -22,10 +24,10 @@ class SessionsController < ApplicationController
   end
 
   def create_admin
-    user = User.find_by(email: params[:email])
-    if user&.authenticate(params[:password]) && user&.admin?
-      session[:user_id] = user.id
-      redirect_to admins_path
+    user = authenticate_user(params[:email], params[:password])
+    if user
+      setup_user_session(user)
+      redirect_to_user_path(user.role)
     else
       flash.now[:alert] = 'Invalid email or password'
       render :admin_new
@@ -46,41 +48,5 @@ class SessionsController < ApplicationController
     else
       redirect_to login_path
     end
-  end
-
-  private
-
-  def redirect_to_user_path(role)
-    case role
-    when 'customer'
-      redirect_to customers_path
-    when 'admin'
-      redirect_to admins_path
-    end
-  end
-
-  def authenticate_user(email, password)
-    user = User.find_by(email:)
-    user if user&.authenticate(password)
-  end
-
-  def setup_user_session(user)
-    session[:user_id] = user.id
-    cookies.signed[:user_id] = user.id
-  end
-
-  # facebook session setup and creation
-  def find_or_create_user_from_facebook(auth)
-    info = auth[:info]
-    User.find_or_create_by(uid: auth[:uid], provider: auth[:provider]) do |u|
-      u.name = info[:name]
-      u.email = info[:email]
-      u.password = SecureRandom.hex(15)
-    end
-  end
-
-  def setup_user_session_facebook(user, access_token)
-    session[:user_id] = user.id
-    session[:access_token] = access_token
   end
 end

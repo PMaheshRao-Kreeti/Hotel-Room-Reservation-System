@@ -15,7 +15,7 @@ class UsersController < ApplicationController
   # create a new user
   def create
     @user = User.new(user_params)
-    @user.role = :customer # Set role as customer by default
+    @user.customer! # Set role as customer by default
 
     if @user.save
       session[:user_id] = @user.id
@@ -28,6 +28,6 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:name, :email, :phone, :password, :password_confirmation, :role)
+    params.require(:user).permit(:name, :email, :phone, :password, :password_confirmation)
   end
 end

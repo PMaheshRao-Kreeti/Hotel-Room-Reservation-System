@@ -4,6 +4,7 @@
 class RoomsController < ApplicationController
   before_action :set_room, only: %i[edit show update destroy]
   before_action :set_hotel, only: %i[new create edit update destroy]
+
   def new
     @room = Room.new
   end
@@ -11,7 +12,7 @@ class RoomsController < ApplicationController
   def create
     @room = @hotel.rooms.create(room_params)
     if @room.save
-      redirect_to hotel_show_rooms_path(@hotel), notice: "Room at #{@hotel.name} was successfully created "
+      redirect_to hotel_show_room_path(@hotel), notice: "Room at #{@hotel.name} was successfully created "
     else
       render :new
     end
@@ -29,7 +30,7 @@ class RoomsController < ApplicationController
 
   def destroy
     @room.destroy
-    redirect_to hotel_show_rooms_path(@hotel), notice: "Room was successfully destroyed from #{@hotel.name} ."
+    redirect_to hotel_room_path(@hotel), notice: "Room was successfully destroyed from #{@hotel.name} ."
   end
 
   private
@@ -43,6 +44,6 @@ class RoomsController < ApplicationController
   end
 
   def room_params
-    params.require(:room).permit(:room_type, :price, :hotel_id, :bedroom_image, :room_number)
+    params.require(:room).permit(:room_type, :price, :hotel_id, :room_number)
   end
 end

@@ -1,6 +1,6 @@
 <div class="container mb-5">
   <%if flash[:notice].present?%>
-    <div class="alert alert-success">
+    <div class="alert alert-success text-center">
       <%= flash[:notice] %>
     </div>
   <% end %>
@@ -14,11 +14,8 @@
 
   <div class="row mb-1 mt-4">
     <div class="col-lg-12">
-      <% if current_user.role == 'admin' %>
-        <%= link_to "Back", hotels_path, class: "btn btn-warning px-5 my-1" %>
+      <% if current_user.hotel_admin? %>
         <%= link_to "Room +", new_hotel_room_path, class: "btn btn-success px-5 my-1"%>
-      <% else %>
-        <%= link_to "Back ", hotels_path, class: "btn btn-primary"%>
       <% end %>
     </div>
   </div>
@@ -28,16 +25,12 @@
       <% @hotel.rooms.sort_by(&:room_number).each do |room| %>
         <div class="col-lg-4 col-md-6">
           <div class="card shadow mt-5">
-            <% if room.bedroom_image.attached? %>
-              <%= image_tag room.bedroom_image, alt: 'room image', class: 'room-img rounded-3 p-2' %>
-            <% end %>
             <div class="card-body">
-              <h5 class="card-title"><%= room.hotel.name %></h5>
-              <p class="card-text"><strong>Room Type:</strong> <%= room.room_type %></p>
+              <h5 class="card-title"><u><%= room.room_type %></u></h5>
               <p class="card-text"><strong>Room Number:</strong> <%= room.room_number %></p>
               <p class="card-text"><strong>Capacity:</strong> <%= room.capacity %> person</p>
               <p class="card-text"><strong>Price:</strong> <%= room.price %> Rs.</p>
-              <% if current_user.role == 'admin' %>
+              <% if current_user.hotel_admin? %>
                 <%= link_to 'Edit detail', edit_hotel_room_path(@hotel,room), class: 'btn btn-success' %>
                 <%= link_to 'Delete', hotel_room_path(@hotel,room), class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' } %>
               <% end %>

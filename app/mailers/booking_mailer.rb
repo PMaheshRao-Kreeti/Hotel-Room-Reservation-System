@@ -50,8 +50,10 @@ class BookingMailer < ApplicationMailer
     ical.add_event(event)
     ical.append_custom_property('METHOD', 'PUBLISH')
     attachments['event.ics'] = { mime_type: 'text/calendar', content: ical.to_ical }
-    mail(to: user.email, subject: 'Booking Confirmation')
+    mail(to: user.email, from: hotel.hotel_admin.user.email ,subject: 'Booking Confirmation')
   end
+
+  
 
   # rubocop:enable all
 end

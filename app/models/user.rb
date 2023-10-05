@@ -4,10 +4,11 @@
 class User < ApplicationRecord
   has_secure_password
 
+  has_one :hotel_admin
   has_many :bookings
   has_many :notifications
 
-  enum role: { admin: 0, customer: 1 }
+  enum role: { super_admin: 0, hotel_admin: 1, customer: 2 }
 
   validates :name, presence: true, length: { maximum: 255 }
   validates :email, presence: true, uniqueness: true,

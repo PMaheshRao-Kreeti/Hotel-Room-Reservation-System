@@ -4,7 +4,6 @@
 class CreateRooms < ActiveRecord::Migration[6.1]
   def change
     create_table :rooms do |t|
-      t.string :bedroom_image
       t.string :room_type
       t.string :room_number
       t.integer :price
