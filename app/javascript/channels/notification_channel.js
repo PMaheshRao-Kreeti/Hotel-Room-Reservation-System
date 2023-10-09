@@ -48,11 +48,17 @@ document.addEventListener("DOMContentLoaded", function() {
       newNotification.className = "notification-message";
       newNotification.textContent = data.message;
 
-      var divider = document.createElement("div");
-      divider.className = "dropdown-divider";
+      // Check if the first notification in the list
+      var isFirstNotification = !notificationList.querySelector(".notification-message");
+      
+      if (!isFirstNotification) {
+        // Add a divider if it's not the first notification
+        var divider = document.createElement("div");
+        divider.className = "dropdown-divider";
+        notificationList.appendChild(divider);
+      }
 
       notificationList.appendChild(newNotification);
-      notificationList.appendChild(divider);
     }
   });
 });

@@ -1,0 +1,12 @@
+<% if flash[:notice].present? %>
+  <div class="alert alert-success text-center" id="notice-flash">
+    <%= flash[:notice] %>
+  </div>
+<% end %>
+<% if flash[:alert].present? %>
+  <div class="alert alert-danger text-danger" id="alert-flash">
+    <%= flash[:alert] %>
+  </div>
+<% end %>
+
+<%= javascript_pack_tag 'flash_messages' %>

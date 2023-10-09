@@ -7,7 +7,6 @@
         <div class="col-lg-6 col-md-12 p-2">
           <p class="fs-5"><strong>Description : </strong><%= @hotel.description %></p>
           <p class="fs-5"><strong>Address : </strong><%= @hotel.full_address %></p>
-          <p class="fs-5"><strong>Available: Wi-Fi, Room-service, Swimming pool, Car rental services, Laundry services.</strong></p>
         </div>
         <div class="col-lg-4 col-md-7 p-2">
           <p class="fs-5"><strong>Room per day charge :</strong></p>
@@ -30,10 +29,6 @@
         </div>
         <div class="col-lg-8">
           <div class="row">
-            <% if @hotel.hotel_gallery_images.empty?  %>
-              <li class="text-danger mt-3"> Notice : Sorry for the inconvenience , the gallery images are not added yet.   </li>
-            <% end %>
-            
             <% @hotel.hotel_gallery_images.each do |hotel_gallery| %>
               <div class="col-lg-3 col-md-4 col-sm-6">
                 <% if hotel_gallery.image.attached? %>

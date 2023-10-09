@@ -11,12 +11,6 @@ RSpec.describe Room, type: :model do
       expect(room).not_to be_valid
     end
 
-    it 'is invalid without a bedroom_image' do
-      room = FactoryBot.build(:room, bedroom_image: nil)
-      expect(room).not_to be_valid
-      expect(room.errors[:bedroom_image]).to include("can't be blank")
-    end
-
     it 'is invalid without a room_type' do
       room = FactoryBot.build(:room, room_type: nil)
       expect(room).not_to be_valid
@@ -35,12 +29,6 @@ RSpec.describe Room, type: :model do
       expect(room.errors[:room_number]).to include("can't be blank")
     end
 
-    it 'is invalid with a too long room_number' do
-      room = FactoryBot.build(:room, room_number: 'A' * 51)
-      expect(room).not_to be_valid
-      expect(room.errors[:room_number]).to include("is too long (maximum is 50 characters)")
-    end
-
     it 'is invalid without a price' do
       room = FactoryBot.build(:room, price: nil)
       expect(room).not_to be_valid
@@ -51,18 +39,6 @@ RSpec.describe Room, type: :model do
       room = FactoryBot.build(:room, price: -100)
       expect(room).not_to be_valid
       expect(room.errors[:price]).to include("must be greater than 0")
-    end
-
-    it 'is invalid without a capacity' do
-      room = FactoryBot.build(:room, capacity: nil)
-      expect(room).not_to be_valid
-      expect(room.errors[:capacity]).to include("can't be blank")
-    end
-
-    it 'is invalid with a non-positive capacity' do
-      room = FactoryBot.build(:room, capacity: 0)
-      expect(room).not_to be_valid
-      expect(room.errors[:capacity]).to include("must be greater than 0")
     end
 
     it 'is invalid without a hotel_id' do

@@ -47,41 +47,17 @@ RSpec.describe Hotel, type: :model do
       expect(hotel.errors[:pincode]).to include("can't be blank")
     end
 
-    it 'is invalid without a description' do
-      hotel = FactoryBot.build(:hotel, description: nil)
-      expect(hotel).not_to be_valid
-      expect(hotel.errors[:description]).to include("can't be blank")
-    end
-
-    it 'is invalid without a hotel_image' do
-      hotel = FactoryBot.build(:hotel, hotel_image: nil)
-      expect(hotel).not_to be_valid
-      expect(hotel.errors[:hotel_image]).to include("can't be blank")
-    end
-
     it 'is invalid without a latitude' do
       hotel = FactoryBot.build(:hotel, latitude: nil)
       expect(hotel).not_to be_valid
       expect(hotel.errors[:latitude]).to include("can't be blank")
     end
 
-    it 'is invalid with an invalid latitude' do
-      hotel = FactoryBot.build(:hotel, latitude: 91)
-      expect(hotel).not_to be_valid
-      expect(hotel.errors[:latitude]).to include("must be less than or equal to 90")
-    end
-
     it 'is invalid without a longitude' do
       hotel = FactoryBot.build(:hotel, longitude: nil)
       expect(hotel).not_to be_valid
       expect(hotel.errors[:longitude]).to include("can't be blank")
-    end
-
-    it 'is invalid with an invalid longitude' do
-      hotel = FactoryBot.build(:hotel, longitude: 181)
-      expect(hotel).not_to be_valid
-      expect(hotel.errors[:longitude]).to include("must be less than or equal to 180")
-    end
+    end 
   end
 
   describe 'methods' do

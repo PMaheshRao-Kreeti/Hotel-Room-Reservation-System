@@ -6,7 +6,7 @@ Your booking has been checked by admin and admin <%= @booking.booking_status %> 
 
 Hotel: <%= @hotel.name %>
 
-Booked At: <%= @booking.created_at.localtime %>
+Booked At: <%= @booking.created_at.localtime.strftime('%d-%m-%Y, %H:%M:%S') %>
 
 Guest Name: <%= @booking.guest_name %>
 Booking Email: <%= @user.email %>

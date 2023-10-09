@@ -14,15 +14,15 @@
         <ul class="dropdown-menu" style="width: 20vw; height: auto; overflow: auto;" id="notification-list" aria-labelledby="dropdownMenuButton1">
           <button class="btn btn-sm btn-primary mark-read" value="<%= current_user.id %>" id="readbtn">Mark all as read</button>
           <% unread_notifications.each do |notification| %>
-            <li class="notification-message mt-2"><%= notification.message %></li>
-            <div class="dropdown-divider"></div>
+            <li class="notification-message mt-2 mb-1"><%= notification.message %></li>
+            <%# <div class="dropdown-divider"></div> %>
           <% end %>
         </ul>
       <% elsif notification_count == 0 %>
         <ul class="dropdown-menu" style="width: 20vw; height: auto; overflow: auto;" id="notification-list" aria-labelledby="dropdownMenuButton1">
           <button class="btn btn-sm btn-primary mark-read" value="<%= current_user.id %>" id="readbtn">Mark all as read</button>
           <li class="notification-message mt-2" id="no-notification">No Notification Yet</li>
-          <div class="dropdown-divider"></div>
+          <%# <div class="dropdown-divider"></div> %>
         </ul>
       <% end %>
     </div>

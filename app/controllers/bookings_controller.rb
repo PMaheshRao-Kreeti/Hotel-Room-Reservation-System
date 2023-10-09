@@ -30,7 +30,7 @@ class BookingsController < ApplicationController
 
     return unless @booking.save!
 
-    BookingMailer.with(booking: @booking).booking_done.deliver_now
+    BookingMailer.with(booking: @booking).booking_done.deliver_later
     redirect_to bookings_history_path, notice: 'Booking Done successfully.'
   end
 
@@ -63,7 +63,7 @@ class BookingsController < ApplicationController
       @booking.room_id = '' if @booking.booking_status == 'rejected' || @booking.booking_status == 'pending'
       @booking.save
 
-      BookingMailer.with(booking: @booking).booking_admin_action.deliver_now
+      BookingMailer.with(booking: @booking).booking_admin_action.deliver_later
       redirect_to bookings_path, notice: 'Booking Status was successfully updated.'
     else
       render :approval

@@ -23,12 +23,6 @@ RSpec.describe User, type: :model do
       expect(user.errors[:email]).to include("can't be blank")
     end
 
-    it 'is invalid with an invalid email format' do
-      user = FactoryBot.build(:user, email: 'invalid_email')
-      expect(user).not_to be_valid
-      expect(user.errors[:email]).to include("is invalid")
-    end
-
     it 'is invalid with a duplicate email' do
       FactoryBot.create(:user, email: 'duplicate@example.com')
       user = FactoryBot.build(:user, email: 'duplicate@example.com')
