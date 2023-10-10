@@ -46,19 +46,10 @@
                   <p class="card-text">Suite: <%= @suite_count %> Available</p>
                   <p class="card-text">Dormitory: <%= @dormitory_count %> Available</p>
                   <p class="card-text"><strong>Price Range: </strong><%= hotel.min_room_price %> - <%= hotel.max_room_price %> Rs.</p>
-                  <% if current_user.role == 'customer' %>
-                    <%= link_to 'Booking Details', hotel_booking_details_path(hotel), class: 'btn btn-success' %>
-                  <% end %>
-                <% else %>
-                  <% if current_user.role == 'customer' %>
-                    <p class="card-text alert alert-danger"> No Room Available in this hotel. Please try to book different hotel. </p>
-                  <% end %>
-                <% end %>
 
-                <% if current_user.role == 'admin' %>
-                  <%= link_to 'Edit detail', edit_hotel_path(hotel), class: 'btn btn-success' %>
-                  <%= link_to 'Delete', hotel_path(hotel), class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' } %>
-                  <%= link_to 'Show Rooms', hotel_show_rooms_path(hotel), class: 'btn btn-info' %>
+                  <%= link_to 'Booking Details', hotel_booking_details_path(hotel), class: 'btn btn-success' %>
+                <% else %>
+                  <p class="card-text alert alert-danger"> No Room Available in this hotel. Please try to book different hotel. </p>
                 <% end %>
 
               </div>

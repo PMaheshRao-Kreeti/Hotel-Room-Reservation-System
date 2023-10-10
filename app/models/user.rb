@@ -17,6 +17,12 @@ class User < ApplicationRecord
                     format: { with: /\A\d{10}\z/, message: 'Invalid phone number format.' }
   validates :password, presence: true, length: { minimum: 5 }
 
+  # scope
+
+  scope :excluding_assigned_admin, lambda { |assigned_hotel_admin_id|
+    where.not(id: assigned_hotel_admin_id)
+  }
+
   # rubocop:disable all
   def self.from_omniauth(auth)
     user = find_by(email: auth.info.email)

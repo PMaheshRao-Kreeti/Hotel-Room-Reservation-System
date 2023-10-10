@@ -1,5 +1,8 @@
 <div class="row">
   <% @hotels.each do |hotel| %>
+
+    <% available_room_count(hotel,0,0) %>  
+   
     <div class="col-lg-4 col-md-6 mb-4">
       <div class="card shadow">
         <% if hotel.hotel_image.attached? %>
@@ -9,34 +12,20 @@
           <h5 class="card-title"><%= hotel.name %></h5>
           <p class="card-text"><strong>Description : </strong><%= hotel.description %></p>
           <p class="card-text"><strong>Address : </strong><%= hotel.full_address %></p>
-          
-          <% if current_user.customer?  %>
-            <%# <p class="card-text"><strong>Total Rooms :</strong></p> %>
-            <%# total_number_of_rooms_in_hotel(hotel) %>
-          <%# else %>
-            <p class="card-text"><strong>Room Available:</strong></p>
-            <% available_room_count(hotel,0,0) %>  
-          <% end %>
-          
+
+
           <% if @single_bedroom_count > 0 || @double_bedroom_count > 0 || @suite_count > 0 || @dormitory_count > 0   %>
             <p class="card-text">Single Bedroom: <%= @single_bedroom_count %> Available</p>
             <p class="card-text">Double Bedroom: <%= @double_bedroom_count %> Available</p>
             <p class="card-text">Suite: <%= @suite_count %> Available</p>
             <p class="card-text">Dormitory: <%= @dormitory_count %> Available</p>
             <p class="card-text"><strong>Price Range: </strong><%= hotel.min_room_price %> - <%= hotel.max_room_price %> Rs.</p>
-            <% if current_user.customer? %>
-              <%= link_to 'Booking Details', hotel_booking_details_path(hotel), class: 'btn btn-success' %>
-            <% end %>
-          <% else %>
-            <% if current_user.role == 'customer' %>
-              <p class="card-text alert alert-danger"> No Room Available in this hotel. Please try to book different hotel. </p>
-            <% end %>
-          <% end %>
 
-          <% if current_user.super_admin? %>
-            <%= link_to 'Edit', edit_hotel_path(hotel), class: 'btn btn-success px-2' %>
-            <%= link_to 'Delete', hotel_path(hotel), class: 'btn btn-danger px-2', method: :delete, data: { confirm: 'Are you sure?' } %>
-            <%= link_to 'Show Rooms', hotel_show_rooms_path(hotel), class: 'btn btn-info px-2' %>
+            <%= link_to 'Booking Details', hotel_booking_details_path(hotel), class: 'btn btn-success' %>
+          <% else %>
+
+              <p class="card-text alert alert-danger"> No Room Available in this hotel. Please try to book different hotel. </p>
+              
           <% end %>
         </div>
       </div>

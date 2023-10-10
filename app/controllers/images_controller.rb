@@ -22,6 +22,6 @@ class ImagesController < ApplicationController
     @hotel_gallery_image.image.purge
     @hotel_gallery_image.destroy
 
-    redirect_to @hotel_gallery_image.hotel, notice: 'Gallery image was successfully deleted.'
+    redirect_to @hotel_gallery_image.hotel, alert: 'Gallery image was successfully deleted.'
   end
 end

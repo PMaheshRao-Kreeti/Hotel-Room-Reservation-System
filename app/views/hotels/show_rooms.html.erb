@@ -36,7 +36,7 @@
               <p class="card-text"><strong>Price:</strong> <%= room.price %> Rs.</p>
               <% if current_user.hotel_admin? %>
                 <%= link_to 'Edit detail', edit_hotel_room_path(@hotel,room), class: 'btn btn-success' %>
-                <%= link_to 'Delete', hotel_room_path(@hotel,room), class: 'btn btn-danger', method: :delete, data: { confirm: 'Are you sure?' } %>
+                <%= link_to 'Delete', hotel_room_path(@hotel, room), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
               <% end %>
             </div>
           </div>

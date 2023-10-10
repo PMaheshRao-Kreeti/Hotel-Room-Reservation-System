@@ -12,7 +12,7 @@ class RoomsController < ApplicationController
   def create
     @room = @hotel.rooms.create(room_params)
     if @room.save
-      redirect_to hotel_show_room_path(@hotel), notice: "Room at #{@hotel.name} was successfully created "
+      redirect_to hotel_show_rooms_path(@hotel), notice: "Room at #{@hotel.name} was successfully created "
     else
       render :new
     end
@@ -30,7 +30,7 @@ class RoomsController < ApplicationController
 
   def destroy
     @room.destroy
-    redirect_to hotel_room_path(@hotel), notice: "Room was successfully destroyed from #{@hotel.name} ."
+    redirect_to hotel_show_rooms_path(@hotel), alert: "Room at #{@hotel.name} was successfully destroyed ."
   end
 
   private
