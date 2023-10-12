@@ -139,7 +139,7 @@ customer = User.new(
   name: 'Mahesh',
   email: 'mahesh@gmail.com',
   phone: '9145678923',
-  password: 'mahesh',
+  password: '12345',
   role: 2
 )
 

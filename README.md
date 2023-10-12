@@ -38,21 +38,39 @@ application up and running.
 
 ## Necessary Accounts
 
-mail id : admin@gmail.com  (admin)
-<br>
-password : admin
+### Super Admin
 
-mail id : maheshrao2002@gmail.com  (customer)
-<br>
-password : mahesh
+  email: superadmin@gmail.com
 
-mail id : user@gmail.com  (customer)
-<br>
-password : 12345
+  password: superadmin
 
+### Hotel Admin (for All password is 'password')
 
+  email: monoteladmin@gmail.com
+  
+  email: accoadmin@gmail.com
 
+  email: fabexpressadmin@gmail.com
 
+  email: dorotoadmin@gmail.com
 
+  email: midlandadmin@gmail.com
 
+  email: plazaadmin@gmail.com
+
+  email: oyoadmin@gmail.com
+
+  email: hilltopadmin@gmail.com
+
+  email: oyoasansoladmin@gmail.com
+
+### Customer id and password
+
+  email: user@gmail.com
+
+  password: 12345
+
+  email: mahesh@gmail.com
+
+  password: 12345
 
