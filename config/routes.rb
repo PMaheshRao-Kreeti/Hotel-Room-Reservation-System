@@ -4,7 +4,7 @@
 Rails.application.routes.draw do 
   root 'welcome#index'
   # signup and login routes routes
-  get '/signup', to: 'users#new'
+  get '/signup', to: 'users#new' 
   post '/signup', to: 'users#create'
   get '/login', to: 'sessions#new'
   post '/login', to: 'sessions#create'

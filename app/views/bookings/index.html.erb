@@ -30,8 +30,8 @@
           <td><%= booking.user.email %></td>
           <td><%= booking.no_of_guest %></td>
           <td><%= booking.room_type %></td>
-          <td><%= booking.check_in_date  %></td>
-          <td><%= booking.check_out_date %></td>
+          <td><%= booking.check_in_date.strftime('%d %b %Y')  %></td>
+          <td><%= booking.check_out_date.strftime('%d %b %Y') %></td>
           
           <% if booking.booking_status == 'approved' %>
             <td class="text-uppercase text-success text-uppercase"><strong><%= booking.booking_status %></strong></td>
@@ -92,8 +92,8 @@
           <td><%= booking.user.email %></td>
           <td><%= booking.no_of_guest %></td>
           <td><%= booking.room_type %></td>
-          <td><%= booking.check_in_date  %></td>
-          <td><%= booking.check_out_date %></td>
+          <td><%= booking.check_in_date.strftime('%d %b %Y')  %></td>
+          <td><%= booking.check_out_date.strftime('%d %b %Y') %></td>
           
           <% if booking.booking_status == 'approved' %>
             <td class="text-uppercase text-success text-uppercase"><strong><%= booking.booking_status %></strong></td>

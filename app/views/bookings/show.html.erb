@@ -10,7 +10,7 @@
           <div class="card-text p-2"><strong> Booking Status : <span class="text-warning text-uppercase"><%= @booking.booking_status %></span></strong></div>
         <% end %>
         
-        <div class="card-text p-2"><strong> Booked At : <span class="text-success "><%= @booking.created_at.localtime.strftime('%d-%m-%Y, %H:%M:%S') %></span></strong></div>
+        <div class="card-text p-2"><strong> Booked At : <span class="text-success "><%= @booking.created_at.strftime('%d %b %Y, %H:%M') %></span></strong></div>
         <div class="row p-3">
           <div class="col-lg-6">
           <div class="card-text"><strong>Guest Name</strong> : <%= @booking.guest_name %>  </div>

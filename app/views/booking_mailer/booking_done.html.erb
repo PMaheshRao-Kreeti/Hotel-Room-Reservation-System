@@ -16,7 +16,7 @@
       <strong>Booking Status:</strong> <%= @booking.booking_status %>
       <br>
       <br>
-      <strong>Booked At:</strong> <%= @booking.created_at.localtime.strftime('%d-%m-%Y, %H:%M:%S') %>
+      <strong>Booked At:</strong> <%= @booking.created_at.strftime('%d %b %Y, %H:%M') %>
       <br>
       <br>
       <strong>Guest Name:</strong> <%= @booking.guest_name %>

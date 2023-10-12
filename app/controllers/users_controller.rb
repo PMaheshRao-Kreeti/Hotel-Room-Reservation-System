@@ -15,9 +15,9 @@ class UsersController < ApplicationController
   # create a new user
   def create
     @user = User.new(user_params)
-    @user.customer! # Set role as customer by default
-
-    if @user.save
+    @user.role = params[:role].to_i
+    @user.save
+    if @user.persisted?
       session[:user_id] = @user.id
       redirect_to customers_path, notice: 'Account created successfully!'
     else
@@ -30,4 +30,5 @@ class UsersController < ApplicationController
   def user_params
     params.require(:user).permit(:name, :email, :phone, :password, :password_confirmation)
   end
+
 end

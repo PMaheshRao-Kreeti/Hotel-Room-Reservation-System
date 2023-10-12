@@ -12,9 +12,9 @@ class User < ApplicationRecord
 
   validates :name, presence: true, length: { maximum: 255 }
   validates :email, presence: true, uniqueness: true,
-                    format: { with: URI::MailTo::EMAIL_REGEXP, message: 'Invalid eamil id format' }
+                    format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i, message: 'Invalid eamil id format' }
   validates :phone, presence: true, uniqueness: true, length: { is: 10 },
-                    format: { with: /\A\d{10}\z/, message: 'Invalid phone number format.' }
+                    format: { with: /\A[6-9]\d{9}\z/, message: 'Invalid phone number format.' }
   validates :password, presence: true, length: { minimum: 5 }
 
   # scope

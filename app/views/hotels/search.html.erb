@@ -18,27 +18,23 @@
         <% @hotels.each do |hotel| %>
 
           <% if current_user.role == 'customer'%>  
-            <%# return count of available rooms %>
             <% if @checkin_date.present? && @checkout_date.present? %>
               <% available_room_count(hotel, 0, 0,@checkin_date, @checkout_date) %>
             <% else %>
               <% available_room_count(hotel, 0, 0) %>
             <% end %>
-          <% else %> 
-            <%# return total number of rooms for admin %>
-            <%#  total_number_of_rooms_in_hotel(hotel)  %>
           <% end %>
           
-          <div class="col-md-4">
-            <div class="card mt-5">
+          <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card shadow">
               <% if hotel.hotel_image.attached? %>
                 <%= image_tag hotel.hotel_image, alt: 'hotel image', class: 'hotel-img p-2' %>
-              <% end %>
+              <% end %> 
               <div class="card-body">
                 <h5 class="card-title"><%= hotel.name %></h5>
-                <p class="card-text"><strong>Description:</strong> <%= hotel.description %></p>
-                <p class="card-text"><strong>Address:</strong> <%= hotel.full_address %></p>
-                <p class="card-text"><strong>Room Available:</strong></p>
+                <p class="card-text"><strong>Description : </strong><%= hotel.description %></p>
+                <p class="card-text"><strong>Address : </strong><%= hotel.full_address %></p>
+
 
                 <% if @single_bedroom_count > 0 || @double_bedroom_count > 0 || @suite_count > 0 || @dormitory_count > 0   %>
                   <p class="card-text">Single Bedroom: <%= @single_bedroom_count %> Available</p>
@@ -49,9 +45,9 @@
 
                   <%= link_to 'Booking Details', hotel_booking_details_path(hotel), class: 'btn btn-success' %>
                 <% else %>
-                  <p class="card-text alert alert-danger"> No Room Available in this hotel. Please try to book different hotel. </p>
+                  <p class="card-text alert alert-danger"> No Room Available in this hotel. Please try to book different hotel. </p>  
                 <% end %>
-
+                
               </div>
             </div>
           </div>

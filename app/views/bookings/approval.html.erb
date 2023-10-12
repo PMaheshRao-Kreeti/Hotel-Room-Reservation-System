@@ -17,8 +17,8 @@
         <div class="col-lg-4">
             <div class="card-text"><strong >Booking Room Type : </strong><%= @booking.room_type %></div>
             <div class="card-text"><strong >Booking Status : </strong><%= @booking.booking_status %></div>
-            <div class="card-text"><strong >Check In Date : </strong><%= @booking.check_in_date  %></div>
-            <div class="card-text"><strong >Check Out Date : </strong><%= @booking.check_out_date %></div>
+            <div class="card-text"><strong >Check In Date : </strong><%= @booking.check_in_date.strftime('%d %b %Y')  %></div>
+            <div class="card-text"><strong >Check Out Date : </strong><%= @booking.check_out_date.strftime('%d %b %Y') %></div>
         </div>
         </div>
     </div>

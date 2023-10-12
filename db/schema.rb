@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -11,8 +9,6 @@
 # migrations use external dependencies or application code.
 #
 # It's strongly recommended that you check this file into your version control system.
-
-# rubocop:disable all
 
 ActiveRecord::Schema.define(version: 2023_09_25_104459) do
 
@@ -106,16 +102,7 @@ ActiveRecord::Schema.define(version: 2023_09_25_104459) do
     t.index ["user_id"], name: "index_notifications_on_user_id"
   end
 
-  create_table "photos", force: :cascade do |t|
-    t.string "image"
-    t.bigint "hotel_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["hotel_id"], name: "index_photos_on_hotel_id"
-  end
-
   create_table "rooms", force: :cascade do |t|
-    t.string "bedroom_image"
     t.string "room_type"
     t.string "room_number"
     t.integer "price"
@@ -131,7 +118,7 @@ ActiveRecord::Schema.define(version: 2023_09_25_104459) do
     t.string "email"
     t.string "phone"
     t.string "password_digest"
-    t.integer "role", default: 1
+    t.integer "role"
     t.string "provider"
     t.string "uid"
     t.datetime "created_at", precision: 6, null: false
@@ -147,8 +134,5 @@ ActiveRecord::Schema.define(version: 2023_09_25_104459) do
   add_foreign_key "hotel_admins", "users"
   add_foreign_key "hotel_gallery_images", "hotels"
   add_foreign_key "notifications", "users"
-  add_foreign_key "photos", "hotels"
   add_foreign_key "rooms", "hotels"
 end
-
-# rubocop:enable all
