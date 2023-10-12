@@ -3,31 +3,6 @@
 
     <% available_room_count(hotel,0,0) %>  
    
-    <div class="col-lg-4 col-md-6 mb-4">
-      <div class="card shadow">
-        <% if hotel.hotel_image.attached? %>
-          <%= image_tag hotel.hotel_image, alt: 'hotel image', class: 'hotel-img p-2' %>
-        <% end %> 
-        <div class="card-body">
-          <h5 class="card-title"><%= hotel.name %></h5>
-          <p class="card-text"><strong>Description : </strong><%= hotel.description %></p>
-          <p class="card-text"><strong>Address : </strong><%= hotel.full_address %></p>
-
-
-          <% if @single_bedroom_count > 0 || @double_bedroom_count > 0 || @suite_count > 0 || @dormitory_count > 0   %>
-            <p class="card-text">Single Bedroom: <%= @single_bedroom_count %> Available</p>
-            <p class="card-text">Double Bedroom: <%= @double_bedroom_count %> Available</p>
-            <p class="card-text">Suite: <%= @suite_count %> Available</p>
-            <p class="card-text">Dormitory: <%= @dormitory_count %> Available</p>
-            <p class="card-text"><strong>Price Range: </strong><%= hotel.min_room_price %> - <%= hotel.max_room_price %> Rs.</p>
-
-            <%= link_to 'Booking Details', hotel_booking_details_path(hotel), class: 'btn btn-success' %>
-          <% else %>
-            <p class="card-text alert alert-danger"> No Room Available in this hotel. Please try to book different hotel. </p>  
-          <% end %>
-          
-        </div>
-      </div>
-    </div>
+    <%= render  "hotel_card", hotel: hotel %>
   <% end %>
 </div>
