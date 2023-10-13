@@ -13,6 +13,11 @@
  *= require_tree .
  *= require_self
  */
+ 
+   .nav-link:hover {
+     color: #007BFF; /* Change the text color when hovered */
+     background-color: #F8F9FA; /* Change the background color when hovered */
+   }
 
  .hotel-img, .room-img {
     float: left;

@@ -9,57 +9,27 @@
     </div>
   </div>
   
-  <table class="table table-bordered mt-3 text-center">
-    <thead class="bg-primary text-white">
-      <th>Hotel name </th>
-      <th>Guest Name</th>
-      <th>Email</th>
-      <th>No of Guest</th>
-      <th>Room Type</th>
-      <th>check_in_date </th>
-      <th>check_out_date</th>
-      <th>Booking Status</th>
-      <th>Room</th>
-      <th>Action</th>
-    </thead>
-    <tbody>
-      <% @todays_bookings.each do |booking| %>
-        <tr>
-          <td><%= booking.hotel_name %></td>
-          <td><%= booking.guest_name %></td>
-          <td><%= booking.user.email %></td>
-          <td><%= booking.no_of_guest %></td>
-          <td><%= booking.room_type %></td>
-          <td><%= booking.check_in_date.strftime('%d %b %Y')  %></td>
-          <td><%= booking.check_out_date.strftime('%d %b %Y') %></td>
-          
-          <% if booking.booking_status == 'approved' %>
-            <td class="text-uppercase text-success text-uppercase"><strong><%= booking.booking_status %></strong></td>
-          <% elsif booking.booking_status == 'rejected' %>
-            <td class="text-uppercase text-danger text-uppercase"><strong><%= booking.booking_status %></strong></td>
-          <% else %>
-            <td class="text-uppercase text-warning text-uppercase"><strong><%= booking.booking_status %></strong></td>
-          <% end %>
-          
-          <% @booking_room = find_room(booking.room_id)%>
-          <td>
-            <% if @booking_room.present? %>
-              <%= @booking_room.room_number %>
-            <% else %>
-              N/A
-            <% end %>
-          </td>
-          <td>
-            <% if  booking.hotel_id.present? %>
-              <%= link_to 'Action',  hotel_booking_approval_path(booking.hotel_id, booking), class: 'btn btn-primary' %>
-            <% else %>
-              <a href="#" class="btn btn-danger disabled"> Action</a>
-            <% end %>
-          </td>
-        </tr> 
-      <% end %>
-    </tbody>
-  </table>
+  <div class="table-responsive">
+    <table class="table table-bordered mt-3 text-center">
+      <thead class="bg-primary text-white">
+        <th>Hotel name </th>
+        <th>Guest Name</th>
+        <th>Email</th>
+        <th>No of Guest</th>
+        <th>Room Type</th>
+        <th>check_in_date </th>
+        <th>check_out_date</th>
+        <th>Booking Status</th>
+        <th>Room</th>
+        <th>Action</th>
+      </thead>
+      <tbody>
+        <% @todays_bookings.each do |booking| %>
+          <%= render  "booking_table", booking: booking %> 
+        <% end %>
+      </tbody>
+    </table>
+  </div>
 </div>
 
  <!--All booking-->
@@ -71,55 +41,25 @@
     </div>
   </div>
 
-  <table class="table table-bordered mt-3 text-center">
-    <thead class="bg-primary text-white">
-      <th>Hotel name </th>
-      <th>Guest Name</th>
-      <th>Email</th>
-      <th>No of Guest</th>
-      <th>Room Type</th>
-      <th>check_in_date </th>
-      <th>check_out_date</th>
-      <th>Booking Status</th>
-      <th>Room id</th>
-      <th>Action</th>
-    </thead>
-    <tbody>
-      <% @all_bookings.each do |booking| %>
-        <tr>
-          <td><%= booking.hotel_name %></td>
-          <td><%= booking.guest_name %></td>
-          <td><%= booking.user.email %></td>
-          <td><%= booking.no_of_guest %></td>
-          <td><%= booking.room_type %></td>
-          <td><%= booking.check_in_date.strftime('%d %b %Y')  %></td>
-          <td><%= booking.check_out_date.strftime('%d %b %Y') %></td>
-          
-          <% if booking.booking_status == 'approved' %>
-            <td class="text-uppercase text-success text-uppercase"><strong><%= booking.booking_status %></strong></td>
-          <% elsif booking.booking_status == 'rejected' %>
-            <td class="text-uppercase text-danger text-uppercase"><strong><%= booking.booking_status %></strong></td>
-          <% else %>
-            <td class="text-uppercase text-warning text-uppercase"><strong><%= booking.booking_status %></strong></td>
-          <% end %>
-          
-          <% @booking_room = find_room(booking.room_id)%>
-          <td>
-            <% if @booking_room.present? %>
-              <%= @booking_room.room_number %>
-            <% else %>
-              N/A
-            <% end %>
-          </td>
-          <td>
-            <% if  booking.hotel_id.present? %>
-              <%= link_to 'Action',  hotel_booking_approval_path(booking.hotel_id, booking), class: 'btn btn-primary' %>
-            <% else %>
-              <a href="#" class="btn btn-danger disabled ">Action</a>
-            <% end %>
-          </td>
-        </tr> 
-      <% end %>
-    </tbody>
-  </table>
+  <div class="table-responsive">  
+    <table class="table table-bordered mt-3 text-center">
+      <thead class="bg-primary text-white">
+        <th>Hotel name </th>
+        <th>Guest Name</th>
+        <th>Email</th>
+        <th>No of Guest</th>
+        <th>Room Type</th>
+        <th>check_in_date </th>
+        <th>check_out_date</th>
+        <th>Booking Status</th>
+        <th>Room id</th>
+        <th>Action</th>
+      </thead>
+      <tbody>
+        <% @all_bookings.each do |booking| %>
+          <%= render  "booking_table", booking: booking %> 
+        <% end %>
+      </tbody>
+    </table>
+  </div>
 </div>

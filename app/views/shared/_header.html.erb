@@ -1,18 +1,18 @@
+<%= javascript_pack_tag 'notifications' %>
+
 <header>
   <nav class="navbar navbar-expand-lg bg-light justify-content-center">
     <div class="container">
-      
-    <span class="navbar-brand mb-0 h1">BookRooms</span>
+      <span class="navbar-brand mb-0 h1">BookRooms</span>
 
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      
+
       <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
         <ul class="navbar-nav mx-auto">
-          
-          <% if !user_logged_in? %>
 
+          <% if !user_logged_in? %>
             <li class="nav-item">
               <%= link_to 'Customer Login', login_path, class: 'nav-link' %>
             </li>
@@ -22,11 +22,8 @@
             <li class="nav-item">
               <%= link_to 'Admin Login', admin_login_path, method: :get, class: 'nav-link' %>
             </li>
-
           <% else %>
-
             <% if current_user.role == 'customer' %>
-              
               <li class="nav-item">
                 <%= link_to 'Booking History', bookings_history_path, class: 'nav-link ml-3' %>
               </li>
@@ -36,15 +33,9 @@
               <li class="nav-item">
                 <%= link_to 'Hotels', hotels_path, class: 'nav-link' %>
               </li>
-              <li class="nav-item">
-                <%#= link_to 'Gallery', galleries_path, class: 'nav-link ' %>
-              </li>
               
-              <%# notification button dropdown %>
               <%= render  "shared/notification" %>
-              
             <% elsif current_user.role == 'hotel_admin' %>
-
               <li class="nav-item">
                 <%= link_to 'Home', admins_path, class: 'nav-link' %>
               </li>
@@ -57,63 +48,26 @@
               <li class="nav-item">
                 <%= link_to 'Room Details', hotel_show_rooms_path(hotel_id: session[:hotel_id]), class: 'nav-link' %>
               </li>
-
-            <% elsif current_user.role == 'super_admin'%>
-
+            <% elsif current_user.role == 'super_admin' %>
               <li class="nav-item">
                 <%= link_to 'Home', admins_path, class: 'nav-link' %>
               </li>
               <li class="nav-item">
                 <%= link_to 'Admin Management', admin_management_path, class: 'nav-link' %>
               </li>
-              
             <% end %>
           <% end %>
         </ul>
 
         <% if user_logged_in? %>
           <li class="nav-item list-unstyled ms-auto">
-            <span class="nav-link disabled text-dark">Welcome, <%= current_user.name %>(<%= current_user.role %>)  </span>
+            <span class="nav-link disabled text-dark">Welcome, <%= current_user.name %>(<%= current_user.role %>)</span>
           </li>
           <li class="nav-item list-unstyled">
-            <%= link_to 'Logout', logout_path,method: :delete, class: 'btn btn-danger ms-2' %>
+            <%= link_to 'Logout', logout_path, method: :delete, class: 'btn btn-danger ms-2' %>
           </li>
         <% end %>
       </div>
     </div>
   </nav>
 </header>
-
-
-<script>
-  document.getElementById('readbtn').addEventListener('click', function(event) {
-    event.preventDefault();
-    var btnSelect = document.getElementById('readbtn');
-    var selectedBtn = btnSelect.value;
-
-    $.ajax({
-      url: '/markread',
-      method: 'POST',
-      data: {
-        selected_btn: selectedBtn,
-        authenticity_token: $('meta[name="csrf-token"]').attr('content')
-      },
-      success: function(response) {
-          // Update notification count to 0
-        var notificationCount = document.getElementById('notification-count');
-        if (notificationCount) {
-          notificationCount.innerText = '0';
-        }
-
-        // Hide the notification list
-        var notificationList = document.getElementById('notification-list');
-        if (notificationList) {
-          notificationList.style.display = 'none';
-        }
-      },
-      error: function(xhr, status, error) {
-        alert("Failed to mark as read");
-      }
-    });
-  });
-</script>

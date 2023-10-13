@@ -15,6 +15,14 @@ module ApplicationHelper
     @user = User.find_by(id: user_id)
   end
 
+  def notification_count
+    current_user.notifications.where(status: false).count
+  end
+
+  def unread_notifications
+    current_user.notifications.where(status: false)
+  end
+
   def send_notification(notification)
     ActionCable.server.broadcast(
       "NotificationChannel_#{notification.user_id}", {
@@ -23,4 +31,5 @@ module ApplicationHelper
       }
     )
   end
+
 end

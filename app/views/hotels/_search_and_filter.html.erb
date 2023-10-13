@@ -1,36 +1,37 @@
+<%= javascript_pack_tag 'datePicker' %>
+
 <div class="container">
   <h3 class="text-center mb-4"><span class="border-bottom border-2 border-dark pb-2">Search & Filter</span></h3>
-  
-  <% if current_user.role == 'customer' %>
-    <%= form_tag filter_hotels_path, method: :get do %>
-      <div class="row mt-2">
-        <div class="col-md-4 col-lg-3 mb-2">
-          <% @hotel_city_list = Hotel.pluck(:city).uniq %>
-          <label for="">Destination</label>
-          <%= select_tag 'destination', options_for_select([['All Destination', '']] + @hotel_city_list, params[:destination]), class: 'form-control' %>
-        </div>
-        <div class="col-md-3 col-lg-2 mb-2">
-          <label for="">Check-in-date</label>
-          <%= date_field_tag 'checkin', params[:checkin], class: 'form-control date-picker', min: Date.today, placeholder: 'Check-in-date' %>
-        </div>
-        <div class="col-md-3 col-lg-2 mb-2">
-          <label for="">Check-out-date</label>
-          <%= date_field_tag 'checkout', params[:checkout], class: 'form-control date-picker', placeholder: 'Check-out-date' %>
-        </div>
-        <div class="col-md-2 col-lg-2 mb-2">
-          <label for="">Guests</label>
-          <%= number_field_tag 'guests', params[:guests], min: 0, max: 16, class: 'form-control', placeholder: 'Adults and children' %>
-        </div>
-        <div class="col-md-2 col-lg-2 mb-2">
-          <label for="">Rooms</label>
-          <%= number_field_tag 'rooms', params[:rooms], min: 0, max: 5, class: 'form-control', placeholder: 'Number of rooms' %>
-        </div>
-        <div class="col-md-1 mb-2 mt-md-4">
-          <%= submit_tag 'Filter', class: 'btn btn-md btn-info btn-block' %>
-        </div>
+
+  <%= form_tag filter_hotels_path, method: :get do %>
+    <div class="row mt-2">
+      <div class="col-md-4 col-lg-3 mb-2">
+        <% @hotel_city_list = Hotel.pluck(:city).uniq %>
+        <label for="">Destination</label>
+        <%= select_tag 'destination', options_for_select([['All Destination', '']] + @hotel_city_list, params[:destination]), class: 'form-control' %>
       </div>
-    <% end %>
+      <div class="col-md-3 col-lg-2 mb-2">
+        <label for="">Check-in-date</label>
+        <%= date_field_tag 'checkin', params[:checkin], class: 'form-control date-picker', min: Date.today, placeholder: 'Check-in-date', id: 'checkin-date' %>
+      </div>
+      <div class="col-md-3 col-lg-2 mb-2">
+        <label for="">Check-out-date</label>
+        <%= date_field_tag 'checkout', params[:checkout], class: 'form-control date-picker', placeholder: 'Check-out-date', id: 'checkout-date' %>
+      </div>
+      <div class="col-md-2 col-lg-2 mb-2">
+        <label for="">Guests</label>
+        <%= number_field_tag 'guests', params[:guests], min: 0, max: 16, class: 'form-control', placeholder: 'Adults and children' %>
+      </div>
+      <div class="col-md-2 col-lg-2 mb-2">
+        <label for="">Rooms</label>
+        <%= number_field_tag 'rooms', params[:rooms], min: 0, max: 5, class: 'form-control', placeholder: 'Number of rooms' %>
+      </div>
+      <div class="col-md-1 mb-2 mt-md-4">
+        <%= submit_tag 'Filter', class: 'btn btn-md btn-info btn-block' %>
+      </div>
+    </div>
   <% end %>
+
 
   <%= form_for :search_hotels, url: search_hotels_path, method: :get do |form| %>
     <div class="row mt-2">
@@ -43,5 +44,7 @@
       </div>
     </div>
   <% end %>
-  
 </div>
+
+
+

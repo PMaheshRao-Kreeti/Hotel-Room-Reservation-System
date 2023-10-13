@@ -24,7 +24,6 @@ $(document).ready(function () {
     }
   }
 
-  // Attach change event listeners to the check-in and check-out date inputs
   checkInDateInput.change(toggleFormFields);
   checkOutDateInput.change(toggleFormFields);
 
@@ -51,7 +50,6 @@ $(document).ready(function () {
       },
       success: function (response) {
         const roomTypeSelect = $("#booking_room_type");
-        // roomTypeSelect.empty(); // Clear existing options
 
         response.forEach(function (roomType) {
           const option = $("<option></option>")
@@ -61,13 +59,11 @@ $(document).ready(function () {
         });
 
         const numberOfOptions = roomTypeSelect[0].options.length;
-        // console.log('Number of options:', numberOfOptions);
         console.log(typeof numberOfOptions);
         if (numberOfOptions === 1) {
           bookButton.prop("disabled", true);
           divAlert.style.display = "block";
         }
-        // Re-enable the 'room_type' select field.
         roomTypeSelect.prop("disabled", false);
       },
       error: function (xhr, status, error) {
@@ -76,7 +72,6 @@ $(document).ready(function () {
     });
   }
 
-  // Function to restrict booking minimum for 1 day
   function setMinCheckOutDate(selectedCheckInDate) {
     const checkOutDateField = document.querySelector(
       'input[name="booking[check_out_date]"]'
@@ -87,18 +82,15 @@ $(document).ready(function () {
       checkInDateValue.getTime() + oneDayInMilliseconds
     );
 
-    // Format the minimum date in YYYY-MM-DD (HTML date input format)
     const minCheckOutDateString = minCheckOutDate.toISOString().slice(0, 10);
 
     checkOutDateField.min = minCheckOutDateString;
   }
 
-  // Attach change event listener to the check-in date input
   $("#booking_check_in_date").change(function () {
     setMinCheckOutDate(this.value);
   });
 
-  // Attach change event listener to the check-out date input
   $("#booking_check_out_date").change(function () {
     handleCheckOutDateChange(this.value);
   });
