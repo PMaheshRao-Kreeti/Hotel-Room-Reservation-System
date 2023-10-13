@@ -1,31 +1,31 @@
-document.addEventListener("DOMContentLoaded", function () {
-  const checkinDate = document.getElementById("checkin-date");
-  const checkoutDate = document.getElementById("checkout-date");
+$(document).ready(function () {
+  console.log("in datePicker.js start");
+  const checkinDate = $("#checkin-date");
+  const checkoutDate = $("#checkout-date");
 
-  checkoutDate.disabled = true;
+  checkoutDate.prop("disabled", true);
 
-  checkinDate.addEventListener("input", function () {
-    const checkinValue = new Date(checkinDate.value);
+  checkinDate.on("input", function () {
+    const checkinValue = new Date(checkinDate.val());
     if (!isNaN(checkinValue)) {
       const checkoutValue = new Date(checkinValue);
       checkoutValue.setDate(checkinValue.getDate() + 1);
-      checkoutDate.min = formatDate(checkoutValue);
-      checkoutDate.value = formatDate(checkoutValue);
-      checkoutDate.disabled = false;
+      checkoutDate.attr("min", formatDate(checkoutValue));
+      checkoutDate.val(formatDate(checkoutValue));
+      checkoutDate.prop("disabled", false);
     } else {
-      checkoutDate.value = "";
-      checkoutDate.disabled = true;
+      checkoutDate.val("");
+      checkoutDate.prop("disabled", true);
     }
   });
 
-  checkoutDate.addEventListener("input", function () {
-    const checkinValue = new Date(checkinDate.value);
-    const checkoutValue = new Date(checkoutDate.value);
+  checkoutDate.on("input", function () {
+    const checkinValue = new Date(checkinDate.val());
+    const checkoutValue = new Date(checkoutDate.val());
     if (checkoutValue <= checkinValue) {
-
       const newDate = new Date(checkinValue);
       newDate.setDate(checkinValue.getDate() + 1);
-      checkoutDate.value = formatDate(newDate);
+      checkoutDate.val(formatDate(newDate));
     }
   });
 

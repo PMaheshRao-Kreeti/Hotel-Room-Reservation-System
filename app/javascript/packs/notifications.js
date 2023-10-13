@@ -3,6 +3,7 @@
 $(document).ready(function () {
   var readButton = document.getElementById("readbtn");
 
+  console.log('in notificatioon.js start');
   if (readButton) {
     readButton.addEventListener("click", function (event) {
       event.preventDefault();
