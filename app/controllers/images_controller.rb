@@ -2,6 +2,8 @@
 
 # Gallery image contoller
 class ImagesController < ApplicationController
+  before_action :require_hotel_admin
+
   def new
     @image = HotelGalleryImage.new
   end

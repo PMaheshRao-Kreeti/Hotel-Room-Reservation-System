@@ -5,7 +5,7 @@ class UsersController < ApplicationController
   def new
     if user_logged_in? && current_user.role == 'customer'
       redirect_to customers_path
-    elsif user_logged_in? && current_user.role == 'admin'
+    elsif user_logged_in? && current_user.role == 'hotel_admin' || current_user.role == 'super_admin'
       redirect_to admins_path
     else
       @user = User.new
@@ -30,5 +30,4 @@ class UsersController < ApplicationController
   def user_params
     params.require(:user).permit(:name, :email, :phone, :password, :password_confirmation)
   end
-
 end

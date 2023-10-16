@@ -2,6 +2,7 @@
 
 # HotelController handle CRUD on Hotels Room
 class RoomsController < ApplicationController
+  before_action :require_hotel_admin
   before_action :set_room, only: %i[edit show update destroy]
   before_action :set_hotel, only: %i[new create edit update destroy]
 

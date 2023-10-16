@@ -14,5 +14,4 @@ class WelcomeController < ApplicationController
   end
 
   def customer_index; end
-  def gallery; end
 end

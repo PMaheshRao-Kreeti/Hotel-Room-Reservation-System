@@ -4,6 +4,7 @@
 class SessionsController < ApplicationController
   include SessionsHelper
   skip_before_action :verify_authenticity_token, only: [:destroy]
+
   def new
     redirect_to_user_path(current_user.role) if user_logged_in?
   end

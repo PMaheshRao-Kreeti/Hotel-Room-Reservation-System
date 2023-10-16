@@ -15,6 +15,28 @@ module ApplicationHelper
     @user = User.find_by(id: user_id)
   end
 
+  def require_hotel_admin
+    # binding.pry
+    return unless current_user.role != 'hotel_admin'
+
+    if current_user.role == 'customer'
+      redirect_to customers_path, alert: 'You are not authorized to access this url'
+    else
+      redirect_to admins_path, alert: 'You are not authorized to access this url'
+    end
+  end
+
+  def require_super_admin
+    return unless current_user.role != 'super_admin'
+
+    flash[:alert] = 'You are not authorized to access this url'
+    if current_user.role == 'customer'
+      redirect_to customers_path
+    else
+      redirect_to admins_path
+    end
+  end
+
   def notification_count
     current_user.notifications.where(status: false).count
   end
@@ -31,5 +53,4 @@ module ApplicationHelper
       }
     )
   end
-
 end
