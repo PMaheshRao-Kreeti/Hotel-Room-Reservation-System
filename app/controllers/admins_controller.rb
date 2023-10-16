@@ -4,6 +4,7 @@
 class AdminsController < ApplicationController
   before_action :require_super_admin
   before_action :require_hotel_admin, only: %i[admin_index]
+
   def admin_index; end
 
   def hotel_admin_management

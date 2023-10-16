@@ -16,7 +16,6 @@ module ApplicationHelper
   end
 
   def require_hotel_admin
-    # binding.pry
     return unless current_user.role != 'hotel_admin'
 
     if current_user.role == 'customer'
@@ -29,11 +28,10 @@ module ApplicationHelper
   def require_super_admin
     return unless current_user.role != 'super_admin'
 
-    flash[:alert] = 'You are not authorized to access this url'
     if current_user.role == 'customer'
-      redirect_to customers_path
+      redirect_to customers_path, alert: 'You are not authorized to access this url'
     else
-      redirect_to admins_path
+      redirect_to admins_path, alert: 'You are not authorized to access this url'
     end
   end
 
