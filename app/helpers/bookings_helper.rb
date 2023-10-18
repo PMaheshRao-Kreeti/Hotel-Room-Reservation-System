@@ -43,4 +43,8 @@ module BookingsHelper
     available_count = rooms.where(room_type:).count - room_booking_count
     @available_room_type << room_type if available_count.positive? && !@available_room_type.include?(room_type)
   end
+
+  def booking_room_price(room_id)
+    @room = Room.find(room_id)
+  end
 end

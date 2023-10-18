@@ -4,6 +4,8 @@
 class BookingsController < ApplicationController
   before_action :set_booking, only: %i[edit approval update cancelled]
   before_action :set_hotel, only: %i[new create edit approval update]
+  before_action :require_customer, only: %i[booking_history new create details markread markread cancelled]
+  before_action :require_hotel_admin, only: %i[index approval update]
 
   include ApplicationHelper
   include BookingsHelper

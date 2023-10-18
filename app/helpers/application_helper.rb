@@ -3,7 +3,7 @@
 # Applicationhelper
 module ApplicationHelper
   def current_user
-    @current_user ||= User.find_by(id: session[:user_id])
+    @current_user ||= User.find_by(id: session[:user_id]) if session[:user_id]
   end
 
   # return true false depending upon user or admin is logged in or not
@@ -13,6 +13,12 @@ module ApplicationHelper
 
   def find_user(user_id)
     @user = User.find_by(id: user_id)
+  end
+
+  def require_customer
+    return unless current_user.role != 'customer'
+
+    redirect_to admins_path, alert: 'You are not authorized to access this url'
   end
 
   def require_hotel_admin

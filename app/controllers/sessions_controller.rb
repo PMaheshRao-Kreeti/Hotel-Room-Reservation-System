@@ -30,7 +30,7 @@ class SessionsController < ApplicationController
       setup_user_session(user)
       redirect_to_user_path(user.role)
     else
-      flash.now[:alert] = 'Invalid email or password'
+      flash.now[:alert] = 'Invalid email or password (or super admin doesnot assign you hotel)'
       render :admin_new
     end
   end

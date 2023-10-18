@@ -2,8 +2,7 @@
 
 # Admins Controller
 class AdminsController < ApplicationController
-  before_action :require_super_admin
-  before_action :require_hotel_admin, only: %i[admin_index]
+  before_action :require_super_admin, only: %i[hotel_admin_management new create]
 
   def admin_index; end
 

@@ -33,12 +33,17 @@
                 <div class="col-lg-4">
                 <div class="card-text"><strong>Guest Name</strong> : <%= booking.guest_name %>  </div>
                 <div class="card-text"><strong>Booking email</strong> : <%= booking.user.email %>  </div>
-                <div class="card-text"><strong>Number of Guest</strong> : <%= booking.no_of_guest %> </div>
+                <div class="card-text"><strong>Number of Guest</strong> : <%= booking.no_of_guest %> </div> 
+                <div class="card-text"><strong>Room Type</strong> : <%= booking.room_type %>   </div>
               </div>
               <div class="col-lg-4">
-                <div class="card-text"><strong>Room Type</strong> : <%= booking.room_type %>   </div>
                 <div class="card-text"><strong>Check In Date</strong> : <%= booking.check_in_date.strftime('%d %b %Y')  %> </div>
                 <div class="card-text"><strong>Check Out Date</strong> : <%= booking.check_out_date.strftime('%d %b %Y') %> </div>
+                <% if booking.room_id %>
+                  <% booking_room_price(booking.room_id) %>
+                  <div class="card-text"><strong>Room Number</strong> : <%= @room.room_number  %> </div>
+                  <div class="card-text"><strong>Room Price</strong> : <%= @room.price  %> Rs. </div>
+                <% end %>
               </div>
               <div class="col-lg-4">
                 <% if booking.booking_status == 'pending' %>

@@ -2,6 +2,7 @@
 
 # HotelController handle CRUD on Hotel
 class HotelsController < ApplicationController
+  before_action :require_customer, only: %i[index search filter]
   before_action :require_super_admin, only: %i[new create]
   before_action :require_hotel_admin, only: %i[show show_rooms update destroy]
   before_action :set_hotel, only: %i[edit show update destroy]
