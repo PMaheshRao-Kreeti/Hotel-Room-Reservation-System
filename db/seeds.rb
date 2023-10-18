@@ -369,41 +369,4 @@ HotelAdmin.create(user_id: admin10.id, hotel_id: hotel10.id)
   room.save
 end
 
-# Booking.create(
-#   no_of_guest: 2,
-#   guest_name: "Alice",
-#   check_in_date: Date.tomorrow + 2,
-#   check_out_date: Date.tomorrow + 3,
-#   booking_status: "pending",
-#   room_type: "Single Bed",
-#   hotel_name: "MONOTEL",
-#   user_id: 11,
-#   hotel_id: 1,
-#   room: 1
-# )
-
-# Booking.create(
-#   no_of_guest: 4,
-#   guest_name: "Damen",
-#   check_in_date: Date.tomorrow + 4,
-#   check_out_date: Date.tomorrow + 5,
-#   booking_status: "pending",
-#   room_type: "Double Bed",
-#   hotel_name: "MONOTEL",
-#   user_id: 11,
-#   hotel_id: 1,
-#   room: 3
-# )
-# Booking.create(
-#   no_of_guest: 8,
-#   guest_name: "Dizy",
-#   check_in_date: Date.tomorrow + 6,
-#   check_out_date: Date.tomorrow + 7,
-#   booking_status: "pending",
-#   room_type: "Double Bed",
-#   hotel_name: "MONOTEL",
-#   user_id: 11,
-#   hotel_id: 1,
-#   room_id: 4
-# )
 # rubocop:enable all

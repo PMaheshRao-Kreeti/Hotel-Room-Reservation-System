@@ -44,13 +44,13 @@ ActiveRecord::Schema.define(version: 2023_09_25_104459) do
   end
 
   create_table "bookings", force: :cascade do |t|
-    t.integer "no_of_guest", default: 1
-    t.string "guest_name"
-    t.date "check_in_date"
-    t.date "check_out_date"
+    t.integer "no_of_guest", null: false
+    t.string "guest_name", null: false
+    t.date "check_in_date", null: false
+    t.date "check_out_date", null: false
     t.string "booking_status"
-    t.string "room_type"
-    t.string "hotel_name"
+    t.string "room_type", null: false
+    t.string "hotel_name", null: false
     t.bigint "user_id", null: false
     t.bigint "hotel_id"
     t.bigint "room_id"
@@ -79,16 +79,16 @@ ActiveRecord::Schema.define(version: 2023_09_25_104459) do
   end
 
   create_table "hotels", force: :cascade do |t|
-    t.string "name"
-    t.string "address"
-    t.string "city"
-    t.string "state"
-    t.string "country"
-    t.string "pincode"
+    t.string "name", null: false
+    t.string "address", null: false
+    t.string "city", null: false
+    t.string "state", null: false
+    t.string "country", null: false
+    t.string "pincode", null: false
     t.text "description"
     t.string "hotel_image"
-    t.string "latitude"
-    t.string "longitude"
+    t.string "latitude", null: false
+    t.string "longitude", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -103,8 +103,8 @@ ActiveRecord::Schema.define(version: 2023_09_25_104459) do
   end
 
   create_table "rooms", force: :cascade do |t|
-    t.string "room_type"
-    t.string "room_number"
+    t.string "room_type", null: false
+    t.string "room_number", null: false
     t.integer "price"
     t.integer "capacity"
     t.bigint "hotel_id", null: false
@@ -114,11 +114,11 @@ ActiveRecord::Schema.define(version: 2023_09_25_104459) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "name"
-    t.string "email"
-    t.string "phone"
-    t.string "password_digest"
-    t.integer "role"
+    t.string "name", null: false
+    t.string "email", null: false
+    t.string "phone", limit: 10, null: false
+    t.string "password_digest", null: false
+    t.integer "role", null: false
     t.string "provider"
     t.string "uid"
     t.datetime "created_at", precision: 6, null: false

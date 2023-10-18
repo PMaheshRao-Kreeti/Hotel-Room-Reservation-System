@@ -5,16 +5,16 @@
 class CreateHotels < ActiveRecord::Migration[6.1]
   def change
     create_table :hotels do |t|
-      t.string :name
-      t.string :address
-      t.string :city
-      t.string :state
-      t.string :country
-      t.string :pincode
+      t.string :name, null: false
+      t.string :address, null: false
+      t.string :city, null: false
+      t.string :state, null: false
+      t.string :country, null: false
+      t.string :pincode, null: false
       t.text   :description
       t.string :hotel_image
-      t.string :latitude
-      t.string :longitude
+      t.string :latitude, null: false
+      t.string :longitude, null: false
 
       t.timestamps
     end
