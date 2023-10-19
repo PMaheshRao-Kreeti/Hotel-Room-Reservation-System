@@ -4,9 +4,27 @@
 module HotelsHelper
   def filter_hotels
     @hotels = Hotel.all
-    @hotels = @hotels.filter_by_destination(params[:destination]) if params[:destination].present?
-    @hotels = @hotels.filter_by_no_of_guests(params[:guests].to_i) if params[:guests].present?
-    @hotels = @hotels.filter_by_no_of_rooms(params[:rooms].to_i) if params[:rooms].present?
+    apply_destination_filter
+    apply_guests_filter
+    apply_rooms_filter
+  end
+
+  def apply_destination_filter
+    return unless params[:destination].present?
+
+    @hotels = @hotels.filter_by_destination(params[:destination])
+  end
+
+  def apply_guests_filter
+    return unless params[:guests].present?
+
+    @hotels = @hotels.filter_by_no_of_guests(params[:guests].to_i)
+  end
+
+  def apply_rooms_filter
+    return unless params[:rooms].present?
+
+    @hotels = @hotels.filter_by_no_of_rooms(params[:rooms].to_i)
   end
 
   # method that give number of room in the hotel

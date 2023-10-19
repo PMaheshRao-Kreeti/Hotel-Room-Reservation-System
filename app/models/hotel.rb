@@ -1,10 +1,11 @@
 # frozen_string_literal: true
 
 # Hotel model handle hotel releted data
+# rubocop:disable all
 class Hotel < ApplicationRecord
   before_destroy :reject_bookings_and_send_rejection_emails
   before_save :address_titleize
-
+  
   # RoomType available [Single Bed , Double Bed , Suite , Dormitory] for coding help
   # hotel image attachment
   has_one_attached :hotel_image
@@ -47,7 +48,6 @@ class Hotel < ApplicationRecord
       .having('COUNT(rooms.id) > ?', no_of_room)
   }
 
-
   # custome validation
   def hotel_image_content_type
     return unless hotel_image.attached? && !hotel_image.content_type.in?(%w[image/jpeg image/png])
@@ -87,7 +87,7 @@ class Hotel < ApplicationRecord
     }
   end
 
-  # rubocop:disable all
+  
   def self.search_by_keyword(query)
     wildcards_query = query.split.map { |term| "*#{term}*" }.join(' ')
     result = __elasticsearch__.search({
@@ -107,8 +107,7 @@ class Hotel < ApplicationRecord
     result.records
   end
 
-  # rubocop:enable all
-
+  
   # callback method for rejecting all booking request related to that hotel
   def reject_bookings_and_send_rejection_emails
     bookings.each do |booking|
@@ -116,25 +115,27 @@ class Hotel < ApplicationRecord
       BookingMailer.with(booking: @booking).booking_admin_action.deliver_later
     end
   end
-
+  
   def address_titleize
     self.address = address.downcase.titleize
     self.city = city.downcase.titleize
     self.state = state.downcase.titleize
     self.country = country.downcase.titleize
   end
-
+  
   # full address of hotel
   def full_address
     "#{address}, #{city}, #{state}, #{country} - #{pincode}".strip
   end
-
+  
   # method for fining maximum and minimum price
   def max_room_price
     rooms.maximum(:price)
   end
-
+  
   def min_room_price
     rooms.minimum(:price)
   end
 end
+
+# rubocop:enable all

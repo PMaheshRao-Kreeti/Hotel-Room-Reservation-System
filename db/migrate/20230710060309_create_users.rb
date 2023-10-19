@@ -12,7 +12,6 @@ class CreateUsers < ActiveRecord::Migration[6.1]
       t.string :provider
       t.string :uid, unique: true
 
-
       t.timestamps
     end
   end
