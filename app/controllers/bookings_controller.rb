@@ -28,12 +28,13 @@ class BookingsController < ApplicationController
     @booking.user_id = session[:user_id]
     @booking.hotel_id = @hotel.id
     @booking.hotel_name = @hotel.name
-    @booking.booking_status = 'pending'
 
-    return unless @booking.save!
-
-    BookingMailer.with(booking: @booking).booking_done.deliver_later
-    redirect_to bookings_history_path, notice: 'Booking Done successfully.'
+    if @booking.save
+      BookingMailer.with(booking: @booking).booking_done.deliver_later
+      redirect_to bookings_history_path, notice: 'Booking Done successfully.'
+    else
+      render :new
+    end
   end
 
   def approval

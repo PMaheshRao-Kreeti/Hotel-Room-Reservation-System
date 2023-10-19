@@ -2,6 +2,7 @@
 
 # Booking model represents a booking made by user
 class Booking < ApplicationRecord
+  before_create :set_booking_status_as_pending
   BOOKINGSTATUS = %w[approved rejected pending].freeze
 
   # association
@@ -14,7 +15,6 @@ class Booking < ApplicationRecord
   validates :guest_name, presence: true, length: { maximum: 255 }
   validates :check_in_date, presence: true
   validates :check_out_date, presence: true
-  validates :booking_status, presence: true, inclusion: { in: %w[approved pending rejected cancelled] }
   validates :room_type, presence: true, inclusion: { in: ['Single Bed', 'Double Bed', 'Suite', 'Dormitory'] }
   validates :user_id, presence: true
   validates :hotel_id, presence: true
@@ -67,5 +67,10 @@ class Booking < ApplicationRecord
     return unless (check_out_date - check_in_date).to_i < 1
 
     errors.add(:base, 'Booking duration must be more than one day')
+  end
+
+  # callback method
+  def set_booking_status_as_pending
+    self.booking_status = 'pending'
   end
 end

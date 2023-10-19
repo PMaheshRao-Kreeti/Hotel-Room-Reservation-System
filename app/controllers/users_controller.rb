@@ -3,10 +3,9 @@
 # User controller create customer account
 class UsersController < ApplicationController
   def new
-    if user_logged_in? && current_user.role == 'customer'
-      redirect_to customers_path
-    elsif user_logged_in? && current_user.role == 'hotel_admin' || current_user.role == 'super_admin'
-      redirect_to admins_path
+    if user_logged_in?
+      redirect_to customers_path if current_user.role == 'customer'
+      redirect_to admins_path if current_user.role == 'hotel_admin' || current_user.role == 'super_admin'
     else
       @user = User.new
     end
