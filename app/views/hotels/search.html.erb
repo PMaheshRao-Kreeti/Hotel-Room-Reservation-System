@@ -17,13 +17,7 @@
       <div class="row mt-3">
         <% @hotels.each do |hotel| %>
 
-          <% if current_user.role == 'customer'%>  
-            <% if @checkin_date.present? && @checkout_date.present? %>
-              <% available_room_count(hotel, 0, 0,@checkin_date, @checkout_date) %>
-            <% else %>
-              <% available_room_count(hotel, 0, 0) %>
-            <% end %>
-          <% end %>
+          <% available_room_count_of_hotel(hotel) %>
           
           <%= render  "hotel_card", hotel: hotel %>
         <% end %>

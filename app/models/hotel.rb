@@ -31,6 +31,23 @@ class Hotel < ApplicationRecord
 
   default_scope { order(created_at: :asc) }
 
+  scope :filter_by_destination, lambda { |city|
+    where(city: city)
+  }
+
+  scope :filter_by_no_of_guests, lambda { |no_of_guest|
+    joins(:rooms)
+      .group('hotels.id')
+      .having('SUM(rooms.capacity) > ?', no_of_guest)
+  }
+
+  scope :filter_by_no_of_rooms, lambda { |no_of_room|
+    joins(:rooms)
+      .group('hotels.id')
+      .having('COUNT(rooms.id) > ?', no_of_room)
+  }
+
+
   # custome validation
   def hotel_image_content_type
     return unless hotel_image.attached? && !hotel_image.content_type.in?(%w[image/jpeg image/png])

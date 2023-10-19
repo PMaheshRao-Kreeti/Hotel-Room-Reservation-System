@@ -6,7 +6,6 @@ class HotelsController < ApplicationController
   before_action :require_super_admin, only: %i[new create]
   before_action :require_hotel_admin, only: %i[show show_rooms update destroy]
   before_action :set_hotel, only: %i[edit show update destroy]
-  before_action :initialize_filter_variables, only: :filter
 
   include HotelsHelper
 
@@ -51,6 +50,10 @@ class HotelsController < ApplicationController
   end
 
   def filter
+    if params[:checkin].present?
+      @checkin_date = params[:checkin]
+      @checkout_date = params[:checkout]
+    end
     filter_hotels
   end
 
