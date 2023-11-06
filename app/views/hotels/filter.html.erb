@@ -4,13 +4,17 @@
       
       <%= render "search_and_filter" %>
       
-      <div class="row pt-4">
+      <div class="row pt-4 pb-3">
         <div class="h2 text-center">Filtration Result List</div>
       </div>
 
       <div class="row">
         <% @hotels.each do |hotel| %>
+            <% if (@checkin_date)  %>
             <% available_room_count_of_hotel(hotel, @checkin_date, @checkout_date) %>
+            <% else %>
+              <% available_room_count_of_hotel(hotel) %>
+            <% end  %>
 
           <%= render  "hotel_card", hotel: hotel %>
         <% end %>

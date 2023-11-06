@@ -1,7 +1,7 @@
-<%if current_user.role == 'customer'%>
+<% if current_user.role == 'customer' %>
   <div class="notification me-3">
     <div class="dropdown">
-      <a class="btn btn-dark dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false"> notification
+      <a class="btn btn-dark dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">Notification
         <% if notification_count > 0 %>
           <span id="notification-count" class="badge rounded-pill badge-notification bg-warning" data-count="<%= notification_count %>">
             <%= notification_count %>
@@ -11,18 +11,15 @@
         <% end %>
       </a>
       <% if notification_count > 0 %>
-        <ul class="dropdown-menu" style="width: 20vw; height: auto; overflow: auto;" id="notification-list" aria-labelledby="dropdownMenuButton1">
-          <button class="btn btn-sm btn-primary mark-read" value="<%= current_user.id %>" id="readbtn">Mark all as read</button>
+        <ul class="dropdown-menu p-2" style="width: 20vw; height: auto; overflow: auto;" id="notification-list" aria-labelledby="dropdownMenuLink">
+          <button class="btn btn-primary btn-sm" value="<%= current_user.id %>" id="readbtn">Mark all as read</button>
           <% unread_notifications.each do |notification| %>
             <li class="notification-message mt-2 mb-1"><%= notification.message %></li>
-            <%# <div class="dropdown-divider"></div> %>
           <% end %>
         </ul>
       <% elsif notification_count == 0 %>
-        <ul class="dropdown-menu" style="width: 20vw; height: auto; overflow: auto;" id="notification-list" aria-labelledby="dropdownMenuButton1">
-          <button class="btn btn-sm btn-primary mark-read" value="<%= current_user.id %>" id="readbtn">Mark all as read</button>
-          <li class="notification-message mt-2" id="no-notification">No Notification Yet</li>
-          <%# <div class="dropdown-divider"></div> %>
+        <ul class="dropdown-menu p-2" style="width: 20vw; height: auto; overflow: auto;" id="notification-list" aria-labelledby="dropdownMenuLink">
+          <li class="notification-message mt-2 mb-1" id="no-notification">No Notification Yet</li>
         </ul>
       <% end %>
     </div>

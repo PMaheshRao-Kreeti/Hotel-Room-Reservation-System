@@ -50,7 +50,7 @@ $(document).ready(function () {
       },
       success: function (response) {
         const roomTypeSelect = $("#booking_room_type");
-
+        roomTypeSelect.empty();
         response.forEach(function (roomType) {
           const option = $("<option></option>")
             .text(roomType)

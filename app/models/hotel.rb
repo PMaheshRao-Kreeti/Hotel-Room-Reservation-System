@@ -33,20 +33,46 @@ class Hotel < ApplicationRecord
   default_scope { order(created_at: :asc) }
 
   scope :filter_by_destination, lambda { |city|
-    where(city: city)
+    where(city: city) 
+  }
+  
+  scope :filter_by_no_of_guests, lambda { |no_of_guest, hotels, checkin = Date.today, checkout = Date.tomorrow |
+    guest_filter(no_of_guest, hotels, checkin, checkout)
+  }
+  
+  scope :filter_by_no_of_rooms, lambda { |no_of_room, hotels, checkin = Date.today, checkout = Date.tomorrow |
+    room_count_filter(no_of_room, hotels, checkin, checkout)
   }
 
-  scope :filter_by_no_of_guests, lambda { |no_of_guest|
-    joins(:rooms)
-      .group('hotels.id')
-      .having('SUM(rooms.capacity) > ?', no_of_guest)
-  }
+  def self.guest_filter(no_of_guest, hotels, checkin, checkout)
+    @remove_hotel_id = []
+    hotels.each do |hotel|
+      @guest_count = 0
+      @guest_count = 2 * hotel.available_rooms_count(checkin, checkout, 'Single Bed') +
+                    4 * hotel.available_rooms_count(checkin, checkout, 'Double Bed') +
+                    8 * hotel.available_rooms_count(checkin, checkout, 'Suite') +
+                    16 * hotel.available_rooms_count(checkin, checkout, 'Dormitory')
+      
+      @remove_hotel_id << hotel if @guest_count < no_of_guest
+    end
+    hotels = hotels.where.not(id: @remove_hotel_id)
+    return hotels
+  end
 
-  scope :filter_by_no_of_rooms, lambda { |no_of_room|
-    joins(:rooms)
-      .group('hotels.id')
-      .having('COUNT(rooms.id) > ?', no_of_room)
-  }
+  def self.room_count_filter(no_of_room, hotels, checkin, checkout)
+    @remove_hotel_id = []
+    hotels.each do |hotel|
+      @room_count = 0
+      @room_count = hotel.available_rooms_count(checkin, checkout, 'Single Bed') +
+                     hotel.available_rooms_count(checkin, checkout, 'Double Bed') +
+                     hotel.available_rooms_count(checkin, checkout, 'Suite') +
+                     hotel.available_rooms_count(checkin, checkout, 'Dormitory')
+      
+      @remove_hotel_id << hotel if @room_count < no_of_room
+    end
+    hotels = hotels.where.not(id: @remove_hotel_id)
+    return hotels
+  end
 
   # custome validation
   def hotel_image_content_type
@@ -129,6 +155,19 @@ class Hotel < ApplicationRecord
   end
   
   # method for fining maximum and minimum price
+  def total_rooms_count(type)
+    rooms.where('room_type = ?',type).count
+  end
+
+  def booked_rooms_count(checkin, checkout, type)
+    bookings.where('((?<= check_in_date  AND  ?  > check_in_date) OR
+      (?<= check_out_date)) AND room_type = ?', checkin, checkout,checkin, type).count
+  end
+
+  def available_rooms_count( checkin, checkout, type )
+    total_rooms_count(type) - booked_rooms_count(checkin, checkout, type)
+  end
+  
   def max_room_price
     rooms.maximum(:price)
   end

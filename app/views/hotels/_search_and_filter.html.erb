@@ -17,11 +17,11 @@
       </div>
       <div class="col-md-2 col-lg-2 mb-2">
         <label for="">Guests</label>
-        <%= number_field_tag 'guests', params[:guests], min: 0, max: 16, class: 'form-control', placeholder: 'Adults and children' %>
+        <%= number_field_tag 'guests', params[:guests], min: 0, class: 'form-control', placeholder: 'Adults and children' %>
       </div>
       <div class="col-md-2 col-lg-2 mb-2">
         <label for="">Rooms</label>
-        <%= number_field_tag 'rooms', params[:rooms], min: 0, max: 5, class: 'form-control', placeholder: 'Number of rooms' %>
+        <%= number_field_tag 'rooms', params[:rooms], min: 0, class: 'form-control', placeholder: 'Number of rooms' %>
       </div>
       <div class="col-md-1 mb-2 mt-md-4">
         <%= submit_tag 'Filter', class: 'btn btn-md btn-info btn-block' %>

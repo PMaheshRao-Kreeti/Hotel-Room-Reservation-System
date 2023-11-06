@@ -1,7 +1,7 @@
 <div class="row">
   <% @hotels.each do |hotel| %>
 
-    <% available_room_count_of_hotel(hotel) %>  
+    <% available_room_count_of_hotel(hotel) %> 
    
     <%= render  "hotel_card", hotel: hotel %>
   <% end %>

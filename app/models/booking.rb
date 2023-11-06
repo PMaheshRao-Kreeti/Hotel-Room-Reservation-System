@@ -60,6 +60,11 @@ class Booking < ApplicationRecord
     all_for_hotel(hotel_id).created_today
   }
 
+  scope :booked_room_ids, lambda { |checkin, checkout, hotel_id|
+                            where('((?<= check_in_date  AND  ?  > check_in_date) OR
+      (?<= check_out_date)) AND hotel_id = ? ', checkin, checkout, checkin, hotel_id).pluck(:room_id)
+                          }
+
   # Custom validation method
   def booking_duration_more_than_one_day
     errors.add(:check_out_date, 'must be greater than start date') if check_out_date < check_in_date
