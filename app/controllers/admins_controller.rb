@@ -21,7 +21,7 @@ class AdminsController < ApplicationController
       hotel_id: params[:hotel_id],
       user_id: params[:admin_id]
     )
-      redirect_to admin_management_path, notice: 'Admin assignned successfully.'
+      redirect_to admin_management_path, notice: 'Admin assignned to the hotel successfully.'
     else
       render :new
     end

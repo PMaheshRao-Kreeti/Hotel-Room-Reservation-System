@@ -16,6 +16,7 @@ class Booking < ApplicationRecord
   validates :check_in_date, presence: true
   validates :check_out_date, presence: true
   validates :room_type, presence: true, inclusion: { in: ['Single Bed', 'Double Bed', 'Suite', 'Dormitory'] }
+  validates :booking_status, presence: true, inclusion: { in: %w[approved rejected pending cancelled] }
   validates :user_id, presence: true
   validates :hotel_id, presence: true
   validate :booking_duration_more_than_one_day

@@ -37,6 +37,7 @@ RSpec.describe Booking, type: :model do
       expect(booking).not_to be_valid
       expect(booking.errors[:guest_name]).to include("can't be blank")
     end
+    
     it 'is invalid without booking_status' do
       booking = FactoryBot.build(:booking, booking_status: nil)
       expect(booking).not_to be_valid

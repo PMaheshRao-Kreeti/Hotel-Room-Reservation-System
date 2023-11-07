@@ -8,7 +8,7 @@ FactoryBot.define do
     check_out_date { Date.today + 2.days }
     booking_status { 'approved' }
     room_type { 'Single Bed' }
-    user { association(:user, role: 1) }
+    user { association(:user, role: 2) }
     hotel
   end
 end
