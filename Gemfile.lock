@@ -83,6 +83,7 @@ GEM
     crass (1.0.6)
     date (3.3.3)
     diff-lcs (1.5.0)
+    docile (1.4.0)
     dotenv (2.8.1)
     dotenv-rails (2.8.1)
       dotenv (= 2.8.1)
@@ -106,6 +107,8 @@ GEM
     factory_bot_rails (6.2.0)
       factory_bot (~> 6.2.0)
       railties (>= 5.0.0)
+    faker (3.2.1)
+      i18n (>= 1.8.11, < 2)
     faraday (2.7.10)
       faraday-net_http (>= 2.0, < 3.1)
       ruby2_keywords (>= 0.0.4)
@@ -213,6 +216,10 @@ GEM
       bundler (>= 1.15.0)
       railties (= 6.1.7.6)
       sprockets-rails (>= 2.0.0)
+    rails-controller-testing (1.0.5)
+      actionpack (>= 5.0.1.rc1)
+      actionview (>= 5.0.1.rc1)
+      activesupport (>= 5.0.1.rc1)
     rails-dom-testing (2.2.0)
       activesupport (>= 5.0.0)
       minitest
@@ -285,6 +292,12 @@ GEM
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
     semantic_range (3.0.0)
+    simplecov (0.22.0)
+      docile (~> 1.1)
+      simplecov-html (~> 0.11)
+      simplecov_json_formatter (~> 0.1)
+    simplecov-html (0.12.3)
+    simplecov_json_formatter (0.1.4)
     snaky_hash (2.0.1)
       hashie
       version_gem (~> 1.1, >= 1.1.1)
@@ -339,6 +352,7 @@ DEPENDENCIES
   elasticsearch-model (~> 7.2, >= 7.2.1)
   elasticsearch-rails (~> 7.2, >= 7.2.1)
   factory_bot_rails
+  faker
   icalendar
   image_processing (~> 1.2)
   jbuilder (~> 2.7)
@@ -349,11 +363,13 @@ DEPENDENCIES
   pry
   puma (~> 5.0)
   rails (~> 6.1.7, >= 6.1.7.3)
+  rails-controller-testing
   redis (~> 4.0)
   rspec-rails
   rubocop
   sass-rails (>= 6)
   selenium-webdriver (>= 4.0.0.rc1)
+  simplecov
   spring
   turbolinks (~> 5)
   tzinfo-data

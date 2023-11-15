@@ -47,6 +47,69 @@ RSpec.describe Room, type: :model do
       expect(room.errors[:hotel_id]).to include("can't be blank")
     end
   end
+  describe '#set_room_capacity' do
+    it 'sets the capacity for Single Bed' do
+      room = FactoryBot.build(:room, room_type: 'Single Bed')
+      room.set_room_capacity
+      expect(room.capacity).to eq(2)
+    end
+
+    it 'sets the capacity for Double Bed' do
+      room = FactoryBot.build(:room, room_type: 'Double Bed')
+      room.set_room_capacity
+      expect(room.capacity).to eq(4)
+    end
+
+    it 'sets the capacity for Suite' do
+      room = FactoryBot.build(:room, room_type: 'Suite')
+      room.set_room_capacity
+      expect(room.capacity).to eq(8)
+    end
+
+    it 'sets the capacity for Dormitory' do
+      room = FactoryBot.build(:room, room_type: 'Dormitory')
+      room.set_room_capacity
+      expect(room.capacity).to eq(16)
+    end
+
+    it 'does not set capacity for unknown room type' do
+      room = FactoryBot.build(:room, room_type: 'Unknown Type')
+      room.set_room_capacity
+      expect(room.capacity).not_to be_nil
+    end
+  end
+
+  describe '.room_prices' do
+    it 'returns room prices for a specific room type' do
+      # Create rooms with different prices and room types
+      FactoryBot.create(:room, room_type: 'Single Bed', price: 100)
+      FactoryBot.create(:room, room_type: 'Single Bed', price: 120)
+      prices = Room.room_prices('Single Bed')
+
+      expect(prices).to eq([100, 120])
+    end
+
+    it 'returns [0] if no prices are available for the specified room type' do
+      prices = Room.room_prices('Unknown Type')
+
+      expect(prices).to eq([0])
+    end
+  end
+
+  describe '.excluding_room_ids' do
+    it 'excludes rooms with specified room_ids' do
+      # Create rooms with different room_ids
+      room1 = FactoryBot.create(:room)
+      room2 = FactoryBot.create(:room)
+      room3 = FactoryBot.create(:room)
+
+      booked_room_ids = [room1.id, room3.id]
+
+      result = Room.excluding_room_ids(booked_room_ids)
+
+      expect(result).to contain_exactly(room2)
+    end
+  end
 end
 
 

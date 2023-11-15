@@ -30,8 +30,9 @@ gem 'image_processing', '~> 1.2'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false
+gem 'faker'
+gem 'rails-controller-testing'
 gem 'elasticsearch-model', '~> 7.2', '>= 7.2.1'
-
 gem 'elasticsearch-rails', '~> 7.2', '>= 7.2.1'
 
 group :development, :test do
@@ -43,6 +44,7 @@ group :development, :test do
   gem 'pry'
   gem 'rspec-rails'
   gem 'rubocop', require: false
+  gem 'simplecov', require: false
 end
 
 group :development do

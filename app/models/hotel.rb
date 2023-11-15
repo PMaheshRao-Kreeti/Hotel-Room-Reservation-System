@@ -137,7 +137,7 @@ class Hotel < ApplicationRecord
   # callback method for rejecting all booking request related to that hotel
   def reject_bookings_and_send_rejection_emails
     bookings.each do |booking|
-      booking.update(booking_status: 'rejected', hotel_id: nil)
+      booking.update(booking_status: 'rejected', hotel_id: nil, room_id: nil)
       BookingMailer.with(booking: @booking).booking_admin_action.deliver_later
     end
   end

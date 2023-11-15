@@ -34,11 +34,13 @@ class HotelsController < ApplicationController
     @hotel = Hotel.includes(:rooms).find(params[:hotel_id])
   end
 
+  def edit; end
+
   def update
     if @hotel.update(hotel_params)
       redirect_to hotel_path(session[:hotel_id]), notice: "Hotel [ #{@hotel.name} ] has been updated successfully"
     else
-      render :new
+      render :edit
     end
   end
 
