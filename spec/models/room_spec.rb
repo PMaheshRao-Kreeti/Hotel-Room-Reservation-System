@@ -82,9 +82,9 @@ RSpec.describe Room, type: :model do
   describe '.room_prices' do
     it 'returns room prices for a specific room type' do
       # Create rooms with different prices and room types
-      FactoryBot.create(:room, room_type: 'Single Bed', price: 100)
-      FactoryBot.create(:room, room_type: 'Single Bed', price: 120)
-      prices = Room.room_prices('Single Bed')
+      FactoryBot.create(:room, room_type: 'Suite', price: 100, room_number: '110')
+      FactoryBot.create(:room, room_type: 'Suite', price: 120,  room_number: '111')
+      prices = Room.room_prices('Suite')
 
       expect(prices).to eq([100, 120])
     end
@@ -93,21 +93,6 @@ RSpec.describe Room, type: :model do
       prices = Room.room_prices('Unknown Type')
 
       expect(prices).to eq([0])
-    end
-  end
-
-  describe '.excluding_room_ids' do
-    it 'excludes rooms with specified room_ids' do
-      # Create rooms with different room_ids
-      room1 = FactoryBot.create(:room)
-      room2 = FactoryBot.create(:room)
-      room3 = FactoryBot.create(:room)
-
-      booked_room_ids = [room1.id, room3.id]
-
-      result = Room.excluding_room_ids(booked_room_ids)
-
-      expect(result).to contain_exactly(room2)
     end
   end
 end

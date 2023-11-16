@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-#rubocop:disable all
+# rubocop:disable all
 
 require 'rails_helper'
 
@@ -32,25 +32,14 @@ RSpec.describe HotelsController, type: :controller do
       expect(response).to be_successful
     end
   end
-  
+
   describe 'POST #create' do
     context 'with valid parameters' do
       it 'creates a new Hotel' do
         allow(controller).to receive(:current_user).and_return(super_admin)
         expect {
-          post :create, params: { 
-            hotel: {
-              name:  'Sample Hotel' ,
-            address:  '123 Main Street' ,
-            city:  'Sample City' ,
-            state:  'Sample State' ,
-            country:  'Sample Country' ,
-            pincode:  '12345' ,
-            latitude:  42.123456 ,
-            longitude:  -71.987654
-            }
-          }
-          }.to change(Hotel, :count).by(1)
+          post :create, params: { hotel: valid_attributes }
+        }.to change(Hotel, :count).by(1)
       end
 
       it 'redirects to the created hotel' do
@@ -112,9 +101,8 @@ RSpec.describe HotelsController, type: :controller do
         hotel.reload
         expect(hotel.name).to eq(new_name)
       end
-        
+
       it 'redirects to the updated hotel' do
-        allow(controller).to receive(:current_user).and_return(super_admin)
         allow(controller).to receive(:current_user).and_return(super_admin)
         hotel = FactoryBot.create(:hotel)
         session[:hotel_id] = hotel.id
@@ -125,7 +113,7 @@ RSpec.describe HotelsController, type: :controller do
 
     context 'with invalid parameters' do
       it 'does not update the hotel' do
-        allow(controller).to receive(:current_user).and_return(super_admin)        
+        allow(controller).to receive(:current_user).and_return(super_admin)
         put :update, params: { id: hotel.id, hotel: invalid_attributes }
         hotel.reload
         expect(hotel.name).not_to eq(invalid_attributes[:name])
@@ -160,4 +148,4 @@ RSpec.describe HotelsController, type: :controller do
   end
 end
 
-#rubocop:enable all
+# rubocop:enable all
