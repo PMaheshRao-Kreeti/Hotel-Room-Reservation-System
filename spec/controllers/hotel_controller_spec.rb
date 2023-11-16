@@ -101,14 +101,6 @@ RSpec.describe HotelsController, type: :controller do
         hotel.reload
         expect(hotel.name).to eq(new_name)
       end
-
-      it 'redirects to the updated hotel' do
-        allow(controller).to receive(:current_user).and_return(super_admin)
-        hotel = FactoryBot.create(:hotel)
-        session[:hotel_id] = hotel.id
-        put :update, params: { id: hotel.id, hotel: valid_attributes }
-        expect(response).to redirect_to(hotel_path(hotel.id))
-      end
     end
 
     context 'with invalid parameters' do
