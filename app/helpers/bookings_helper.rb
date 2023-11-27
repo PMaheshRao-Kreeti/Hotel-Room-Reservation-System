@@ -17,6 +17,8 @@ module BookingsHelper
 
   def set_hotel
     @hotel = Hotel.find(params[:hotel_id])
+  rescue ActiveRecord::RecordNotFound => e
+    redirect_to hotels_path, notice: e
   end
 
   # view helper
